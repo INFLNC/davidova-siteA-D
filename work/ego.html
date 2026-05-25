@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EGO by Vobro — Davidova.Studio</title>
+<meta name="description" content="Tastes that don't apologize. CGI campaign for Vobro's premium praline collection." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0A0A0A;
+  --graphite: #1F1F1F;
+  --bone: #F5F2EC;
+  --paper: #E8E4DB;
+  --mid: #6B6B6B;
+
+  /* EGO flavor worlds */
+  --ego-hazelnut: #1F5C2E;
+  --ego-plum: #4B1F5C;
+  --ego-pistachio: #7DB833;
+  --ego-cherry: #C4258A;
+  --ego-almond: #E8DDC8;
+  --ego-gold: #C9A84C;
+  
+  /* Sky for hero */
+  --sky: #6BB6E8;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --section: clamp(4rem, 10vw, 8rem);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+  color: var(--bone);
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav__logo-line {
+  display: inline-block;
+  width: 1.5rem; height: 1px;
+  background: currentColor;
+  transition: width 0.4s var(--ease-out-expo);
+}
+
+.nav__logo:hover .nav__logo-line { width: 2.5rem; }
+
+.nav__menu {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.nav__link { position: relative; padding: 0.25rem 0; }
+.nav__link::after {
+  content: ''; position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.nav__link:hover::after { transform: scaleX(1); }
+
+/* MODULES */
+.cs-module {
+  position: relative;
+  padding: var(--section) var(--gutter);
+}
+
+.cs-module--bone { background: var(--bone); color: var(--ink); }
+.cs-module--paper { background: var(--paper); color: var(--ink); }
+.cs-module--ink { background: var(--ink); color: var(--bone); }
+.cs-module--graphite { background: var(--graphite); color: var(--bone); }
+.cs-module--bleed { padding: 0; background: var(--ink); }
+
+.cs-module--hazelnut { background: var(--ego-hazelnut); color: var(--bone); }
+.cs-module--plum { background: var(--ego-plum); color: var(--bone); }
+.cs-module--pistachio { background: var(--ego-pistachio); color: var(--ink); }
+.cs-module--cherry { background: var(--ego-cherry); color: var(--bone); }
+.cs-module--almond { background: var(--ego-almond); color: var(--ink); }
+.cs-module--sky { background: var(--sky); color: var(--ink); }
+
+.cs-module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.cs-module--ink .cs-module-header,
+.cs-module--graphite .cs-module-header,
+.cs-module--hazelnut .cs-module-header,
+.cs-module--plum .cs-module-header,
+.cs-module--cherry .cs-module-header { color: rgba(245, 242, 236, 0.6); }
+.cs-module--ink .cs-module-header__title,
+.cs-module--graphite .cs-module-header__title,
+.cs-module--hazelnut .cs-module-header__title,
+.cs-module--plum .cs-module-header__title,
+.cs-module--cherry .cs-module-header__title { color: var(--bone); }
+
+.cs-module-header__title { color: var(--ink); }
+.cs-module-header__meta { color: var(--mid); }
+
+/* SLOT */
+.cs-slot {
+  position: relative;
+  width: 100%;
+  background: rgba(107, 107, 107, 0.08);
+  border: 1px dashed var(--mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  text-align: center;
+  padding: 2rem;
+}
+.cs-slot::before {
+  content: attr(data-slot-id);
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 9px;
+  opacity: 0.7;
+}
+.cs-slot--render { aspect-ratio: 16/9; }
+.cs-slot--portrait { aspect-ratio: 4/5; }
+.cs-slot--vertical { aspect-ratio: 9/16; }
+.cs-slot--square { aspect-ratio: 1/1; }
+.cs-slot--strip { aspect-ratio: 21/9; }
+
+.cs-caption {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  text-align: center;
+}
+
+.cs-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.cs-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-grid-3x2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-grid-4 { 
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .cs-grid-4 { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media (max-width: 700px) {
+  .cs-grid-4 { 
+    grid-template-columns: 1fr; 
+  }
+}
+@media (max-width: 700px) {
+  .cs-grid-3, .cs-grid-3x2, .cs-grid-3x3 { grid-template-columns: repeat(2, 1fr); }
+  .cs-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* HERO */
+.cs-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  background: var(--sky);
+  overflow: hidden;
+}
+.cs-hero .cs-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+  background: linear-gradient(180deg, #6BB6E8 0%, #A8D2EF 100%);
+  font-size: 14px;
+}
+.cs-hero__meta {
+  position: absolute;
+  bottom: var(--gutter);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  z-index: 2;
+}
+
+/* INTRO */
+.cs-intro {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 800px) {
+  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.cs-intro__metadata {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  line-height: 1.8;
+}
+.cs-intro__metadata dt {
+  display: inline-block;
+  width: 7rem;
+  color: var(--mid);
+}
+.cs-intro__metadata dd {
+  display: inline-block;
+  color: var(--ink);
+}
+.cs-intro__metadata > div { display: block; }
+
+.cs-intro__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+
+.cs-intro__headline {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  max-width: 25ch;
+}
+.cs-intro__headline em { font-style: italic; color: var(--mid); }
+
+.cs-intro__body {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 60ch;
+  font-weight: 300;
+}
+
+/* CONCEPT */
+.cs-concept {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.cs-concept__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+.cs-concept__headline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+.cs-concept__body {
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 50ch;
+  margin: 0 auto;
+  opacity: 0.85;
+}
+
+/* FLAVOR (macro modules) */
+.cs-flavor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .cs-flavor { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.cs-flavor__media { position: relative; }
+.cs-flavor__copy { padding: 2rem 0; }
+
+.cs-flavor__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.cs-flavor__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.cs-flavor__tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.3;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+}
+
+.cs-flavor__description {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 40ch;
+  font-weight: 300;
+  opacity: 0.75;
+}
+
+/* LIFESTYLE — full bleed wide */
+.cs-lifestyle {
+  position: relative;
+  padding: 0;
+  min-height: 80vh;
+  display: grid;
+  align-items: stretch;
+}
+.cs-lifestyle__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+}
+.cs-lifestyle__media .cs-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(245,242,236,0.3);
+  background: rgba(0,0,0,0.1);
+}
+.cs-lifestyle__caption {
+  position: absolute;
+  bottom: var(--gutter);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* SHADER ROW */
+.cs-shader-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cs-shader-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--bone);
+  margin-bottom: 8px;
+}
+
+/* SPECS */
+.cs-specs { font-family: var(--font-mono); max-width: 800px; margin: 0 auto; }
+.cs-specs table { width: 100%; border-collapse: collapse; }
+.cs-specs td { padding: 12px 0; font-size: 11px; vertical-align: top; }
+.cs-specs tr { border-bottom: 1px solid rgba(245, 242, 236, 0.15); }
+.cs-specs tr:last-child { border-bottom: none; }
+.cs-specs__label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  width: 12rem;
+  padding-right: 40px !important;
+}
+.cs-specs__value { color: var(--bone); }
+
+/* CLOSER */
+.cs-closer__statement {
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 5rem;
+  max-width: 22ch;
+  margin-left: auto; margin-right: auto;
+}
+.cs-closer__credits {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 4rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  max-width: 600px;
+  margin: 0 auto 5rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(245, 242, 236, 0.15);
+  border-bottom: 1px solid rgba(245, 242, 236, 0.15);
+}
+.cs-closer__credits dt { color: var(--mid); }
+.cs-closer__credits dd { color: var(--bone); }
+.cs-closer__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.cs-closer__nav-link {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: -0.01em;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <div class="nav__menu">
+    <a href="/work" class="nav__link">Work</a>
+    <a href="/about" class="nav__link">About</a>
+    <a href="/contact" class="nav__link">Contact</a>
+  </div>
+</nav>
+
+<!-- 01 HERO — 5 PACKS ON ROPE / SKY -->
+<section class="cs-hero">
+ <img src="D:\davidova-site\assets\img_EGO/Hero.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+  <div class="cs-hero__meta">
+    <div>VOBRO — EGO</div>
+    <div>2026 · Five passions, five worlds</div>
+  </div>
+</section>
+
+<!-- 02 PROJECT INTRO -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-intro">
+    <dl class="cs-intro__metadata">
+      <div><dt>Client</dt><dd>Vobro</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
+      <div><dt>Category</dt><dd>CGI · Packaging · Campaign</dd></div>
+      <div><dt>Role</dt><dd>CGI Art Direction · Visualization</dd></div>
+      <div><dt>Software</dt><dd>Blender 4.2 · Photoshop · Illustrator</dd></div>
+    </dl>
+    <div>
+      <div class="cs-intro__label">— Project</div>
+      <h1 class="cs-intro__headline reveal">
+        <em>Tastes that don't apologize.</em> A campaign for Vobro's premium praline collection — five flavours, five worlds, one collection that refuses to be quiet.
+      </h1>
+      <p class="cs-intro__body reveal">
+        EGO by Vobro is now competing on shelves across Europe and beyond. The challenge was to lift the visual story above generic premium-praline cliché — gold + brown + flourish — and into a place where each flavour has its own voice, its own world, its own moment. Built entirely in Blender with lifestyle CGI compositions inspired by Sundae Body Mists, Squeeze and modern FMCG editorial.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 CONCEPT -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-concept reveal">
+    <div class="cs-concept__label">— Concept</div>
+    <h2 class="cs-concept__headline">"Five passions. Five worlds. One EGO."</h2>
+    <p class="cs-concept__body">Each EGO praline is a different mood. Hazelnut as restraint, plum as twilight, pistachio as escape, cherry as boldness, almond as lightness. Five flavours that arrive in their own scenes — not in a studio. Pleasure that doesn't apologize.</p>
+  </div>
+</section>
+
+<!-- 04 REFERENCES -->
+<section class="cs-module cs-module--paper">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— References</span>
+    <span class="cs-module-header__meta">Lifestyle FMCG · bold colour · playful confidence</span>
+  </div>
+  <div class="cs-grid-3x3">
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_01.png"><div class="cs-caption">Sundae Body Mists by Jo Cutri Studio — Y2K-tinted FMCG</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_02.png"><div class="cs-caption">Zingo Snacks — basket scene, bold playful</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_03.png"><div class="cs-caption">flora glow hydrogel masks — clothesline composition</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_04.png"><div class="cs-caption">Cosnori mask — sky backdrop, single hero</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_05.png"><div class="cs-caption">Claire cosmetics — fruit + product chiaroscuro</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_06.png"><div class="cs-caption">net bag of citrus</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_07.png"><div class="cs-caption">Mango skin — cream net flat-lay</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_08.png"><div class="cs-caption">Jacquemus bag — basket overflow, colour clash</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/REF_09.png"><div class="cs-caption">Doorderma cream — editorial fashion campaign</div></div>
+  </div>
+</section>
+
+<!-- 06 LOGO SYSTEM -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Identity</span>
+    <span class="cs-module-header__meta">EGO wordmark across colour environments</span>
+  </div>
+  <div class="cs-grid-3">
+    <div><img src="D:\davidova-site\assets\img_EGO/Identity_1.png"></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Identity_2.png"></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Identity_3.png"></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Identity_4.png"></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Identity_5.png"></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Identity_6.png"></div>
+  </div>
+</section>
+
+<!-- 07 COLOR -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Colour</span>
+    <span class="cs-module-header__meta">Five flavours · five worlds · gold anchor</span>
+  </div>
+<img src="D:\davidova-site\assets\img_EGO/COLOR SYSTEM.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+  <div class="cs-caption">#1F5C2E · #4B1F5C · #7DB833 · #C4258A · #E8DDC8 · #C9A84C</div>
+</section>
+
+<!-- 09 EMBLEM -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Emblem</span>
+    <span class="cs-module-header__meta">Vobro signature on chocolate</span>
+  </div>
+  <div class="cs-grid-2">
+    <div><img src="D:\davidova-site\assets\img_EGO/Emblem_1.png"><div class="cs-caption">01-logo system</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Emblem_2.png"><div class="cs-caption">02-logo system</div></div>
+  </div>
+</section>
+
+<!-- 10 PACKAGING SYSTEM -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Packaging</span>
+    <span class="cs-module-header__meta">Five SKUs · unified system</span>
+  </div>
+  <img src="D:\davidova-site\assets\img_EGO/PACKAGING SYSTEM.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;"><div class="cs-caption">ALL 5 POUCHES FRONT VIEW</div></div>
+</section>
+
+<!-- 11 PACKAGING DETAIL -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Detail</span>
+    <span class="cs-module-header__meta">Gold foil · embossing · finish</span>
+  </div>
+  <div class="cs-grid-2">
+    <div><img src="D:\davidova-site\assets\img_EGO/Mat_1.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;"><div class="cs-caption">GOLD FOIL LOGO MACRO</div></div>
+    <div><img src="D:\davidova-site\assets\img_EGO/Mat_2.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;"><div class="cs-caption">POUCH MATERIAL TEXTURE</div></div>
+  </div>
+</section>
+
+<!-- 12 DTP -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— DTP</span>
+    <span class="cs-module-header__meta">Print-ready · Illustrator</span>
+  </div>
+  <div class="cs-grid-2">
+    <div>
+      <div class="cs-slot cs-slot--square" data-slot-id="⬚ DTP_01">
+        <video width="1000" height="1000" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;">
+          <source src="D:\davidova-site/assets/img_EGO/DTP_carousel.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+      <div class="cs-caption">01 — Layout grid ·</div>
+    </div>
+    
+    <div>
+      <div class="cs-slot cs-slot--square" data-slot-id="⬚ DTP_02">
+        <img src="D:\davidova-site/assets/img_EGO/DTP_02_print.png" alt="Print-Ready File" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+      <div class="cs-caption">02 — CMYK + Pantone gold</div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 CGI HERO 1 -->
+<section class="cs-module cs-module--bleed">
+  <img src="D:\davidova-site\assets\img_EGO/Hero Full Bleed.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+   <div class="cs-caption">— HERO SHOT</div>
+</section>
+
+<!-- 15 CGI HERO 3 — EDITORIAL MODEL -->
+<section class="cs-module cs-module--almond">
+   <img src="D:\davidova-site\assets\img_EGO/Front Pack Shot.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+  <div class="cs-caption">— Editorial campaign hero</div>
+</section>
+
+<!-- 16 MACRO HAZELNUT -->
+<section class="cs-module cs-module--hazelnut">
+  <div class="cs-flavor cs-flavor--horizontal">
+    <div class="cs-flavor__media">
+      <img src="D:\davidova-site\assets\img_EGO/Macro_1.png" alt="Hazelnut Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;">
+    </div>
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label">— 01 / Hazelnut Passion</div>
+      <h3 class="cs-flavor__name">The Stoic</h3>
+      <p class="cs-flavor__tagline">"Found it on the way home."</p>
+      <p class="cs-flavor__description">Milk chocolate shell, smooth hazelnut cream, one whole roasted hazelnut. Forest restraint with a slow finish.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 MACRO PLUM -->
+<section class="cs-module cs-module--plum">
+  <div class="cs-flavor cs-flavor--horizontal cs-flavor--reverse">
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label">— 02 / Plum Passion</div>
+      <h3 class="cs-flavor__name">The Mystic</h3>
+      <p class="cs-flavor__tagline">"Rip-it-open o'clock."</p>
+      <p class="cs-flavor__description">Two-layer filling — white cream with cocoa pieces, deep plum reduction. Twilight in a praline.</p>
+    </div>
+    <div class="cs-flavor__media">
+      <img src="D:\davidova-site\assets\img_EGO/Macro_2.png" alt="Plum Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;">
+    </div>
+  </div>
+</section>
+
+<!-- 18 MACRO PISTACHIO -->
+<section class="cs-module cs-module--pistachio">
+  <div class="cs-flavor cs-flavor--horizontal">
+    <div class="cs-flavor__media">
+      <img src="D:\davidova-site\assets\img_EGO/Macro_3.png" alt="Pistachio Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;">
+    </div>
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label">— 03 / Pistachio Passion</div>
+      <h3 class="cs-flavor__name">The Adventurer</h3>
+      <p class="cs-flavor__tagline">"Holiday in your pocket."</p>
+      <p class="cs-flavor__description">Vibrant pistachio cream with golden kadayif strands. The Mediterranean inside Polish chocolate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 19 MACRO CHERRY -->
+<section class="cs-module cs-module--cherry">
+  <div class="cs-flavor cs-flavor--horizontal cs-flavor--reverse">
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label">— 04 / Cherry Passion</div>
+      <h3 class="cs-flavor__name">The Seducer</h3>
+      <p class="cs-flavor__tagline">"Caught red-handed."</p>
+      <p class="cs-flavor__description">Whole cherry suspended in deep ruby liquid, sealed in milk chocolate. The praline that makes a sound.</p>
+    </div>
+    <div class="cs-flavor__media">
+      <img src="D:\davidova-site\assets\img_EGO/Macro_4.png" alt="Cherry Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;">
+    </div>
+  </div>
+</section>
+
+<!-- 20 MACRO ALMOND -->
+<section class="cs-module cs-module--almond">
+  <div class="cs-flavor cs-flavor--horizontal">
+    <div class="cs-flavor__media">
+      <img src="D:\davidova-site\assets\img_EGO/Macro_5.png" alt="Almond Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;">
+    </div>
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label">— 05 / Almond Passion</div>
+      <h3 class="cs-flavor__name">The Pure One</h3>
+      <p class="cs-flavor__tagline">"Light enough to float."</p>
+      <p class="cs-flavor__description">White chocolate shell, silky cream, one whole roasted almond. Monochromatic discipline at its sweetest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 21 LIFESTYLE PISTACHIO — BEACH BAG -->
+<section class="cs-lifestyle" style="background: var(--ego-pistachio);">
+  <div class="cs-lifestyle__media">
+       <img src="D:\davidova-site\assets\img_EGO/pist.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+    <div class="cs-lifestyle__caption" style="color: var(--ink);">
+      <div>06 / Holiday in your pocket</div>
+      <div>EGO Pistachio Passion</div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 LIFESTYLE PLUM — TWILIGHT WITH FRUIT -->
+<section class="cs-lifestyle" style="background: var(--ego-plum);">
+  <div class="cs-lifestyle__media">
+       <img src="D:\davidova-site\assets\img_EGO/plum.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+    <div class="cs-lifestyle__caption" style="color: var(--bone);">
+      <div>07 / Rip-it-open o'clock</div>
+      <div>EGO Plum Passion</div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 LIFESTYLE CHERRY — NET BAG OF CHERRIES -->
+<section class="cs-lifestyle" style="background: var(--ego-cherry);">
+  <div class="cs-lifestyle__media">
+      <img src="D:\davidova-site\assets\img_EGO/cherry.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+    <div class="cs-lifestyle__caption" style="color: var(--bone);">
+      <div>08 / Caught red-handed</div>
+      <div>EGO Cherry Passion</div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 LIFESTYLE ALMOND — CREAM NET WITH ALMONDS -->
+<section class="cs-lifestyle" style="background: var(--ego-almond);">
+  <div class="cs-lifestyle__media">
+       <img src="D:\davidova-site\assets\img_EGO/almond.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+    <div class="cs-lifestyle__caption" style="color: var(--ink);">
+      <div>09 / Light enough to float</div>
+      <div>EGO Almond Passion</div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 LIFESTYLE HAZELNUT — BASKET WITH FOREST FRUIT -->
+<section class="cs-lifestyle" style="background: var(--ego-hazelnut);">
+  <div class="cs-lifestyle__media">
+      <img src="D:\davidova-site\assets\img_EGO/hz.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+    <div class="cs-lifestyle__caption" style="color: var(--bone);">
+      <div>10 / Found it on the way home</div>
+      <div>EGO Hazelnut Passion</div>
+    </div>
+  </div>
+</section>
+
+<!-- 26 MODELING -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Modeling</span>
+    <span class="cs-module-header__meta">Clean topology · production-ready</span>
+  </div>
+  <div class="cs-grid-4">
+    <div>
+      <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_01">
+        <img src="D:\davidova-site\assets\img_EGO/MODEL_01.png" alt="Wireframe" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+      <div class="cs-caption">01 — Wireframe · clean quad topology</div>
+    </div>
+    
+    <div>
+      <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_02">
+        <img src="D:\davidova-site\assets\img_EGO/MODEL_02.png" alt="Topology" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+      <div class="cs-caption">02 — Topology · Vobro EGO doypack</div>
+    </div>
+    
+    <div>
+      <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_04">
+        <img src="D:\davidova-site\assets\img_EGO/MODEL_04.png" alt="UV layout" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+      <div class="cs-caption">03 — Render · viewport / render</div>
+    </div>
+    
+    <div>
+      <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_03">
+        <img src="D:\davidova-site\assets\img_EGO/MODEL_03.png" alt="Render" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+      <div class="cs-caption">04 — UV layout · 4K PBR maps</div>
+    </div>
+  </div>
+</section>
+
+<!-- 30 EDITORIAL -->
+<section class="cs-module cs-module--paper">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Editorial</span>
+    <span class="cs-module-header__meta">Magazine spread mockup</span>
+  </div>
+  <img src="D:\davidova-site\assets\img_EGO/EDITORIAL.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <div class="cs-caption">EDITORIAL MAGAZINE SPREAD</div>
+</div>
+</section>
+
+<!-- 31 OOH 01 -->
+<section class="cs-module cs-module--bleed">
+<img src="D:\davidova-site\assets\img_EGO/OOH 01.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <div class="cs-caption">OOH BILLBOARD — WARSAW BUILDING FACADE</div>
+  </div>
+</section>
+
+<!-- 32 OOH 02 -->
+<section class="cs-module cs-module--bleed">
+  <img src="D:\davidova-site\assets\img_EGO/OOH 02.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <div class="cs-caption">OOH BILLBOARD — WARSAW METRO</div>
+  </div>
+</section>
+
+<!-- 33 WEB HERO -->
+<section class="cs-module cs-module--bleed">
+  <img src="D:\davidova-site\assets\img_EGO/PACKAGING SYSTEM_wide.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <div class="cs-caption">WEB HERO BANNER 21:9</div>
+  </div>
+</section>
+
+<!-- 34 TECH SPECS -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Technical</span>
+    <span class="cs-module-header__meta">Project specifications</span>
+  </div>
+  <div class="cs-specs">
+    <table>
+      <tbody>
+        <tr><td class="cs-specs__label">SOFTWARE</td><td class="cs-specs__value">Blender 4.2 · Cycles · Photoshop · Illustrator</td></tr>
+        <tr><td class="cs-specs__label">RESOLUTION</td><td class="cs-specs__value">3840 × 2160 px</td></tr>
+        <tr><td class="cs-specs__label">SAMPLES</td><td class="cs-specs__value">4096 per pixel · OptiX denoising</td></tr>
+        <tr><td class="cs-specs__label">POLYCOUNT</td><td class="cs-specs__value">Hero asset: 28500 · Full collection: 412000</td></tr>
+        <tr><td class="cs-specs__label">TEXTURES</td><td class="cs-specs__value">4K PBR · custom emboss normals · gold foil</td></tr>
+        <tr><td class="cs-specs__label">RENDER TIME</td><td class="cs-specs__value">22 minutes per frame on RTX 4090</td></tr>
+        <tr><td class="cs-specs__label">COLOR PIPELINE</td><td class="cs-specs__value">ACES · Filmic Log Encoding</td></tr>
+        <tr><td class="cs-specs__label">POST</td><td class="cs-specs__value">Photoshop · grading · atmospheric</td></tr>
+        <tr><td class="cs-specs__label">DELIVERABLES</td><td class="cs-specs__value">5 hero packs · 5 macro · 5 lifestyle · 3 cinematic</td></tr>
+        <tr><td class="cs-specs__label">HOURS</td><td class="cs-specs__value">218 from concept to delivery</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 35 CLOSER -->
+<section class="cs-module cs-module--ink">
+  <p class="cs-closer__statement reveal">"Tastes that don't apologize."</p>
+  <dl class="cs-closer__credits">
+    <div><dt>Studio</dt><dd>Davidova.Studio</dd></div>
+    <div><dt>Art direction</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>CGI</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Client</dt><dd>Vobro</dd></div>
+    <div><dt>Year</dt><dd>2026</dd></div>
+    <div><dt>Location</dt><dd>Warsaw · Worldwide</dd></div>
+  </dl>
+  <div class="cs-closer__nav">
+    <a href="/work/[NEXT-PROJECT-SLUG]" class="cs-closer__nav-link">Next project →</a>
+    <a href="mailto:studio@davidova.studio" class="cs-closer__nav-link">studio@davidova.studio</a>
+  </div>
+</section>
+
+<script>
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>

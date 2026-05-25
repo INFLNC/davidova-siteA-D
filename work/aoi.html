@@ -1,0 +1,2718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aoi — Quiet Computing Object · Alexandra Davidova</title>
+<meta name="description" content="Aoi is an ambient memory companion. Brand strategy, identity, industrial design direction and CGI art direction by Alexandra Davidova. 2026." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&family=Noto+Serif+JP:wght@200;300&family=Noto+Sans+JP:wght@100;200;300&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   AOI — Case Page
+   Inherits visual DNA from index.html
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0A0A0A;
+  --graphite: #141414;
+  --bone: #F0EDE6;
+  --paper: #E4E0D8;
+  --concrete: #C8C4BC;
+  --cold: #1C1C20;
+  --mid: #5A5A5A;
+  --accent: #8B2E1F;
+  --rule: rgba(10, 10, 10, 0.14);
+  --rule-light: rgba(10, 10, 10, 0.07);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-jp-serif: 'Noto Serif JP', serif;
+  --font-jp-sans: 'Noto Sans JP', sans-serif;
+
+  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --section: clamp(4rem, 10vw, 8rem);
+  --section-tight: clamp(2.5rem, 6vw, 5rem);
+
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+
+  --max-w: 1440px;
+  --reading-w: 62ch;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Inherits the same film grain overlay from index.html */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
+
+/* =========================================================
+   NAVIGATION — identical to index.html system
+   ========================================================= */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--ink);
+  z-index: 101;
+  transition: width 0.1s linear;
+}
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+  color: var(--bone);
+}
+
+.nav__back {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.4s var(--ease-out-expo);
+}
+
+.nav__back:hover { gap: 0.85rem; }
+
+.nav__menu {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.nav__link { position: relative; padding: 0.25rem 0; }
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.nav__link:hover::after { transform: scaleX(1); }
+
+.wordmark {
+  position: fixed;
+  top: 1.65rem;
+  left: 50vw;
+  transform: translate(-50%, 0);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--bone);
+  white-space: nowrap;
+  z-index: 110;
+  mix-blend-mode: difference;
+}
+
+@media (max-width: 700px) {
+  .wordmark { font-size: 0.9rem; }
+  .nav__menu { display: none; }
+}
+
+/* =========================================================
+   COMMON ELEMENTS
+   ========================================================= */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--rule);
+  margin: 0;
+}
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-top: 1rem;
+  display: block;
+}
+
+/* Image slot — universal placeholder behavior matching index.html */
+.slot {
+  position: relative;
+  background: var(--graphite);
+  overflow: hidden;
+  width: 100%;
+}
+
+.slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.slot--4-5  { aspect-ratio: 4/5; }
+.slot--3-4  { aspect-ratio: 3/4; }
+.slot--1-1  { aspect-ratio: 1/1; }
+.slot--16-9 { aspect-ratio: 16/9; }
+.slot--3-2  { aspect-ratio: 3/2; }
+.slot--2-3  { aspect-ratio: 2/3; }
+.slot--5-4  { aspect-ratio: 5/4; }
+.slot--21-9 { aspect-ratio: 21/9; }
+
+/* =========================================================
+   01 — COLD OPEN (full-bleed hero photograph)
+   ========================================================= */
+.cold-open {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  width: 100%;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.cold-open__image {
+  position: absolute;
+  inset: 0;
+}
+
+.cold-open__image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.cold-open__placeholder {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 65% 70%, rgba(139, 46, 31, 0.18), transparent 60%),
+    radial-gradient(ellipse at 30% 40%, rgba(232, 228, 219, 0.06), transparent 65%),
+    linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.cold-open__meta {
+  position: absolute;
+  bottom: var(--gutter);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.65;
+}
+
+/* =========================================================
+   02 — TITLE CARD
+   ========================================================= */
+.title-card {
+  padding: var(--section) var(--gutter);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bone);
+}
+
+.title-card__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.title-card__top > div:last-child { text-align: right; }
+
+.title-card__center {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 4rem 0;
+}
+
+.title-card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.title-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 11vw, 10rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+
+.title-card__title em {
+  font-style: italic;
+  color: var(--mid);
+}
+
+.title-card__subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--mid);
+  max-width: 32ch;
+  line-height: 1.3;
+}
+
+.title-card__bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.title-card__bottom dt {
+  color: var(--mid);
+  margin-bottom: 0.5rem;
+}
+
+.title-card__bottom dd {
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .title-card__bottom { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+/* =========================================================
+   03 — MANIFESTO PULL QUOTE + INTRO
+   ========================================================= */
+.manifesto-block {
+  padding: var(--section) var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  background: var(--bone);
+}
+
+.manifesto-block__quote {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-align: center;
+  max-width: 16ch;
+}
+
+.manifesto-block__quote em {
+  font-style: italic;
+  color: var(--mid);
+}
+
+.manifesto-block__intro {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--graphite);
+  max-width: 48ch;
+  text-align: center;
+}
+
+/* =========================================================
+   04 — CONTEXT
+   ========================================================= */
+.context {
+  padding: var(--section) var(--gutter);
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 6rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.context__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.context__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: var(--reading-w);
+}
+
+.context__body p {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--graphite);
+}
+
+.context__body p:first-child {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+
+@media (max-width: 900px) {
+  .context { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* =========================================================
+   05–06 — HERO PHOTOGRAPHY DUO
+   ========================================================= */
+.hero-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  padding: 0;
+}
+
+.hero-duo__cell {
+  position: relative;
+}
+
+.hero-duo > .hero-duo__cell > .slot { aspect-ratio: 4/5; }
+
+.caption--overlay {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  margin: 0;
+  color: var(--bone);
+  mix-blend-mode: difference;
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .hero-duo { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   07 — MACRO 2x2 GRID
+   ========================================================= */
+.macro-grid {
+  padding: var(--section) var(--gutter);
+  background: var(--bone);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.macro-grid__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  gap: 2rem;
+}
+
+.macro-grid__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 22ch;
+}
+
+.macro-grid__intro {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--mid);
+  max-width: 32ch;
+}
+
+.macro-grid__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.macro-grid__item .caption { color: var(--graphite); }
+
+@media (max-width: 700px) {
+  .macro-grid__header { flex-direction: column; align-items: flex-start; }
+  .macro-grid__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* =========================================================
+   08 — MATERIAL STUDY (3 columns)
+   ========================================================= */
+.materials {
+  padding: var(--section) var(--gutter);
+  background: var(--paper);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.materials__header {
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.materials__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+}
+
+.materials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.material {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.material__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.material__name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.material__desc {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--mid);
+}
+
+@media (max-width: 900px) {
+  .materials__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* =========================================================
+   09 — CMF SYSTEM (three SKUs, full-bleed)
+   ========================================================= */
+.cmf-system {
+  background: var(--bone);
+  padding: var(--section) 0 var(--section-tight);
+}
+
+.cmf-system__header {
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cmf-system__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  max-width: 18ch;
+}
+
+.cmf-system__lede {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--mid);
+  max-width: 38ch;
+  align-self: end;
+}
+
+.cmf-system .slot { aspect-ratio: 16/9; }
+
+.cmf-system__labels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 2rem var(--gutter) 0;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.cmf-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cmf-label__sku { color: var(--mid); }
+.cmf-label__name { color: var(--ink); font-weight: 500; }
+.cmf-label__finish { color: var(--mid); text-transform: none; letter-spacing: 0.02em; font-size: 12px; }
+
+@media (max-width: 900px) {
+  .cmf-system__header { grid-template-columns: 1fr; }
+  .cmf-system__labels { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+
+/* =========================================================
+   10 — IDENTITY SYSTEM
+   ========================================================= */
+.identity {
+  padding: var(--section) var(--gutter);
+  background: var(--paper);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.identity__header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.identity__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.identity__copy {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--graphite);
+  max-width: var(--reading-w);
+}
+
+.identity__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.identity__cell { position: relative; }
+
+.identity__primary { aspect-ratio: 3/2; }
+.identity__secondary { aspect-ratio: 3/4; }
+
+.caption--dark {
+  color: var(--ink) !important;
+  mix-blend-mode: normal !important;
+}
+
+.identity__spec {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.identity__spec dt {
+  color: var(--mid);
+  margin-bottom: 0.5rem;
+}
+
+.identity__spec dd { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .identity__header { grid-template-columns: 1fr; gap: 2rem; }
+  .identity__grid { grid-template-columns: 1fr; }
+  .identity__spec { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+/* =========================================================
+   10B — BRAND ANALYSIS MODULE
+   Japanese brutalism × precision tech × Tokyo premium
+   ========================================================= */
+
+/* ── Full-bleed kanji hero ── */
+.brand-hero {
+  background: var(--cold);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--section) var(--gutter);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-hero::before {
+  content: '青';
+  position: absolute;
+  right: -0.05em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-jp-serif);
+  font-weight: 200;
+  font-size: clamp(40vw, 55vw, 60vw);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240,237,230,0.055);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+}
+
+.brand-hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.brand-hero__section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(240,237,230,0.38);
+}
+
+.brand-hero__coords {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(240,237,230,0.25);
+  text-align: right;
+  line-height: 1.8;
+}
+
+.brand-hero__center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.brand-hero__mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  line-height: 1;
+}
+
+.brand-hero__kanji {
+  font-family: var(--font-jp-serif);
+  font-weight: 200;
+  font-size: clamp(7rem, 22vw, 18rem);
+  letter-spacing: -0.03em;
+  color: var(--bone);
+  line-height: 0.9;
+}
+
+.brand-hero__rule {
+  width: 100%;
+  max-width: clamp(10rem, 30vw, 26rem);
+  height: 1px;
+  background: rgba(240,237,230,0.22);
+  margin: 1.5rem 0 1rem;
+}
+
+.brand-hero__latin {
+  font-family: var(--font-mono);
+  font-size: clamp(0.55rem, 1.1vw, 0.75rem);
+  letter-spacing: 0.65em;
+  text-transform: uppercase;
+  color: rgba(240,237,230,0.45);
+}
+
+.brand-hero__bottom {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border-top: 1px solid rgba(240,237,230,0.1);
+  padding-top: 2rem;
+}
+
+.brand-hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.brand-hero__stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(240,237,230,0.3);
+}
+
+.brand-hero__stat-val {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.375rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: rgba(240,237,230,0.85);
+}
+
+@media (max-width: 700px) {
+  .brand-hero__bottom { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+/* ── Construction breakdown ── */
+.brand-construction {
+  background: var(--cold);
+  padding: 0 var(--gutter) var(--section);
+}
+
+.brand-construction__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid rgba(240,237,230,0.1);
+}
+
+.brand-construction__cell {
+  padding: 3rem 2.5rem;
+  border: 1px solid rgba(240,237,230,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.brand-construction__cell--full {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(240,237,230,0.1);
+}
+
+.brand-construction__cell-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(240,237,230,0.25);
+}
+
+.brand-construction__cell-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--bone);
+}
+
+.brand-construction__cell-body {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: rgba(240,237,230,0.55);
+  max-width: 44ch;
+}
+
+.brand-construction__cell-body strong {
+  color: rgba(240,237,230,0.88);
+  font-weight: 400;
+}
+
+/* Stroke anatomy visual */
+.stroke-anatomy {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 1rem;
+}
+
+.stroke-anatomy__kanji-display {
+  font-family: var(--font-jp-serif);
+  font-weight: 200;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 1;
+  color: var(--bone);
+  position: relative;
+  display: inline-block;
+}
+
+.stroke-anatomy__annotations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.stroke-annotation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(240,237,230,0.15);
+}
+
+.stroke-annotation__label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(240,237,230,0.3);
+}
+
+.stroke-annotation__val {
+  font-size: 0.875rem;
+  color: rgba(240,237,230,0.65);
+  line-height: 1.4;
+}
+
+/* Wordmark lockup applications */
+.lockup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(240,237,230,0.06);
+}
+
+.lockup-cell {
+  background: var(--cold);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 200px;
+}
+
+.lockup-cell--inv { background: var(--bone); }
+
+.lockup-cell__context {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(240,237,230,0.25);
+}
+
+.lockup-cell--inv .lockup-cell__context { color: rgba(10,10,10,0.35); }
+
+/* Wordmark variants rendered in CSS */
+.wm-seal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  line-height: 1;
+}
+
+.wm-seal__k {
+  font-family: var(--font-jp-serif);
+  font-weight: 200;
+  color: var(--bone);
+  line-height: 0.95;
+}
+
+.wm-seal__k--xl  { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+.wm-seal__k--lg  { font-size: 2rem; }
+.wm-seal__k--sm  { font-size: 1.2rem; }
+
+.wm-seal__hr {
+  height: 1px;
+  background: rgba(240,237,230,0.2);
+  margin: 0.6rem 0 0.45rem;
+}
+
+.wm-seal__l {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.55em;
+  color: rgba(240,237,230,0.4);
+}
+
+.wm-seal__l--xl { font-size: 0.6rem; }
+.wm-seal__l--lg { font-size: 0.5rem; }
+.wm-seal__l--sm { font-size: 0.42rem; }
+
+/* inverted variants */
+.wm-seal--inv .wm-seal__k { color: var(--ink); }
+.wm-seal--inv .wm-seal__hr { background: rgba(10,10,10,0.18); }
+.wm-seal--inv .wm-seal__l { color: rgba(10,10,10,0.4); }
+
+/* ── Typography system breakdown ── */
+.type-system {
+  background: var(--ink);
+  padding: var(--section) var(--gutter);
+}
+
+.type-system__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.type-system__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(240,237,230,0.1);
+}
+
+.type-system__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--bone);
+}
+
+.type-system__intro {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: rgba(240,237,230,0.5);
+  max-width: 42ch;
+}
+
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.type-scale__row {
+  display: grid;
+  grid-template-columns: 160px 1fr 120px;
+  gap: 2rem;
+  align-items: baseline;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(240,237,230,0.07);
+}
+
+.type-scale__meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(240,237,230,0.25);
+  line-height: 1.8;
+}
+
+.type-scale__sample { line-height: 1; }
+
+.type-scale__spec {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(240,237,230,0.22);
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* Kanji × Latin optical alignment study */
+.optical-study {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 3rem;
+  border: 1px solid rgba(240,237,230,0.1);
+}
+
+.optical-study__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(240,237,230,0.3);
+}
+
+.optical-study__pair {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.optical-study__pair::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(240,237,230,0.08);
+  pointer-events: none;
+}
+
+.optical-study__k {
+  font-family: var(--font-jp-serif);
+  font-weight: 200;
+  font-size: clamp(5rem, 14vw, 10rem);
+  line-height: 0.9;
+  color: var(--bone);
+  position: relative;
+}
+
+.optical-study__sep {
+  width: 1px;
+  height: 6rem;
+  background: rgba(240,237,230,0.12);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.optical-study__latin {
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: clamp(5rem, 14vw, 10rem);
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  color: var(--bone);
+  font-style: italic;
+}
+
+.optical-study__annotations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(240,237,230,0.08);
+}
+
+.oa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.oa__l {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(240,237,230,0.25);
+}
+
+.oa__v {
+  font-size: 0.875rem;
+  color: rgba(240,237,230,0.6);
+  line-height: 1.4;
+}
+
+/* Color system */
+.color-system {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: rgba(240,237,230,0.08);
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 1.25rem 1.25rem;
+  min-height: 200px;
+}
+
+.color-swatch__name {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.color-swatch__hex {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+}
+
+.color-swatch__role {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: 0.7;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .brand-construction__inner { grid-template-columns: 1fr; }
+  .brand-construction__cell--full { grid-column: 1; }
+  .stroke-anatomy__annotations { grid-template-columns: 1fr; }
+  .lockup-grid { grid-template-columns: 1fr; }
+  .type-system__header { grid-template-columns: 1fr; }
+  .type-scale__row { grid-template-columns: 100px 1fr; }
+  .type-scale__spec { display: none; }
+  .optical-study__annotations { grid-template-columns: 1fr 1fr; }
+  .color-system { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+
+/* =========================================================
+   11 — TYPOGRAPHY
+   ========================================================= */
+.typography {
+  background: var(--bone);
+}
+
+.typography__display {
+  padding: var(--section) var(--gutter);
+  text-align: center;
+}
+
+.typography__display-text {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 22vw, 20rem);
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: var(--ink);
+}
+
+.typography__display-text em {
+  font-style: italic;
+  color: var(--mid);
+}
+
+.typography__caption {
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.typography__spec {
+  padding: 0 var(--gutter) var(--section);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.typography__spec-wrap { position: relative; }
+
+.typography__spec .slot { aspect-ratio: 21/9; }
+
+/* =========================================================
+   12 — IN THE ROOM (lifestyle)
+   ========================================================= */
+.in-the-room {
+  background: var(--paper);
+  padding: var(--section) 0;
+}
+
+.in-the-room__header {
+  padding: 0 var(--gutter);
+  margin-bottom: 4rem;
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+}
+
+.in-the-room__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+}
+
+.in-the-room__lede {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: var(--mid);
+  max-width: 36ch;
+}
+
+.in-the-room__hero {
+  width: 100%;
+  margin-bottom: 1px;
+}
+
+.in-the-room__hero .slot { aspect-ratio: 16/9; }
+
+.in-the-room__duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+}
+
+.in-the-room__duo .slot { aspect-ratio: 4/5; }
+
+@media (max-width: 900px) {
+  .in-the-room__header { grid-template-columns: 1fr; }
+  .in-the-room__duo { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   13 — PACKAGING SEQUENCE
+   ========================================================= */
+.packaging {
+  padding: var(--section) var(--gutter);
+  background: var(--bone);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.packaging__header {
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 60ch;
+}
+
+.packaging__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.packaging__copy {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--graphite);
+}
+
+.packaging__sequence {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+}
+
+.packaging__sequence .slot { aspect-ratio: 4/5; }
+
+.packaging__step {
+  display: flex;
+  flex-direction: column;
+}
+
+.packaging__step-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+  .packaging__sequence { grid-template-columns: 1fr 1fr; }
+}
+
+/* =========================================================
+   14 — COMPANION APP
+   ========================================================= */
+.app {
+  padding: var(--section) var(--gutter);
+  background: var(--paper);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.app__header {
+  margin-bottom: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+}
+
+.app__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+
+.app__copy {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--graphite);
+  max-width: 42ch;
+}
+
+.app__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.app__screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.app__screen .slot { aspect-ratio: 9/19; }
+
+.app__screen-name {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+.app__screen-desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--mid);
+  max-width: 28ch;
+}
+
+@media (max-width: 900px) {
+  .app__header { grid-template-columns: 1fr; }
+  .app__grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; gap: 3rem; }
+}
+
+/* =========================================================
+   15 — CAMPAIGN FRAMES
+   ========================================================= */
+.campaign {
+  background: var(--ink);
+  padding: var(--section) 0;
+  color: var(--bone);
+}
+
+.campaign__header {
+  padding: 0 var(--gutter);
+  margin-bottom: 4rem;
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.campaign__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(245, 242, 236, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.campaign__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 14ch;
+}
+
+.campaign__title em {
+  font-style: italic;
+  color: rgba(245, 242, 236, 0.45);
+}
+
+.campaign__frame {
+  width: 100%;
+  position: relative;
+}
+
+.campaign__frame .slot {
+  aspect-ratio: 16/9;
+  background: var(--graphite);
+}
+
+.campaign__frame:not(:last-of-type) { margin-bottom: var(--section-tight); }
+
+.campaign__copy {
+  position: absolute;
+  bottom: var(--gutter);
+  left: var(--gutter);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 300;
+  color: var(--bone);
+  max-width: 24ch;
+  line-height: 1.3;
+  z-index: 2;
+  pointer-events: none;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+}
+
+.campaign__credit {
+  position: absolute;
+  bottom: var(--gutter);
+  right: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(245, 242, 236, 0.55);
+}
+
+/* =========================================================
+   16 — SPATIAL CONCEPT
+   ========================================================= */
+.spatial {
+  padding: var(--section) var(--gutter);
+  background: var(--bone);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.spatial__header {
+  margin-bottom: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: end;
+}
+
+.spatial__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+}
+
+.spatial__lede {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--mid);
+  max-width: 42ch;
+}
+
+.spatial__hero .slot { aspect-ratio: 16/9; }
+
+@media (max-width: 900px) {
+  .spatial__header { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   17 — PROCESS STRIP
+   ========================================================= */
+.process {
+  padding: var(--section) var(--gutter);
+  background: var(--paper);
+}
+
+.process__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.process__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2.5rem;
+  gap: 2rem;
+}
+
+.process__title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.process__strip {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+}
+
+.process__strip .slot {
+  aspect-ratio: 4/5;
+  background: var(--graphite);
+}
+
+.process__strip .slot::after {
+  content: attr(data-num);
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--bone);
+  letter-spacing: 0.1em;
+  z-index: 2;
+  mix-blend-mode: difference;
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .process__strip { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* =========================================================
+   18 — CREDITS
+   ========================================================= */
+.credits {
+  padding: var(--section) var(--gutter);
+  background: var(--bone);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.credits__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--rule);
+}
+
+.credits__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.credits__role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.credits__name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .credits__grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+}
+
+/* =========================================================
+   19 — NEXT PROJECT
+   ========================================================= */
+.next-project {
+  padding: var(--section) var(--gutter);
+  background: var(--ink);
+  color: var(--bone);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.next-project__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(245, 242, 236, 0.55);
+}
+
+.next-project__link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: opacity 0.4s var(--ease-out-expo);
+}
+
+.next-project__link:hover { opacity: 0.7; }
+
+.next-project__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.next-project__title em {
+  font-style: italic;
+  color: rgba(245, 242, 236, 0.5);
+}
+
+.next-project__meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(245, 242, 236, 0.55);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  padding: 3rem var(--gutter);
+  background: var(--ink);
+  color: rgba(245, 242, 236, 0.55);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(245, 242, 236, 0.1);
+}
+
+@media (max-width: 700px) {
+  .footer { flex-direction: column; }
+}
+</style>
+</head>
+
+<body id="top">
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="progress"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <a href="/index.html#projects" class="nav__back">← Index</a>
+  <div class="nav__menu">
+    <a href="/index.html#contact" class="nav__link">Contact</a>
+  </div>
+</nav>
+
+<!-- Wordmark -->
+<a href="/index.html" class="wordmark">A — D</a>
+
+
+<!-- =========================================================
+     01 — COLD OPEN
+     ========================================================= -->
+<section class="cold-open">
+  <div class="cold-open__placeholder"></div>
+  <div class="cold-open__image">
+    <div class="slot" style="height:100%;aspect-ratio:auto;" data-slot="cold-open">
+      <img
+        src="assets/img/projects/img_Aoi/cold-open.jpg"
+        alt="Aoi — opening frame"
+        onerror="this.style.display='none'"
+      />
+    </div>
+  </div>
+  <div class="cold-open__meta">
+    <div>Aoi — Quiet Computing Object</div>
+    <div>Case study — 2026</div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     02 — TITLE CARD
+     ========================================================= -->
+<section class="title-card">
+  <div class="title-card__top">
+    <div></div>
+    <div>Warsaw — Kanagawa — 2026</div>
+  </div>
+
+  <div class="title-card__center">
+    <span class="title-card__eyebrow">— A brand, an object, a system</span>
+    <h1 class="title-card__title">Aoi <em>—</em><br>Quiet Computing.</h1>
+    <p class="title-card__subtitle">
+      Brand strategy, identity, industrial design direction and visual system
+      for an ambient memory companion.
+    </p>
+  </div>
+
+  <dl class="title-card__bottom">
+    <div>
+      <dt>Scope</dt>
+      <dd>Strategy · Identity · CGI</dd>
+    </div>
+    <div>
+      <dt>Sector</dt>
+      <dd>Calm Technology</dd>
+    </div>
+    <div>
+      <dt>Status</dt>
+      <dd>Concept — 2026</dd>
+    </div>
+    <div>
+      <dt>Studio</dt>
+      <dd>Davidova, Warsaw</dd>
+    </div>
+  </dl>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- =========================================================
+     03 — MANIFESTO PULL QUOTE + INTRO
+     ========================================================= -->
+<section class="manifesto-block">
+  <h2 class="manifesto-block__quote">
+    Made to be<br><em>forgotten.</em>
+  </h2>
+  <p class="manifesto-block__intro">
+    Aoi listens. It does not interrupt. It does not respond.
+    It remembers, in the quiet, so the day can stay open.
+    A small object on a desk that disappears into the room —
+    until you ask it to return.
+  </p>
+</section>
+
+
+<!-- =========================================================
+     04 — CONTEXT
+     ========================================================= -->
+<section class="context">
+  <div class="context__label">
+    <span class="section-label">01 — Context</span>
+  </div>
+  <div class="context__body">
+    <p>
+      Calm technology is a category in formation. Devices that capture thought,
+      that remember on our behalf, that listen ambiently — they exist, but they
+      arrive dressed in the language of the gadget: glossy, blinking, demanding.
+    </p>
+    <p>
+      Aoi proposes a different posture. A small ceramic-finished object that
+      sits on a writer's desk like a teacup. Bone-coloured. Quiet. Heavier than
+      it looks. Its only signal is a slow breath of light beneath sapphire glass,
+      barely visible in daylight.
+    </p>
+    <p>
+      The brand is built on the same principle as the object: presence without
+      noise. A wordmark, a circle, a horizon line. Three SKUs. One promise —
+      <em>memory, without the screen.</em>
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- =========================================================
+     05–06 — HERO PHOTOGRAPHY DUO
+     ========================================================= -->
+<section class="hero-duo">
+  <div class="hero-duo__cell">
+    <div class="slot slot--4-5" data-slot="hero-01-ink-front">
+      <img src="assets/img/projects/img_Aoi/01_hero_ink.jpg" alt="Aoi One — Ink, front view" onerror="this.style.display='none'" />
+    </div>
+    <span class="caption caption--overlay">R / 02 — Aoi One / Ink · Front</span>
+  </div>
+  <div class="hero-duo__cell">
+    <div class="slot slot--4-5" data-slot="hero-02-stone-3q">
+      <img src="assets/img/projects/img_Aoi/02_hero_stone.jpg" alt="Aoi One — Stone, three-quarter view" onerror="this.style.display='none'" />
+    </div>
+    <span class="caption caption--overlay">R / 03 — Aoi One / Stone · 3/4 angle</span>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     07 — MACRO 2×2 GRID
+     ========================================================= -->
+<section class="macro-grid">
+  <header class="macro-grid__header">
+    <h2 class="macro-grid__title">The object, observed at close range.</h2>
+    <p class="macro-grid__intro">
+      Four details. The four moments where the object reveals
+      it is, in fact, a machine.
+    </p>
+  </header>
+
+  <div class="macro-grid__inner">
+    <div class="macro-grid__item">
+      <div class="slot slot--4-5" data-slot="macro-cork-base">
+        <img src="assets/img/projects/img_Aoi/03_macro_cork.jpg" alt="Cork base detail" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption">R / 04 — Cork base, fine-grain natural</span>
+    </div>
+    <div class="macro-grid__item">
+      <div class="slot slot--4-5" data-slot="macro-sapphire-top">
+        <img src="assets/img/projects/img_Aoi/04_macro_sapphire.jpg" alt="Sapphire glass top" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption">R / 05 — Sapphire glass, 38mm</span>
+    </div>
+    <div class="macro-grid__item">
+      <div class="slot slot--4-5" data-slot="macro-aluminium-edge">
+        <img src="assets/img/projects/img_Aoi/05_macro_edge.jpg" alt="Anodized aluminium edge" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption">R / 06 — Anodized aluminium, satin</span>
+    </div>
+    <div class="macro-grid__item">
+      <div class="slot slot--4-5" data-slot="macro-horizon-line">
+        <img src="assets/img/projects/img_Aoi/06_macro_engraving.jpg" alt="Engraved horizon line" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption">R / 07 — Engraved horizon line, 0.2mm</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     08 — MATERIAL STUDY
+     ========================================================= -->
+<section class="materials">
+  <header class="materials__header">
+    <span class="section-label">02 — Materials</span>
+    <h2 class="materials__title">Stoneware, aluminium, cork.</h2>
+  </header>
+
+  <div class="materials__grid">
+    <article class="material">
+      <div class="slot slot--3-4" data-slot="material-stoneware">
+        <img src="assets/img/projects/img_Aoi/07_mat_stoneware.jpg" alt="Stoneware finish texture" onerror="this.style.display='none'" />
+      </div>
+      <span class="material__num">R / 08</span>
+      <h3 class="material__name">Stoneware finish</h3>
+      <p class="material__desc">
+        Powder-coated aluminium with a fine ceramic grain.
+        The hand reads it as pottery; the structure remains metal.
+      </p>
+    </article>
+
+    <article class="material">
+      <div class="slot slot--3-4" data-slot="material-brushed-alu">
+        <img src="assets/img/projects/img_Aoi/08_mat_aluminium.jpg" alt="Brushed aluminium texture" onerror="this.style.display='none'" />
+      </div>
+      <span class="material__num">R / 09</span>
+      <h3 class="material__name">Brushed aluminium</h3>
+      <p class="material__desc">
+        Single-piece CNC body, oxidised in controlled atmosphere.
+        No seams. No assembly tells.
+      </p>
+    </article>
+
+    <article class="material">
+      <div class="slot slot--3-4" data-slot="material-cork">
+        <img src="assets/img/projects/img_Aoi/09_mat_cork.jpg" alt="Cork grain detail" onerror="this.style.display='none'" />
+      </div>
+      <span class="material__num">R / 10</span>
+      <h3 class="material__name">Cork base</h3>
+      <p class="material__desc">
+        A quiet acoustic decoupler. The object never rings on a desk.
+        It rests.
+      </p>
+    </article>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     09 — CMF SYSTEM
+     ========================================================= -->
+<section class="cmf-system">
+  <header class="cmf-system__header">
+    <h2 class="cmf-system__title">A system of three.</h2>
+    <p class="cmf-system__lede">
+      Stone, Ink, Ash. Three finishes built around a single form —
+      the choice is between the rooms the object is meant for.
+    </p>
+  </header>
+
+  <div class="slot" data-slot="cmf-system-flatlay">
+    <img src="assets/img/projects/img_Aoi/10_cmf_system.jpg" alt="Aoi One — three SKUs, top-down" onerror="this.style.display='none'" />
+    <span class="caption caption--overlay">R / 11 — Stone / Ink / Ash · Top-down</span>
+  </div>
+
+  <div class="cmf-system__labels">
+    <div class="cmf-label">
+      <span class="cmf-label__sku">SKU 01</span>
+      <span class="cmf-label__name">Aoi One / Stone</span>
+      <span class="cmf-label__finish">Bone — stoneware finish, cork base</span>
+    </div>
+    <div class="cmf-label">
+      <span class="cmf-label__sku">SKU 02</span>
+      <span class="cmf-label__name">Aoi One / Ink</span>
+      <span class="cmf-label__finish">Ink — soft-touch ceramic coating, cork base</span>
+    </div>
+    <div class="cmf-label">
+      <span class="cmf-label__sku">SKU 03</span>
+      <span class="cmf-label__name">Aoi One / Ash</span>
+      <span class="cmf-label__finish">Ash — brushed aluminium, controlled patina</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     10 — IDENTITY SYSTEM
+     ========================================================= -->
+<section class="identity">
+  <header class="identity__header">
+    <h2 class="identity__title">The mark, the wordmark, the horizon.</h2>
+    <div class="identity__copy">
+      <p>
+        Aoi means a colour that exists between blue and green — the colour of dawn
+        before the sun, of unripe fruit, of distance. A word for things not yet defined.
+      </p>
+      <p style="margin-top: 1rem;">
+        The mark is a circle bisected by a thin horizontal line. A lens. A horizon.
+        A surface broken by the simplest possible event.
+      </p>
+    </div>
+  </header>
+
+  <div class="identity__grid">
+    <div class="identity__cell">
+      <div class="slot identity__primary" data-slot="identity-mark">
+        <img src="assets/img/projects/img_Aoi/11_identity_mark.jpg" alt="Aoi mark on uncoated paper" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption caption--overlay caption--dark">R / 12 — Mark application · embossed paper</span>
+    </div>
+    <div class="identity__cell">
+      <div class="slot identity__secondary" data-slot="identity-wordmark">
+        <img src="assets/img/projects/img_Aoi/12_identity_wordmark.jpg" alt="Aoi wordmark construction" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption caption--overlay caption--dark">R / 13 — Wordmark construction</span>
+    </div>
+  </div>
+
+  <dl class="identity__spec">
+    <div>
+      <dt>Mark</dt>
+      <dd>Circle + horizon line</dd>
+    </div>
+    <div>
+      <dt>Wordmark</dt>
+      <dd>Aoi Sans (custom, in development)</dd>
+    </div>
+    <div>
+      <dt>Construction</dt>
+      <dd>1:1 ratio · 12u grid</dd>
+    </div>
+    <div>
+      <dt>Application</dt>
+      <dd>Emboss, debossing, engraving only</dd>
+    </div>
+  </dl>
+</section>
+
+
+<!-- =========================================================
+     10B — BRAND ANALYSIS: TYPOGRAPHY & IDENTITY SYSTEM
+     Japanese Brutalism × Precision Tech × Tokyo Premium
+     ========================================================= -->
+
+<!-- Full-bleed kanji hero -->
+<section class="brand-hero">
+  <div class="brand-hero__top">
+    <span class="brand-hero__section-label">05 — Identity System</span>
+    <div class="brand-hero__coords">
+      35.6762° N, 139.6503° E<br>
+      Tokyo — Shinjuku<br>
+      6:04 AM
+    </div>
+  </div>
+
+  <div class="brand-hero__center">
+    <div class="brand-hero__mark">
+      <span class="brand-hero__kanji">青</span>
+      <div class="brand-hero__rule"></div>
+      <span class="brand-hero__latin">Aoi</span>
+    </div>
+  </div>
+
+  <div class="brand-hero__bottom">
+    <div class="brand-hero__stat">
+      <span class="brand-hero__stat-label">Kanji</span>
+      <span class="brand-hero__stat-val">青 (Ao / Sei)</span>
+    </div>
+    <div class="brand-hero__stat">
+      <span class="brand-hero__stat-label">Meaning</span>
+      <span class="brand-hero__stat-val">Blue-green, unformed</span>
+    </div>
+    <div class="brand-hero__stat">
+      <span class="brand-hero__stat-label">Strokes</span>
+      <span class="brand-hero__stat-val">8 — radicals 月+生</span>
+    </div>
+    <div class="brand-hero__stat">
+      <span class="brand-hero__stat-label">System</span>
+      <span class="brand-hero__stat-val">Seal logic · Direction 01</span>
+    </div>
+  </div>
+</section>
+
+<!-- Construction breakdown cells -->
+<section class="brand-construction">
+  <div class="brand-construction__inner">
+
+    <div class="brand-construction__cell">
+      <span class="brand-construction__cell-num">01 — The kanji</span>
+      <h3 class="brand-construction__cell-title">青 is not decoration.<br>It is the primary mark.</h3>
+      <p class="brand-construction__cell-body">
+        In traditional Japanese design, the <strong>hanko</strong> (判子) — the personal seal —
+        carries more legal and symbolic weight than a signature. 青 functions in the same
+        register: it is not a translation of "Aoi". It is the object's identity in its
+        original form. The Latin wordmark is a footnote. The kanji is the statement.
+      </p>
+      <div class="stroke-anatomy">
+        <span class="brand-construction__cell-kanji-display">
+          <span style="font-family:var(--font-jp-serif);font-weight:200;font-size:clamp(3.5rem,8vw,5.5rem);color:var(--bone);line-height:1;">青</span>
+        </span>
+        <div class="stroke-anatomy__annotations">
+          <div class="stroke-annotation">
+            <span class="stroke-annotation__label">Radical upper</span>
+            <span class="stroke-annotation__val">主 — master, primary</span>
+          </div>
+          <div class="stroke-annotation">
+            <span class="stroke-annotation__label">Radical lower</span>
+            <span class="stroke-annotation__val">月 — moon, cycle</span>
+          </div>
+          <div class="stroke-annotation">
+            <span class="stroke-annotation__label">Reading</span>
+            <span class="stroke-annotation__val">Ao (native) · Sei (Sino)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-construction__cell">
+      <span class="brand-construction__cell-num">02 — The lockup logic</span>
+      <h3 class="brand-construction__cell-title">Kanji primary.<br>Latin as dimension.</h3>
+      <p class="brand-construction__cell-body">
+        The horizontal rule separating 青 from "Aoi" is not a design element —
+        it is a <strong>structural pause</strong>. In typographic terms it functions as
+        a keireki (罫) — the ruled line in traditional Japanese printing that
+        separates registers of text. The Latin below does not translate.
+        It anchors the mark in a second language, as equals in different systems.
+      </p>
+      <!-- Lockup scale grid -->
+      <div class="lockup-grid" style="margin-top:1rem;">
+        <div class="lockup-cell">
+          <span class="lockup-cell__context">Primary · Large</span>
+          <div class="wm-seal">
+            <span class="wm-seal__k wm-seal__k--xl">青</span>
+            <div class="wm-seal__hr" style="width:3.5rem;"></div>
+            <span class="wm-seal__l wm-seal__l--xl">Aoi</span>
+          </div>
+        </div>
+        <div class="lockup-cell">
+          <span class="lockup-cell__context">Nav · Medium</span>
+          <div class="wm-seal">
+            <span class="wm-seal__k wm-seal__k--lg">青</span>
+            <div class="wm-seal__hr" style="width:2.5rem;"></div>
+            <span class="wm-seal__l wm-seal__l--lg">Aoi</span>
+          </div>
+        </div>
+        <div class="lockup-cell lockup-cell--inv">
+          <span class="lockup-cell__context" style="color:rgba(10,10,10,0.3);">Inverted · Emboss</span>
+          <div class="wm-seal wm-seal--inv">
+            <span class="wm-seal__k wm-seal__k--lg" style="color:var(--ink);">青</span>
+            <div class="wm-seal__hr" style="width:2.5rem;background:rgba(10,10,10,0.18);"></div>
+            <span class="wm-seal__l wm-seal__l--lg" style="color:rgba(10,10,10,0.4);">Aoi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-construction__cell brand-construction__cell--full">
+      <span class="brand-construction__cell-num">03 — Optical alignment: kanji × Latin</span>
+      <h3 class="brand-construction__cell-title">Two scripts. One optical axis.</h3>
+      <p class="brand-construction__cell-body" style="max-width:60ch;">
+        Noto Serif JP at weight 200 was chosen specifically because its <strong>cap-height
+        to em-square ratio</strong> aligns closely with Fraunces' ascender line at matching
+        font-size. The optical baseline — not the mathematical baseline — is shared.
+        This is not accidental. Mixing scripts without this calibration produces
+        the visual discomfort that makes most Japanese-Latin lockups feel naive.
+        Here, 青 and "Aoi" share the same visual gravity line, not the same CSS baseline.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Typography system -->
+<section class="type-system">
+  <div class="type-system__inner">
+
+    <header class="type-system__header">
+      <h2 class="type-system__title">The type system.</h2>
+      <p class="type-system__intro">
+        Three typefaces. Each with a single function.
+        None decorative. The system is an architecture —
+        hierarchy determined by register, not weight.
+      </p>
+    </header>
+
+    <!-- Optical pair study -->
+    <div class="optical-study">
+      <span class="optical-study__label">Optical alignment study — 青 × Aoi</span>
+      <div class="optical-study__pair">
+        <span class="optical-study__k">青</span>
+        <div class="optical-study__sep"></div>
+        <span class="optical-study__latin">Aoi</span>
+      </div>
+      <div class="optical-study__annotations">
+        <div class="oa">
+          <span class="oa__l">JP typeface</span>
+          <span class="oa__v">Noto Serif JP<br>Weight 200</span>
+        </div>
+        <div class="oa">
+          <span class="oa__l">Latin typeface</span>
+          <span class="oa__v">Fraunces<br>Weight 200, italic</span>
+        </div>
+        <div class="oa">
+          <span class="oa__l">Alignment</span>
+          <span class="oa__v">Optical baseline,<br>not CSS baseline</span>
+        </div>
+        <div class="oa">
+          <span class="oa__l">Size ratio</span>
+          <span class="oa__v">1:1 em-square<br>−8% optical correction</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Type scale -->
+    <div class="type-scale">
+      <div class="type-scale__row">
+        <div class="type-scale__meta">Display<br>Hero kanji</div>
+        <div class="type-scale__sample">
+          <span style="font-family:var(--font-jp-serif);font-weight:200;font-size:clamp(4rem,10vw,7rem);color:var(--bone);line-height:0.9;letter-spacing:-0.02em;">青</span>
+        </div>
+        <div class="type-scale__spec">Noto Serif JP<br>200 / clamp 7rem<br>lh 0.9</div>
+      </div>
+      <div class="type-scale__row">
+        <div class="type-scale__meta">Display<br>Hero Latin</div>
+        <div class="type-scale__sample">
+          <span style="font-family:var(--font-display);font-weight:300;font-size:clamp(3rem,8vw,5.5rem);color:var(--bone);line-height:0.9;letter-spacing:-0.04em;font-style:italic;">Quiet</span>
+        </div>
+        <div class="type-scale__spec">Fraunces<br>300 italic / clamp 5.5rem<br>ls −0.04em</div>
+      </div>
+      <div class="type-scale__row">
+        <div class="type-scale__meta">Heading<br>Section</div>
+        <div class="type-scale__sample">
+          <span style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.75rem,4vw,3rem);color:var(--bone);line-height:1.05;letter-spacing:-0.02em;">The object, observed.</span>
+        </div>
+        <div class="type-scale__spec">Fraunces<br>300 / clamp 3rem<br>ls −0.02em</div>
+      </div>
+      <div class="type-scale__row">
+        <div class="type-scale__meta">Body<br>Editorial</div>
+        <div class="type-scale__sample">
+          <span style="font-family:var(--font-body);font-weight:300;font-size:1rem;color:rgba(240,237,230,0.6);line-height:1.7;">Technology that does not ask for attention.</span>
+        </div>
+        <div class="type-scale__spec">Inter<br>300 / 1rem<br>lh 1.7</div>
+      </div>
+      <div class="type-scale__row">
+        <div class="type-scale__meta">Label<br>Metadata</div>
+        <div class="type-scale__sample">
+          <span style="font-family:var(--font-mono);font-size:11px;color:rgba(240,237,230,0.3);text-transform:uppercase;letter-spacing:0.16em;">SKU 01 — Aoi One / Stone</span>
+        </div>
+        <div class="type-scale__spec">JetBrains Mono<br>300 / 11px<br>ls 0.16em</div>
+      </div>
+      <div class="type-scale__row" style="border-bottom:none;">
+        <div class="type-scale__meta">Micro<br>System</div>
+        <div class="type-scale__sample">
+          <span style="font-family:var(--font-mono);font-size:9px;color:rgba(240,237,230,0.22);text-transform:uppercase;letter-spacing:0.2em;">35.6762° N, 139.6503° E · 2026</span>
+        </div>
+        <div class="type-scale__spec">JetBrains Mono<br>300 / 9px<br>ls 0.2em</div>
+      </div>
+    </div>
+
+    <!-- Color system -->
+    <div>
+      <div style="margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(240,237,230,0.1);">
+        <span style="font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:rgba(240,237,230,0.3);">— Color system · Tokyo concrete palette</span>
+      </div>
+      <div class="color-system">
+        <div class="color-swatch" style="background:#0A0A0A;color:#F0EDE6;">
+          <span class="color-swatch__name">Ink</span>
+          <div>
+            <span class="color-swatch__hex">#0A0A0A</span>
+            <p class="color-swatch__role">Primary surface. Hardware body / Ink SKU</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#1C1C20;color:#F0EDE6;">
+          <span class="color-swatch__name">Cold</span>
+          <div>
+            <span class="color-swatch__hex">#1C1C20</span>
+            <p class="color-swatch__role">Campaign, identity sections, digital dark</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#141414;color:#F0EDE6;">
+          <span class="color-swatch__name">Graphite</span>
+          <div>
+            <span class="color-swatch__hex">#141414</span>
+            <p class="color-swatch__role">Image placeholders, secondary dark</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#C8C4BC;color:#0A0A0A;">
+          <span class="color-swatch__name">Concrete</span>
+          <div>
+            <span class="color-swatch__hex">#C8C4BC</span>
+            <p class="color-swatch__role">Mid-tone. Brutalist texture reference</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#E4E0D8;color:#0A0A0A;">
+          <span class="color-swatch__name">Paper</span>
+          <div>
+            <span class="color-swatch__hex">#E4E0D8</span>
+            <p class="color-swatch__role">Secondary light surface, material study</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#F0EDE6;color:#0A0A0A;">
+          <span class="color-swatch__name">Bone</span>
+          <div>
+            <span class="color-swatch__hex">#F0EDE6</span>
+            <p class="color-swatch__role">Primary light surface. Stone SKU reference</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <div class="typography__display">
+    <div class="typography__display-text">
+      Ao<em>i</em>
+    </div>
+    <p class="typography__caption">Aoi Sans — semi-serif, custom, in development</p>
+  </div>
+
+  <div class="typography__spec">
+    <div class="typography__spec-wrap">
+      <div class="slot" data-slot="typography-specimen">
+        <img src="assets/img/projects/img_Aoi/13_type_specimen.jpg" alt="Aoi Sans type specimen" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption caption--overlay">R / 14 — Aoi Sans · type specimen</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     12 — IN THE ROOM
+     ========================================================= -->
+<section class="in-the-room">
+  <header class="in-the-room__header">
+    <h2 class="in-the-room__title">In the room.</h2>
+    <p class="in-the-room__lede">
+      The object was photographed where it belongs — not in studio,
+      but on the surfaces it will share its life with.
+    </p>
+  </header>
+
+  <div class="in-the-room__hero">
+    <div class="in-the-room__cell">
+      <div class="slot" data-slot="lifestyle-desk">
+        <img src="assets/img/projects/img_Aoi/14_lifestyle_desk.jpg" alt="Aoi on writer's desk" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption caption--overlay">R / 15 — Tokyo architect's desk</span>
+    </div>
+  </div>
+
+  <div class="in-the-room__duo">
+    <div class="in-the-room__cell">
+      <div class="slot" data-slot="lifestyle-kitchen">
+        <img src="assets/img/projects/img_Aoi/15_lifestyle_shelf.jpg" alt="Aoi on kitchen shelf" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption caption--overlay">R / 16 — Midnight kitchen, Shibuya</span>
+    </div>
+    <div class="in-the-room__cell">
+      <div class="slot" data-slot="lifestyle-studio">
+        <img src="assets/img/projects/img_Aoi/16_lifestyle_studio.jpg" alt="Aoi in ceramicist's studio" onerror="this.style.display='none'" />
+      </div>
+      <span class="caption caption--overlay">R / 17 — Ceramicist studio, Yanaka</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     13 — PACKAGING SEQUENCE
+     ========================================================= -->
+<section class="packaging">
+  <header class="packaging__header">
+    <span class="section-label">03 — Packaging</span>
+    <h2 class="packaging__title">An opening, as slow as the object.</h2>
+    <p class="packaging__copy">
+      Uncoated bone paper. Moulded paper-pulp tray. A folded canvas wrapper.
+      One dried leaf, placed at the centre. No foam, no plastic, no instructions
+      on the lid. The unboxing is a ritual, not a reveal.
+    </p>
+  </header>
+
+  <div class="packaging__sequence">
+    <div class="packaging__step">
+      <div class="slot" data-slot="package-01-closed">
+        <img src="assets/img/projects/img_Aoi/17_pkg_01.jpg" alt="Packaging step 01" onerror="this.style.display='none'" />
+      </div>
+      <span class="packaging__step-num"><span>01</span><span>Closed</span></span>
+    </div>
+    <div class="packaging__step">
+      <div class="slot" data-slot="package-02-emboss">
+        <img src="assets/img/projects/img_Aoi/18_pkg_02.jpg" alt="Packaging step 02" onerror="this.style.display='none'" />
+      </div>
+      <span class="packaging__step-num"><span>02</span><span>Mark, embossed</span></span>
+    </div>
+    <div class="packaging__step">
+      <div class="slot" data-slot="package-03-lid">
+        <img src="assets/img/projects/img_Aoi/19_pkg_03.jpg" alt="Packaging step 03" onerror="this.style.display='none'" />
+      </div>
+      <span class="packaging__step-num"><span>03</span><span>Lifting the lid</span></span>
+    </div>
+    <div class="packaging__step">
+      <div class="slot" data-slot="package-04-canvas">
+        <img src="assets/img/projects/img_Aoi/20_pkg_04.jpg" alt="Packaging step 04" onerror="this.style.display='none'" />
+      </div>
+      <span class="packaging__step-num"><span>04</span><span>Canvas, folded</span></span>
+    </div>
+    <div class="packaging__step">
+      <div class="slot" data-slot="package-05-leaf">
+        <img src="assets/img/projects/img_Aoi/21_pkg_05.jpg" alt="Packaging step 05" onerror="this.style.display='none'" />
+      </div>
+      <span class="packaging__step-num"><span>05</span><span>The leaf</span></span>
+    </div>
+    <div class="packaging__step">
+      <div class="slot" data-slot="package-06-object">
+        <img src="assets/img/projects/img_Aoi/22_pkg_06.jpg" alt="Packaging step 06" onerror="this.style.display='none'" />
+      </div>
+      <span class="packaging__step-num"><span>06</span><span>The object</span></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     14 — COMPANION APP
+     ========================================================= -->
+<section class="app">
+  <header class="app__header">
+    <h2 class="app__title">The app, in three views.</h2>
+    <p class="app__copy">
+      No chat. No notifications by default. No streaks, no charts, no metrics.
+      Three states — Capture, Day, Return. The interface uses Aoi Sans throughout,
+      with structured retrieval rather than conversation.
+    </p>
+  </header>
+
+  <div class="app__grid">
+    <article class="app__screen">
+      <div class="slot" data-slot="app-capture">
+        <img src="assets/img/projects/img_Aoi/23_app_capture.jpg" alt="Capture screen" onerror="this.style.display='none'" />
+      </div>
+      <h3 class="app__screen-name">Capture</h3>
+      <p class="app__screen-desc">
+        Passive view of what Aoi is hearing right now, structured into fragments.
+      </p>
+    </article>
+
+    <article class="app__screen">
+      <div class="slot" data-slot="app-day">
+        <img src="assets/img/projects/img_Aoi/24_app_day.jpg" alt="Day screen" onerror="this.style.display='none'" />
+      </div>
+      <h3 class="app__screen-name">Day</h3>
+      <p class="app__screen-desc">
+        A timeline of the day, condensed into bones — the shape of thought,
+        not the transcript.
+      </p>
+    </article>
+
+    <article class="app__screen">
+      <div class="slot" data-slot="app-return">
+        <img src="assets/img/projects/img_Aoi/25_app_return.jpg" alt="Return screen" onerror="this.style.display='none'" />
+      </div>
+      <h3 class="app__screen-name">Return</h3>
+      <p class="app__screen-desc">
+        The only place where Aoi speaks back — when asked, never before.
+      </p>
+    </article>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     15 — CAMPAIGN FRAMES
+     ========================================================= -->
+<section class="campaign">
+  <header class="campaign__header">
+    <p class="campaign__label">04 — Campaign</p>
+    <h2 class="campaign__title">
+      Three frames<br>for one<br><em>quiet promise.</em>
+    </h2>
+  </header>
+
+  <div class="campaign__frame">
+    <div class="slot" data-slot="campaign-01-horizon">
+      <img src="assets/img/projects/img_Aoi/26_campaign_horizon.jpg" alt="Campaign frame — horizon" onerror="this.style.display='none'" />
+    </div>
+    <p class="campaign__copy">Made to be forgotten.</p>
+    <span class="campaign__credit">Aoi — 01 / 03</span>
+  </div>
+
+  <div class="campaign__frame">
+    <div class="slot" data-slot="campaign-02-desk">
+      <img src="assets/img/projects/img_Aoi/27_campaign_desk.jpg" alt="Campaign frame — desk" onerror="this.style.display='none'" />
+    </div>
+    <p class="campaign__copy">Listens. Remembers. Returns.</p>
+    <span class="campaign__credit">Aoi — 02 / 03</span>
+  </div>
+
+  <div class="campaign__frame">
+    <div class="slot" data-slot="campaign-03-still">
+      <img src="assets/img/projects/img_Aoi/28_campaign_still.jpg" alt="Campaign frame — still life" onerror="this.style.display='none'" />
+    </div>
+    <p class="campaign__copy">Memory, without the screen.</p>
+    <span class="campaign__credit">Aoi — 03 / 03</span>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     16 — SPATIAL CONCEPT
+     ========================================================= -->
+<section class="spatial">
+  <header class="spatial__header">
+    <h2 class="spatial__title">A room for the object.</h2>
+    <p class="spatial__lede">
+      A speculative retail interior — pine shelving, plaster walls,
+      a single skylight. The objects arranged like artefacts on a museum tray.
+      No signage. No price. No instruction.
+    </p>
+  </header>
+
+  <div class="spatial__hero">
+    <div class="slot" data-slot="spatial-retail">
+      <img src="assets/img/projects/img_Aoi/29_spatial_retail.jpg" alt="Aoi retail spatial concept" onerror="this.style.display='none'" />
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     17 — PROCESS STRIP
+     ========================================================= -->
+<section class="process">
+  <div class="process__inner">
+    <header class="process__header">
+      <span class="process__title">— Process · 01 to 08</span>
+      <span class="process__title">2025 — 2026</span>
+    </header>
+
+    <div class="process__strip">
+      <div class="slot" data-slot="process-01" data-num="01"></div>
+      <div class="slot" data-slot="process-02" data-num="02"></div>
+      <div class="slot" data-slot="process-03" data-num="03"></div>
+      <div class="slot" data-slot="process-04" data-num="04"></div>
+      <div class="slot" data-slot="process-05" data-num="05"></div>
+      <div class="slot" data-slot="process-06" data-num="06"></div>
+      <div class="slot" data-slot="process-07" data-num="07"></div>
+      <div class="slot" data-slot="process-08" data-num="08"></div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="credits">
+  <span class="section-label" style="margin-bottom: 2rem; display: flex;">— Credits</span>
+  <div class="credits__grid">
+    <div class="credits__group">
+      <span class="credits__role">Strategy & Identity</span>
+      <span class="credits__name">Alexandra Davidova</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">Industrial Direction</span>
+      <span class="credits__name">Alexandra Davidova</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">CGI & Art Direction</span>
+      <span class="credits__name">Davidova Studio</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">Prototype shell</span>
+      <span class="credits__name">In collaboration — TBA</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">Typography</span>
+      <span class="credits__name">Aoi Sans (in development)</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">Sonic identity</span>
+      <span class="credits__name">Davidova Studio</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">Year</span>
+      <span class="credits__name">2026 — Warsaw</span>
+    </div>
+    <div class="credits__group">
+      <span class="credits__role">Status</span>
+      <span class="credits__name">Concept project</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================
+     19 — NEXT PROJECT
+     ========================================================= -->
+<section class="next-project">
+  <span class="next-project__eyebrow">— Next</span>
+  <a href="/work/ego.html" class="next-project__link">
+    <span class="next-project__title">VOBRO <em>—</em> EGO</span>
+    <span class="next-project__meta">CGI · Packaging · Campaign · 2026</span>
+  </a>
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer class="footer">
+  <div>© 2026 Alexandra Davidova — Warsaw</div>
+  <div><a href="mailto:studio@davidova.studio">studio@davidova.studio</a></div>
+</footer>
+
+
+<script>
+/* ── Scroll progress ── */
+(function() {
+  const bar = document.getElementById('progress');
+  if (!bar) return;
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = scrolled + '%';
+  }, { passive: true });
+})();
+
+/* ── Fade-in on scroll ── */
+(function() {
+  const targets = document.querySelectorAll(
+    '.brand-hero, .brand-construction, .type-system'
+  );
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  targets.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.9s cubic-bezier(0.19,1,0.22,1), transform 0.9s cubic-bezier(0.19,1,0.22,1)';
+    io.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Abeille Royale — Royal Honey — Davidova.Studio</title>
+<meta name="description" content="Some scents are louder when they are quiet." />
+
+<!-- ============================================================
+     TYPOGRAPHY — same stack as davidova.studio main site
+     Replace with licensed Pangram Pangram fonts in production.
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   RESET + BRAND TOKENS — inherited from davidova.studio
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0A0A0A;
+  --graphite: #1F1F1F;
+  --bone: #F5F2EC;
+  --paper: #E8E4DB;
+  --mid: #6B6B6B;
+  --accent: #8B2E1F;
+
+  --font-display: 'Fraunces', 'PP Editorial New', Georgia, serif;
+  --font-body: 'Inter', 'PP Neue Montreal', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'PP Fraktion Mono', monospace;
+
+  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --section: clamp(4rem, 10vw, 8rem);
+
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Subtle film grain — same as main site */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
+
+/* ============================================================
+   NAV — identical to main site, blends across pages
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+  color: var(--bone);
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav__logo-line {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.4s var(--ease-out-expo);
+}
+
+.nav__logo:hover .nav__logo-line { width: 2.5rem; }
+
+.nav__menu {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.nav__link { position: relative; padding: 0.25rem 0; }
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.nav__link:hover::after { transform: scaleX(1); }
+
+/* ============================================================
+   CASE STUDY MODULES
+   Each .cs-module is one section in the case study
+   ============================================================ */
+.cs-module {
+  position: relative;
+  padding: var(--section) var(--gutter);
+}
+
+/* Background variants — match the brand surfaces */
+.cs-module--bone { background: var(--bone); color: var(--ink); }
+.cs-module--paper { background: var(--paper); color: var(--ink); }
+.cs-module--ink { background: var(--ink); color: var(--bone); }
+.cs-module--graphite { background: var(--graphite); color: var(--bone); }
+.cs-module--bleed { padding: 0; background: var(--ink); }
+
+/* Section header used at the top of most modules */
+.cs-module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.cs-module--ink .cs-module-header,
+.cs-module--graphite .cs-module-header { color: var(--mid); }
+.cs-module--ink .cs-module-header__title,
+.cs-module--graphite .cs-module-header__title { color: var(--bone); }
+
+.cs-module-header__title { color: var(--ink); }
+.cs-module-header__meta { color: var(--mid); }
+
+/* Slot indicator — visible while you're building, hide on production */
+.cs-slot {
+  position: relative;
+  width: 100%;
+  background: rgba(107, 107, 107, 0.08);
+  border: 1px dashed var(--mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  text-align: center;
+  padding: 2rem;
+}
+.cs-slot::before {
+  content: attr(data-slot-id);
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 9px;
+  opacity: 0.7;
+}
+.cs-slot--render { aspect-ratio: 16/9; }
+.cs-slot--portrait { aspect-ratio: 4/5; }
+.cs-slot--square { aspect-ratio: 1/1; }
+.cs-slot--strip { aspect-ratio: 21/9; }
+
+.cs-caption {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  text-align: center;
+}
+
+/* Grids */
+.cs-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.cs-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.cs-grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+@media (max-width: 700px) {
+  .cs-grid-3, .cs-grid-4, .cs-grid-3x3 { grid-template-columns: repeat(2, 1fr); }
+  .cs-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   MODULE 01 — HERO COVER (full bleed)
+   ============================================================ */
+.cs-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  background: var(--ink);
+  overflow: hidden;
+}
+.cs-hero__media,
+.cs-hero .cs-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #1a1a1a;
+}
+.cs-hero__meta {
+  position: absolute;
+  bottom: var(--gutter);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  z-index: 2;
+}
+
+/* ============================================================
+   MODULE 02 — PROJECT INTRO (two-column)
+   ============================================================ */
+.cs-intro {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 800px) {
+  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.cs-intro__metadata {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  line-height: 1.8;
+}
+.cs-intro__metadata dt {
+  display: inline-block;
+  width: 7rem;
+  color: var(--mid);
+}
+.cs-intro__metadata dd {
+  display: inline-block;
+  color: var(--ink);
+}
+.cs-intro__metadata > div { display: block; }
+
+.cs-intro__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+
+.cs-intro__headline {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  max-width: 25ch;
+}
+.cs-intro__headline em { font-style: italic; color: var(--mid); }
+
+.cs-intro__body {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 60ch;
+  font-weight: 300;
+}
+
+/* ============================================================
+   MODULE 03 — CONCEPT (centered, inverted)
+   ============================================================ */
+.cs-concept {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.cs-concept__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+.cs-concept__headline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+.cs-concept__body {
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 50ch;
+  margin: 0 auto;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   MODULE 30 — CLOSER
+   ============================================================ */
+.cs-closer__statement {
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 5rem;
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cs-closer__credits {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 4rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  max-width: 600px;
+  margin: 0 auto 5rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(245, 242, 236, 0.15);
+  border-bottom: 1px solid rgba(245, 242, 236, 0.15);
+}
+.cs-closer__credits dt { color: var(--mid); }
+.cs-closer__credits dd { color: var(--bone); }
+.cs-closer__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.cs-closer__nav-link {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   MODULE STYLE — sketches, references, breakdowns
+   Reusable layout primitives
+   ============================================================ */
+.cs-strip-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cs-strip-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+@media (max-width: 700px) {
+  .cs-strip-3, .cs-strip-4 { grid-template-columns: 1fr; }
+}
+
+.cs-shader-row {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.cs-shader-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--bone);
+  margin-bottom: 8px;
+}
+
+/* Tech specs table */
+.cs-specs {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.cs-specs dt {
+  display: inline-block;
+  width: 12rem;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+}
+.cs-specs dd {
+  display: inline-block;
+  color: var(--bone);
+}
+.cs-specs > div { display: block; }
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     NAV — same as main site
+     ============================================================ -->
+<nav class="nav">
+  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <div class="nav__menu">
+    <a href="/work" class="nav__link">Work</a>
+    <a href="/about" class="nav__link">About</a>
+    <a href="/contact" class="nav__link">Contact</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MODULE 01 · HERO COVER
+     SLOT: HERO_01_landscape.jpg (full bleed background)
+     ============================================================ -->
+<section class="cs-hero">
+ <img src="D:\davidova-site\assets\img_Guerlian/Hero.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  </div>
+
+  <div class="cs-hero__meta">
+    <div>Guerlain — Abeille Royale — Royal Honey</div>
+    <div>2025 · Warsaw</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 02 · PROJECT INTRO
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-intro">
+    <dl class="cs-intro__metadata">
+      <div><dt>Client</dt><dd>Guerlain — personal reinterpretation</dd></div>
+      <div><dt>Year</dt><dd>2025</dd></div>
+      <div><dt>CATEGORY</dt><dd>CGI · Skincare</dd></div>
+      <div><dt>Role</dt><dd>Concept · Modeling · Shading · Lighting</dd></div>
+      <div><dt>Software</dt><dd>Blender 4.2 · Photoshop · Lightroom</dd></div>
+    </dl>
+
+    <div>
+      <div class="cs-intro__label">— Project</div>
+      <h1 class="cs-intro__headline reveal">
+        <em>Abeille Royale is heritage in liquid form — Guerlain's royal jelly serum, </em> a product whose story stretches back through 200 years of French perfumery.
+      </h1>
+      <p class="cs-intro__body reveal">
+        I rebuilt the bottle in Blender as a museum object: gold lit from within, glass faceted like a gem, framed in the chiaroscuro of a vault.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 03 · CONCEPT STATEMENT
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-concept reveal">
+    <div class="cs-concept__label">— Concept</div>
+    <h2 class="cs-concept__headline">"A jewel, not a jar."</h2>
+    <p class="cs-concept__body">Abeille Royale is heritage in liquid form. I built the visual not as 
+cosmetics but as a museum artifact — golden, lit from within, framed 
+in chiaroscuro. The bottle is precious. The honey is its proof.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 04 · REFERENCE BOARD
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— References</span>
+    <span class="cs-module-header__meta">Mood / direction / tone</span>
+  </div>
+
+  <div class="cs-grid-3x3">
+   <div>
+    <img src="D:\davidova-site\assets\img_Guerlian\REF_01.png" alt="Caravaggio, Boy with a Basket" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Caravaggio, Boy with a Basket — single warm light source</div>
+  </div>   
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_02.png" alt="Vermeer, Pearl Earring" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Vermeer, Pearl Earring — luminous detail in darkness</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_03.png" alt="Tom Ford Beauty" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Tom Ford Beauty — chiaroscuro discipline</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_04.png" alt="Clains campaign" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Clains campaign — tactile material focus</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_05.png" alt="Honey macro" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Honey macro — viscosity, slow flow</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_06.png" alt="Guerlain heritage 1962" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Guerlain heritage 1962 — typographic brand DNA</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_07.png" alt="Hermès leather" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Hermès leather — restrained material study</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_08.png" alt="Museum amber photography" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Museum amber photography — artifact reverence</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/REF_09.png" alt="Honeycomb structure" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Honeycomb structure — geometric warmth</div>
+  </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 05 · CONCEPT SKETCHES
+     ============================================================ -->
+<section class="cs-module cs-module--paper">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Composition studies</span>
+    <span class="cs-module-header__meta">Pre-vis / framing / lighting plan</span>
+  </div>
+
+  <div class="cs-strip-3">
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/SKETCH 01.png" alt="Hero framing" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Hero framing · key light direction</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/SKETCH 02.png" alt="Macro detail composition" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Macro detail composition</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/SKETCH 03.png" alt="Top-down lighting plan" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Top-down lighting plan</div>
+  </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 06 · MODELING BREAKDOWN
+     ============================================================ -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Modeling</span>
+    <span class="cs-module-header__meta">[N] polygons · clean quad topology</span>
+  </div>
+
+  <div class="cs-grid-4">
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/MODEL_01.png" alt="Wireframe" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Wireframe</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/MODEL_02.png" alt="Solid" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Solid</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/MODEL_03.png" alt="Material Preview" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Material Preview</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/MODEL_04.png" alt="Rendered" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Rendered</div>
+  </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 07 · SHADER BREAKDOWN
+     ============================================================ -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Shading</span>
+    <span class="cs-module-header__meta">Five core materials · physically based</span>
+  </div>
+
+  <div class="cs-grid-2" style="gap: 16px;">
+    
+    <!-- ROW 1, LEFT — GLASS -->
+    <div>
+      <div class="cs-shader-label">01 / GLASS</div>
+      <img src="D:\davidova-site\assets\img_Guerlian/Shader_1.png" alt="Glass shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <div class="cs-caption">IOR 1.52 · dispersion enabled · micro-roughness 0.05</div>
+    </div>
+
+    <!-- ROW 1, RIGHT — METALLIC -->
+    <div>
+      <div class="cs-shader-label">02 / METALLIC</div>
+      <img src="D:\davidova-site\assets\img_Guerlian/Shader_2.png" alt="Metallic shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <div class="cs-caption">Anisotropic brushed · roughness 0.3 · metallic 1.0</div>
+    </div>
+
+    <!-- ROW 2, LEFT — FABRIC -->
+    <div>
+      <div class="cs-shader-label">03 / FABRIC</div>
+      <img src="D:\davidova-site\assets\img_Guerlian/Shader_3.png" alt="Fabric shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <div class="cs-caption">Cotton texture · roughness 0.85 · subsurface scattering enabled</div>
+    </div>
+
+    <!-- ROW 2, RIGHT — ROCK -->
+    <div>
+      <div class="cs-shader-label">04 / ROCK</div>
+      <img src="D:\davidova-site\assets\img_Guerlian/Shader_4.png" alt="Rock shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <div class="cs-caption">Granite texture · roughness 0.95 · ambient occlusion baked</div>
+    </div>
+
+    <!-- ROW 3, LEFT — LIQUID -->
+    <div>
+      <div class="cs-shader-label">05 / LIQUID</div>
+      <img src="D:\davidova-site\assets\img_Guerlian/Shader_5.png" alt="Liquid shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <div class="cs-caption">Volume absorption · density 2.4 · color attenuation enabled</div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 09 · HERO FULL BLEED
+     ============================================================ -->
+<section class="cs-module cs-module--bleed">
+    <img src="D:\davidova-site\assets\img_Guerlian/Hero Full Bleed.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">Hero Full Bleed</div>
+</section>
+
+<!-- ============================================================
+     MODULE 10 · 45° PREMIUM SHOT
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div style="max-width: 80%; margin: 0 auto;">
+    <img src="D:\davidova-site\assets\img_Guerlian/45° Premium Shot.png" alt="45° Premium Shot" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    </div>
+    <div class="cs-caption">Three-quarter view</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 11 · FRONT PACK SHOT
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div style="max-width: 60%; margin: 0 auto;">
+    <img src="D:\davidova-site\assets\img_Guerlian/Front Pack Shot.png" alt="Front pack" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">Front pack</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 12 · MACRO DETAIL SERIES
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-strip-3">
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Macro_1.png" alt="Golden Liquid & Sparkles (interior focus)" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Golden Liquid & Sparkles (interior focus)</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Macro_2.png" alt="Gradient Glass Edge & Vertical Lines (material focus)" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Gradient Glass Edge & Vertical Lines (material focus)</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Macro_3.png" alt="Cap, Bee Emblem & Pipette Bulb (detail focus)" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <div class="cs-caption">Cap, Bee Emblem & Pipette Bulb (detail focus)</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 13 · LABEL & TYPE DETAIL
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Label & Type Detail.png" alt="Label & Type Detail (Wide)" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">Label & Type Detail (Wide)</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 14 · MATERIAL CLOSE-UPS
+     ============================================================ -->
+<section class="cs-module cs-module--paper">
+  <div class="cs-strip-3">
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Mat_1.png" alt="Gradient Glass & Liquid Interior" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">Gradient Glass & Liquid Interior</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Mat_2.png" alt="Gold Cap" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">Gold Cap</div>
+  </div>
+<div>
+    <img src="D:\davidova-site\assets\img_Guerlian/Mat_3.png" alt="Gold Typography on Glass Surface" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">Gold Typography on Glass Surface</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 18 · ADVERTISING FRAME
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+  <div>
+    <img src="D:\davidova-site\assets\img_Guerlian\Paris Building Facade.png" alt="Paris Building Facade" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">LIFESTYLE / IN-CONTEXT (Paris Building Facade)</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 19 · LIFESTYLE CONTEXT
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+   <div>
+    <img src="D:\davidova-site\assets\img_Guerlian\Paris Metro Station.png" alt="Paris Metro Station" 
+         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <div class="cs-caption">LIFESTYLE / IN-CONTEXT (Paris Metro Station)</div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     MODULE 24 · MOTION FRAMES (optional)
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Motion</span>
+    <span class="cs-module-header__meta">Sequence concept · 4-second loop</span>
+  </div>
+
+  <div class="cs-grid-4">
+    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_01">APPROACH</div><div class="cs-caption">01 — Approach</div></div>
+    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_02">ROTATION</div><div class="cs-caption">02 — Rotation</div></div>
+    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_03">DETAIL</div><div class="cs-caption">03 — Detail</div></div>
+    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_04">HOLD</div><div class="cs-caption">04 — Hold</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 25 · DESIGN SYSTEM PAGE (optional)
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Design system</span>
+    <span class="cs-module-header__meta">Color · type · material · principle</span>
+  </div>
+
+  <div class="cs-grid-2">
+    <div class="cs-slot" data-slot-id="✎ SYS_01_COLORS" style="aspect-ratio: 4/3;">COLOR PALETTE · 5-6 SWATCHES</div>
+    <div class="cs-slot" data-slot-id="✎ SYS_02_TYPE" style="aspect-ratio: 4/3;">TYPE SYSTEM · DISPLAY / BODY / MONO</div>
+    <div class="cs-slot" data-slot-id="✎ SYS_03_MATERIALS" style="aspect-ratio: 4/3;">MATERIAL LIBRARY · 4-6 SPHERES</div>
+    <div class="cs-slot" data-slot-id="✎ SYS_04_RULES" style="aspect-ratio: 4/3;">COMPOSITION RULES · 3-4 PRINCIPLES</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 26 · TECHNICAL SPECS PANEL
+     ============================================================ -->
+<section class="cs-module cs-module--graphite">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Technical</span>
+    <span class="cs-module-header__meta">Project specifications</span>
+  </div>
+
+  <dl class="cs-specs">
+    <div><dt>Software</dt><dd>Blender [VERSION] · Cycles</dd></div>
+    <div><dt>Resolution</dt><dd>[W] × [H] px</dd></div>
+    <div><dt>Samples</dt><dd>[N] per pixel · OptiX denoising</dd></div>
+    <div><dt>Polycount</dt><dd>Hero asset: [N] · Scene: [N]</dd></div>
+    <div><dt>Textures</dt><dd>4K PBR maps · custom normals</dd></div>
+    <div><dt>Render time</dt><dd>[N] minutes per frame on [GPU]</dd></div>
+    <div><dt>Color pipeline</dt><dd>ACES · Filmic Log</dd></div>
+    <div><dt>Post</dt><dd>Photoshop · grading · atmospheric pass</dd></div>
+    <div><dt>Hours</dt><dd>[N] from concept to delivery</dd></div>
+  </dl>
+</section>
+
+<!-- ============================================================
+     MODULE 27 · BEFORE / AFTER (optional)
+     ============================================================ -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Iteration</span>
+    <span class="cs-module-header__meta">Original vs refined</span>
+  </div>
+
+  <div class="cs-grid-2">
+    <div><div class="cs-slot cs-slot--render" data-slot-id="▣ BEFORE_01">ORIGINAL</div><div class="cs-caption">Before</div></div>
+    <div><div class="cs-slot cs-slot--render" data-slot-id="▣ AFTER_01">REFINED</div><div class="cs-caption">After</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 28 · SOCIAL FRAMES (optional)
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Social</span>
+    <span class="cs-module-header__meta">Instagram · stories · carousel</span>
+  </div>
+
+  <div class="cs-grid-3">
+    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ SOCIAL_01">SQUARE 1:1</div><div class="cs-caption">Feed post</div></div>
+    <div><div class="cs-slot cs-slot--portrait" data-slot-id="▣ SOCIAL_02">PORTRAIT 4:5</div><div class="cs-caption">Feed portrait</div></div>
+    <div><div class="cs-slot" data-slot-id="▣ SOCIAL_03" style="aspect-ratio: 9/16;">STORY 9:16</div><div class="cs-caption">Story</div></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULE 29 · WEB HERO BANNER (optional)
+     ============================================================ -->
+<section class="cs-module cs-module--bleed">
+  <div class="cs-slot cs-slot--strip" data-slot-id="▣ WEB_HERO_01">
+    WEB HERO BANNER · 21:9 ULTRA-WIDE
+  </div>
+  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">Web banner application</div>
+</section>
+
+<!-- ============================================================
+     MODULE 30 · CLOSER & CREDITS
+     ============================================================ -->
+<section class="cs-module cs-module--ink">
+  <p class="cs-closer__statement reveal">"[ONE FINAL POETIC LINE — SAME TONE AS THE CONCEPT STATEMENT]"</p>
+
+  <dl class="cs-closer__credits">
+    <div><dt>Studio</dt><dd>Davidova.Studio</dd></div>
+    <div><dt>Art direction</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>CGI</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Year</dt><dd>[YEAR]</dd></div>
+    <div><dt>Location</dt><dd>Warsaw · Worldwide</dd></div>
+    <div><dt>Software</dt><dd>[SOFTWARE]</dd></div>
+  </dl>
+
+  <div class="cs-closer__nav">
+    <a href="/work/[NEXT-PROJECT-SLUG]" class="cs-closer__nav-link">Next project →</a>
+    <a href="mailto:studio@davidova.studio" class="cs-closer__nav-link">studio@davidova.studio</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     SCROLL REVEAL SCRIPT
+     ============================================================ -->
+<script>
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>

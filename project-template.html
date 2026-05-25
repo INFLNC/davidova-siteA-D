@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumen Fragrance — Alexandra Davidova</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* Inherits base tokens — in production, extract to shared.css */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0A0A0A;
+  --graphite: #1F1F1F;
+  --bone: #F5F2EC;
+  --paper: #E8E4DB;
+  --mid: #6B6B6B;
+  --accent: #8B2E1F;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* =========================================================
+   NAV (same pattern as index)
+   ========================================================= */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bone);
+  border-bottom: 1px solid rgba(10,10,10,0.08);
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav__logo-line {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.nav__menu {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* =========================================================
+   PROJECT HERO
+   ========================================================= */
+.project-hero {
+  padding-top: 80px;
+  background: var(--ink);
+}
+
+.project-hero__image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 60%, #1f1f1f 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+/* =========================================================
+   PROJECT META BAR
+   ========================================================= */
+.project-meta {
+  padding: 3rem var(--gutter) 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+}
+
+.project-meta__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-meta__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.project-meta__value {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .project-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================================================
+   PROJECT HEADER
+   ========================================================= */
+.project-header {
+  padding: 4rem var(--gutter) 6rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.project-header__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink);
+}
+
+.project-header__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.project-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.project-header__intro {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--graphite);
+  max-width: 40ch;
+}
+
+@media (max-width: 900px) {
+  .project-header {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* =========================================================
+   STORY BODY
+   ========================================================= */
+.story {
+  padding: 0 var(--gutter) 6rem;
+}
+
+.story__section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 4rem;
+  padding: 4rem 0;
+  border-top: 1px solid rgba(10, 10, 10, 0.15);
+}
+
+.story__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--mid);
+  padding-top: 0.25rem;
+}
+
+.story__body {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 60ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.story__body p {
+  color: var(--graphite);
+}
+
+/* Drop cap on first paragraph in body */
+.story__body--lead p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  float: left;
+  line-height: 1;
+  padding: 0.2em 0.15em 0 0;
+  font-weight: 300;
+}
+
+/* Q&A / Interview block */
+.qa {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.qa__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.qa__q {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+}
+
+.qa__a {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+
+@media (max-width: 900px) {
+  .story__section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* =========================================================
+   IMAGE BLOCKS
+   ========================================================= */
+.media {
+  margin: 4rem calc(-1 * var(--gutter));
+}
+
+.media--fullbleed {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.media__image {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--graphite), var(--ink));
+  background-size: cover;
+  background-position: center;
+}
+
+.media__caption {
+  margin-top: 0.75rem;
+  padding: 0 var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  margin: 4rem 0;
+}
+
+.media-grid__image {
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, var(--paper), var(--bone));
+}
+
+@media (max-width: 700px) {
+  .media-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   CREDITS
+   ========================================================= */
+.credits {
+  padding: 6rem var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 4rem;
+  border-top: 1px solid rgba(10, 10, 10, 0.15);
+}
+
+.credits__list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem 2rem;
+  font-size: 15px;
+}
+
+.credits__role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  padding-top: 0.2rem;
+}
+
+/* =========================================================
+   NEXT PROJECT
+   ========================================================= */
+.next {
+  background: var(--ink);
+  color: var(--bone);
+  padding: var(--section, 6rem) var(--gutter);
+  text-align: left;
+  display: block;
+  text-decoration: none;
+  transition: background 0.4s var(--ease-out-expo);
+}
+
+.next:hover { background: var(--graphite); }
+
+.next__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-bottom: 1.5rem;
+}
+
+.next__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.next__arrow {
+  display: inline-block;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.next:hover .next__arrow {
+  transform: translateX(1.5rem);
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <div class="nav__menu">
+    <a href="/work">Work</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="project-hero">
+  <div class="project-hero__image"></div>
+</header>
+
+<!-- ============ META ============ -->
+<div class="project-meta">
+  <div class="project-meta__item">
+    <span class="project-meta__label">Client</span>
+    <span class="project-meta__value">Self-initiated</span>
+  </div>
+  <div class="project-meta__item">
+    <span class="project-meta__label">Role</span>
+    <span class="project-meta__value">Art direction, 3D, Post</span>
+  </div>
+  <div class="project-meta__item">
+    <span class="project-meta__label">Duration</span>
+    <span class="project-meta__value">3 weeks / Feb 2026</span>
+  </div>
+  <div class="project-meta__item">
+    <span class="project-meta__label">Category</span>
+    <span class="project-meta__value">Fragrance / Concept</span>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<section class="project-header">
+  <div class="project-header__num">001 / Lumen</div>
+  <div class="project-header__content">
+    <h1 class="project-header__title">Lumen<br/>Fragrance</h1>
+    <p class="project-header__intro">
+      A speculative house exploring scent as architecture — three bottles, three times of day, one language of light.
+    </p>
+  </div>
+</section>
+
+<!-- ============ STORY: BRIEF ============ -->
+<article class="story">
+
+  <section class="story__section">
+    <div class="story__label">The Brief</div>
+    <div class="story__body story__body--lead">
+      <p>Lumen began as a question: if a fragrance were a building, what light would it live in? The project treats the bottle as an architectural object — not a cosmetic one — and uses lighting as the primary narrative device.</p>
+      <p>Three scents, three times of day. Each frame is lit from a single primary source, controlled in intensity and colour temperature, with the product acting as both subject and sculpture.</p>
+    </div>
+  </section>
+
+  <!-- Fullbleed image 1 -->
+  <div class="media media--fullbleed">
+    <div class="media__image"></div>
+    <div class="media__caption">Fig. 01 — Hero frame, morning light setup (4300K, east-facing).</div>
+  </div>
+
+  <!-- ============ APPROACH (interview format) ============ -->
+  <section class="story__section">
+    <div class="story__label">Approach</div>
+    <div class="story__body">
+      <p>The process started not in Blender but on a contact sheet of architectural photography — Chipperfield interiors, Kappo Saito still lifes, Ralph Gibson's early nudes. The bottle needed to carry the same quiet.</p>
+
+      <div class="qa">
+        <div class="qa__item">
+          <div class="qa__q">Q — What was the starting point?</div>
+          <div class="qa__a">"The form. I spent the first week only on silhouette — every other decision follows from whether the object holds its shape against the light."</div>
+        </div>
+
+        <div class="qa__item">
+          <div class="qa__q">Q — How did you approach the light?</div>
+          <div class="qa__a">"One key source per scene, shaped with large negative fills. No fill light. The shadows do the work."</div>
+        </div>
+
+        <div class="qa__item">
+          <div class="qa__q">Q — Biggest lesson from the project?</div>
+          <div class="qa__a">"Restraint is a skill. The moment I added anything 'to help the image', the image got worse."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Two-up grid -->
+  <div class="media-grid">
+    <div class="media-grid__image"></div>
+    <div class="media-grid__image"></div>
+  </div>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="story__section">
+    <div class="story__label">Process</div>
+    <div class="story__body">
+      <p>Modelled in Blender, rendered in Cycles with adaptive sampling. Materials built from scanned-reference textures — the glass uses a four-layer shader with dispersion and a custom Fresnel curve to match medium-format photography.</p>
+      <p>Post in DaVinci Resolve: subtle film emulation (Kodak 2383 LUT at 40% opacity), light grain, and a soft halation pass on highlights.</p>
+    </div>
+  </section>
+
+  <!-- Fullbleed image 2 -->
+  <div class="media media--fullbleed">
+    <div class="media__image"></div>
+    <div class="media__caption">Fig. 02 — Lighting diagram and final comparison.</div>
+  </div>
+
+</article>
+
+<!-- ============ CREDITS ============ -->
+<section class="credits">
+  <div class="story__label">Credits</div>
+  <div class="credits__list">
+    <span class="credits__role">Art Direction</span>
+    <span>Alexandra Davidova</span>
+
+    <span class="credits__role">CGI & Lighting</span>
+    <span>Alexandra Davidova</span>
+
+    <span class="credits__role">Post</span>
+    <span>Alexandra Davidova</span>
+
+    <span class="credits__role">Sound Design</span>
+    <span>— / available for loops and motion pieces on request</span>
+
+    <span class="credits__role">Software</span>
+    <span>Blender, Photoshop, DaVinci Resolve</span>
+  </div>
+</section>
+
+<!-- ============ NEXT ============ -->
+<a href="/work/nordic" class="next">
+  <div class="next__label">Next Project — 002</div>
+  <div class="next__title">
+    Nordic Skin Tech
+    <span class="next__arrow">→</span>
+  </div>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PETRO — Davidova.Studio</title>
+<meta name="description" content="The bistro that talks back. Brand identity for a European wine bar." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,700;9..144,900&family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0A0A0A;
+  --graphite: #1F1F1F;
+  --bone: #F5F2EC;
+  --paper: #E8E4DB;
+  --mid: #6B6B6B;
+
+  --petro-cream: #F0E6D2;
+  --petro-wine:  #5D1F2B;
+  --petro-olive: #5C5A2E;
+  --petro-stone: #2A2520;
+  --petro-ochre: #C49A4C;
+  --petro-tomato:#C53F2C;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-serif:   'Newsreader', Georgia, serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.25rem, 2vw, 2rem);
+  /* ЕДИНЫЙ вертикальный ритм для всех модулей */
+  --section: clamp(4rem, 8vw, 7rem);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a   { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+  color: var(--bone);
+}
+.nav__logo { font-family: var(--font-display); font-size: 1.125rem; display: flex; align-items: center; gap: 0.75rem; }
+.nav__logo-line { display: inline-block; width: 1.5rem; height: 1px; background: currentColor; transition: width 0.4s var(--ease-out-expo); }
+.nav__logo:hover .nav__logo-line { width: 2.5rem; }
+.nav__menu { display: flex; gap: 2rem; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; }
+.nav__link { position: relative; padding: 0.25rem 0; }
+.nav__link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease-out-expo); }
+.nav__link:hover::after { transform: scaleX(1); }
+
+/* ─── MODULES — единый padding для всех ─── */
+.cs-module {
+  position: relative;
+  padding: var(--section) var(--gutter);
+}
+
+.cs-module--bone     { background: var(--bone);        color: var(--ink); }
+.cs-module--paper    { background: var(--paper);       color: var(--ink); }
+.cs-module--ink      { background: var(--ink);         color: var(--bone); }
+.cs-module--graphite { background: var(--graphite);    color: var(--bone); }
+/* bleed = НЕТ padding, НЕТ фона */
+.cs-module--bleed    { padding: 0; background: transparent; }
+.cs-module--cream    { background: var(--petro-cream); color: var(--petro-stone); }
+.cs-module--wine     { background: var(--petro-wine);  color: var(--petro-cream); }
+.cs-module--stone    { background: var(--petro-stone); color: var(--petro-cream); }
+.cs-module--olive    { background: var(--petro-olive); color: var(--petro-cream); }
+.cs-module--ochre    { background: var(--petro-ochre); color: var(--petro-stone); }
+
+/* ─── MODULE HEADER ─── */
+.cs-module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.cs-module--wine .cs-module-header,
+.cs-module--stone .cs-module-header,
+.cs-module--olive .cs-module-header,
+.cs-module--ink .cs-module-header,
+.cs-module--graphite .cs-module-header { color: rgba(240,230,210,0.6); }
+.cs-module--wine .cs-module-header__title,
+.cs-module--stone .cs-module-header__title,
+.cs-module--olive .cs-module-header__title,
+.cs-module--ink .cs-module-header__title,
+.cs-module--graphite .cs-module-header__title { color: var(--petro-cream); }
+.cs-module-header__title { color: var(--petro-stone); }
+.cs-module-header__meta  { color: var(--mid); }
+
+/* ─── GRIDS — единый gap ─── */
+.cs-grid-2   { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+.cs-grid-3   { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.cs-grid-4   { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.cs-grid-3x3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+@media (max-width: 700px) {
+  .cs-grid-3, .cs-grid-4, .cs-grid-3x3 { grid-template-columns: repeat(2,1fr); }
+  .cs-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ─── CELL — единая ячейка для всех визуализаций ─── */
+.cs-cell { display: flex; flex-direction: column; }
+.cs-cell img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+.cs-cell--square img    { aspect-ratio: 1/1; }
+.cs-cell--portrait img  { aspect-ratio: 4/5; }
+.cs-cell--landscape img { aspect-ratio: 16/9; }
+.cs-cell--icon img      { aspect-ratio: 1/1; object-fit: contain; padding: 0.5rem; }
+
+/* ─── CAPTION — единый стандарт ─── */
+.cs-caption {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  text-align: center;
+  line-height: 1.5;
+}
+.cs-module--wine .cs-caption,
+.cs-module--stone .cs-caption,
+.cs-module--olive .cs-caption,
+.cs-module--ink .cs-caption,
+.cs-module--graphite .cs-caption { color: rgba(240,230,210,0.5); }
+
+/* ─── SLOT (placeholder) ─── */
+.cs-slot {
+  position: relative;
+  width: 100%;
+  background: rgba(45,32,28,0.06);
+  border: 1px dashed rgba(45,32,28,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(45,32,28,0.5); text-align: center;
+  padding: 2rem;
+}
+.cs-slot::before {
+  content: attr(data-slot-id);
+  position: absolute; top: 0.75rem; left: 0.75rem;
+  font-size: 9px; opacity: 0.7;
+}
+.cs-slot--render   { aspect-ratio: 16/9; }
+.cs-slot--portrait { aspect-ratio: 4/5; }
+.cs-slot--square   { aspect-ratio: 1/1; }
+.cs-module--wine .cs-slot,
+.cs-module--stone .cs-slot,
+.cs-module--olive .cs-slot,
+.cs-module--ink .cs-slot,
+.cs-module--graphite .cs-slot {
+  background: rgba(240,230,210,0.05);
+  border-color: rgba(240,230,210,0.3);
+  color: rgba(240,230,210,0.5);
+}
+
+/* ─── HERO ─── */
+.cs-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+.cs-hero__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+/* ПРАВКА 1: meta в нижний ПРАВЫЙ угол hero */
+.cs-hero__meta {
+  position: absolute;
+  bottom: 2.5rem;
+  right: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--petro-cream);
+  text-align: right;
+  z-index: 3;
+  line-height: 1.7;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+}
+
+/* ─── INTRO ─── */
+.cs-intro {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 800px) {
+  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
+}
+.cs-intro__metadata {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--mid); line-height: 1.8;
+}
+.cs-intro__metadata dt { display: inline-block; width: 7rem; color: var(--mid); }
+.cs-intro__metadata dd { display: inline-block; }
+.cs-intro__metadata > div { display: block; }
+
+/* ПРАВКА 2: PETRO живёт здесь, в правой колонке над headline */
+.cs-intro__wordmark {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(5rem, 14vw, 12rem);
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  color: var(--petro-wine);
+  margin-bottom: 2.5rem;
+}
+.cs-intro__wordmark em { font-style: italic; }
+
+.cs-intro__label {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--mid); margin-bottom: 1rem;
+}
+.cs-intro__headline {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05; letter-spacing: -0.02em;
+  margin-bottom: 2rem; max-width: 25ch;
+}
+.cs-intro__headline em { font-style: italic; }
+.cs-intro__body {
+  font-family: var(--font-serif); font-size: 18px;
+  line-height: 1.6; max-width: 60ch; font-weight: 400;
+}
+
+/* ─── CONCEPT ─── */
+.cs-concept { text-align: center; max-width: 900px; margin: 0 auto; }
+.cs-concept__label {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  opacity: 0.7; margin-bottom: 3rem;
+}
+.cs-concept__headline {
+  font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(3rem, 8vw, 7rem); line-height: 1; letter-spacing: -0.03em;
+}
+
+/* ─── STORY ─── */
+.cs-story {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; max-width: 1400px; margin: 0 auto;
+  align-items: start;
+}
+@media (max-width: 800px) { .cs-story { grid-template-columns: 1fr; gap: 3rem; } }
+.cs-story__heading {
+  font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.02em;
+}
+.cs-story__body p {
+  font-family: var(--font-serif); font-size: 18px;
+  line-height: 1.65; margin-bottom: 1.5rem;
+}
+.cs-story__body p:last-child { margin-bottom: 0; }
+
+/* ─── LOGO ANATOMY ─── */
+.cs-anatomy { display: flex; flex-direction: column; align-items: center; gap: 4rem; }
+.cs-anatomy__wordmark {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(6rem, 18vw, 14rem);
+  letter-spacing: -0.04em; line-height: 1;
+  color: var(--petro-cream);
+}
+.cs-anatomy__notes {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 2rem; max-width: 1200px; width: 100%;
+}
+@media (max-width: 700px) { .cs-anatomy__notes { grid-template-columns: repeat(2,1fr); } }
+.cs-anatomy__note {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(240,230,210,0.5); line-height: 1.6;
+}
+.cs-anatomy__note strong {
+  display: block; color: var(--petro-cream);
+  font-weight: 400; margin-bottom: 0.5rem;
+}
+
+/* ─── TYPOGRAPHY ─── */
+.cs-type-showcase { display: grid; grid-template-columns: 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; }
+.cs-type-row {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 2rem; align-items: baseline;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(45,32,28,0.15);
+}
+.cs-type-row:last-child { border-bottom: none; }
+@media (max-width: 700px) { .cs-type-row { grid-template-columns: 1fr; } }
+.cs-type-row__meta {
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--mid); line-height: 1.6;
+}
+.cs-type-row__meta strong {
+  display: block; color: var(--petro-stone);
+  font-weight: 400; margin-bottom: 0.25rem;
+}
+.cs-type-row__sample  { font-size: clamp(2rem,5vw,4rem); line-height: 1.1; }
+.cs-type-row--display { font-family: var(--font-display); font-weight: 700; }
+.cs-type-row--serif   { font-family: var(--font-serif);  font-weight: 400; }
+.cs-type-row--mono    { font-family: var(--font-mono);   font-size: 1.5rem !important; letter-spacing: 0.05em; }
+
+/* ─── COLOUR ─── */
+.cs-colors {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1rem; max-width: 1400px; margin: 0 auto;
+}
+@media (max-width: 700px) { .cs-colors { grid-template-columns: repeat(2,1fr); } }
+.cs-color {
+  aspect-ratio: 1/1; position: relative; padding: 2rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+}
+.cs-color__name { font-size: 14px; font-weight: 500; }
+.cs-color__hex  { font-size: 10px; opacity: 0.7; }
+.cs-color__role {
+  position: absolute; bottom: 2rem; right: 2rem;
+  font-size: 9px; opacity: 0.5; text-align: right;
+}
+
+/* ─── ICONS ─── */
+.cs-icons {
+  display: grid; grid-template-columns: repeat(6,1fr);
+  gap: 16px; max-width: 1400px; margin: 0 auto;
+}
+@media (max-width: 700px) { .cs-icons { grid-template-columns: repeat(3,1fr); } }
+
+/* ─── BLEED IMAGES — полная ширина, без фона ─── */
+.cs-module--bleed img {
+  width: 100%; height: auto;
+  display: block; max-width: 100%;
+}
+
+/* ─── SOLO image (одиночное изображение в модуле, по центру) ─── */
+.cs-solo { max-width: 1000px; margin: 0 auto; }
+.cs-solo--narrow { max-width: 700px; }
+.cs-solo img { width: 100%; display: block; }
+
+/* ─── CLOSER ─── */
+.cs-closer__statement {
+  text-align: center;
+  font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(2.5rem,6vw,5rem);
+  line-height: 1.05; letter-spacing: -0.02em;
+  margin-bottom: 5rem; max-width: 18ch;
+  margin-left: auto; margin-right: auto;
+}
+.cs-closer__credits {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 1rem 4rem;
+  font-family: var(--font-mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  max-width: 600px; margin: 0 auto 5rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(240,230,210,0.15);
+  border-bottom: 1px solid rgba(240,230,210,0.15);
+}
+.cs-closer__credits dt { color: rgba(240,230,210,0.5); }
+.cs-closer__credits dd { color: var(--petro-cream); }
+.cs-closer__nav {
+  display: flex; justify-content: space-between; align-items: baseline;
+  max-width: 800px; margin: 0 auto;
+}
+.cs-closer__nav-link {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.5rem,3vw,2.5rem); letter-spacing: -0.01em;
+}
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <div class="nav__menu">
+    <a href="/work" class="nav__link">Work</a>
+    <a href="/about" class="nav__link">About</a>
+    <a href="/contact" class="nav__link">Contact</a>
+  </div>
+</nav>
+
+<!-- 01 HERO COVER -->
+<!-- ПРАВКА 1: meta опущена в нижний ПРАВЫЙ угол -->
+<!-- ПРАВКА 2: большое PETRO УБРАНО отсюда — переехало в intro ниже -->
+<section class="cs-hero">
+  <img class="cs-hero__img" src="D:\davidova-site\assets\img_Petro/Hero.jpg" alt="Petro Bistro hero">
+  <div class="cs-hero__meta">
+    <div>Petro Bistro</div>
+    <div>2026 · Concept identity</div>
+  </div>
+</section>
+
+<!-- 02 PROJECT INTRO -->
+<!-- ПРАВКА 2: PETRO живёт здесь — на бежевом фоне, в правой колонке над описанием -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-intro">
+    <dl class="cs-intro__metadata">
+      <div><dt>Client</dt><dd>Conceptual project</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
+      <div><dt>Category</dt><dd>Brand Identity · Restaurant</dd></div>
+      <div><dt>Role</dt><dd>Strategy · Identity · Illustration · Art Direction</dd></div>
+      <div><dt>Sector</dt><dd>Hospitality · Wine bar / Bistro</dd></div>
+    </dl>
+    <div>
+      <span class="cs-intro__wordmark">PET<em>R</em>O</span>
+      <div class="cs-intro__label">— Project</div>
+      <h1 class="cs-intro__headline reveal">
+        <em>A bistro that talks back.</em> Brand identity for a European wine bar built around a single character — Petro himself.
+      </h1>
+      <p class="cs-intro__body reveal">
+        Petro is a conceptual premium-casual European bistro and natural wine bar. The brand is built around a fictional hospitality figure — Petro, the imagined owner — whose illustrated portrait, handwriting, and voice carry the visual identity across every surface. The strategy: take the narrative-driven character branding of Asian street food brands like Mara Cheese Bao and translate it into a confident, restrained European wine-bar context. The result is a brand that feels familial rather than precious — anti-fine-dining without sacrificing craft.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 CONCEPT STATEMENT -->
+<section class="cs-module cs-module--wine">
+  <div class="cs-concept reveal">
+    <div class="cs-concept__label">— Concept</div>
+    <h2 class="cs-concept__headline">"The bistro that talks back."</h2>
+  </div>
+</section>
+
+<!-- 04 BRAND STORY -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-story">
+    <h2 class="cs-story__heading">Petro started because someone got tired of wine bars that whispered.</h2>
+    <div class="cs-story__body">
+      <p>Petro is a bistro for people who love serious wine, simple food, and conversations louder than a whisper. There is no tasting theatre here. No lectures on terroir. No tweezers. There is one wine list, seven dishes on a board, an open kitchen, and Petro — the figure who greets each guest like family.</p>
+      <p>Petro is a character — not a real person, but an archetype. An elderly European bistro owner who has seen three generations of guests, remembers your name by the second visit, and pours wine as though it is not work but hospitality.</p>
+      <p>We drew him. He appears on the packaging, on the wine card, on the storefront. He is the face of the brand. And he refuses to be quiet about good food.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 MOOD BOARD -->
+<!-- ПРАВКА 5: все 9 референсов через .cs-cell--square, идеально выровнены -->
+<section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— References</span>
+    <span class="cs-module-header__meta">Mood / direction / tone</span>
+  </div>
+  <div class="cs-grid-3x3">
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro\REF_01.png" alt="Mama's branding">
+      <div class="cs-caption">Restaurant Branding – Mama's — character-led storytelling</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_02.png" alt="Maman NYC">
+      <div class="cs-caption">Maman NYC — European hospitality warmth</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_03.png" alt="Frenchie Paris">
+      <div class="cs-caption">Frenchie Paris — natural wine intimacy</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_04.png" alt="Big Night">
+      <div class="cs-caption">Big Night (1996) — Italian restaurant cinema</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_05.png" alt="Call Me By Your Name">
+      <div class="cs-caption">Call Me By Your Name — Mediterranean light</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_06.png" alt="Cabana magazine">
+      <div class="cs-caption">Cabana magazine — editorial European</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_07.png" alt="Society De La Rassi">
+      <div class="cs-caption">@blurrbureau for Society De La Rassi — narrative wine branding</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_08.png" alt="Italian mascots">
+      <div class="cs-caption">Vintage Italian restaurant mascots, 1960s</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/REF_09.png" alt="Linocut tradition">
+      <div class="cs-caption">Linocut block-print illustration tradition</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 LOGO ANATOMY -->
+<section class="cs-module cs-module--stone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Logo Anatomy</span>
+    <span class="cs-module-header__meta">Custom display serif · one detail · no extras</span>
+  </div>
+  <div class="cs-anatomy">
+    <div class="cs-anatomy__wordmark">PET<em style="font-style:italic;">R</em>O</div>
+    <div class="cs-anatomy__notes">
+      <div class="cs-anatomy__note"><strong>01 / Display weight</strong>Heavy 900-weight custom serif. Stable, confident, unfussy.</div>
+      <div class="cs-anatomy__note"><strong>02 / The R curl</strong>Single decorative element — the extended hairline curl on the leg of R. The only flourish in the wordmark.</div>
+      <div class="cs-anatomy__note"><strong>03 / Tracking</strong>Tight letter-spacing (-0.04em). The wordmark reads as one breath, not five letters.</div>
+      <div class="cs-anatomy__note"><strong>04 / Case</strong>Always uppercase. Lower-case never appears in the wordmark.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 LOGO LOCKUPS -->
+<!-- ПРАВКА 5: все 4 lockups одинаковый квадратный формат -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Lockups</span>
+    <span class="cs-module-header__meta">Four versions · scale and context</span>
+  </div>
+  <div class="cs-grid-2">
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/Lockup_01.png" alt="Horizontal lockup">
+      <div class="cs-caption">Horizontal · Portrait + Wordmark</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/Lockup_02.png" alt="Stacked lockup">
+      <div class="cs-caption">Stacked · Portrait above Wordmark</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/Lockup_04.png" alt="Wordmark only">
+      <div class="cs-caption">Wordmark only · Minimal version</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/Lockup_03.png" alt="Portrait stamp">
+      <div class="cs-caption">Portrait only · Stamp use</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 PETRO PORTRAIT -->
+<section class="cs-module cs-module--wine">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— The Character</span>
+    <span class="cs-module-header__meta">Hand-drawn linocut illustration · single colour</span>
+  </div>
+  <div class="cs-solo cs-solo--narrow">
+    <img src="D:\davidova-site\assets\img_Petro/Character.png" alt="Petro character illustration">
+    <div class="cs-caption">Meet Petro · he runs the bar</div>
+  </div>
+</section>
+
+<!-- 09 TYPOGRAPHY -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Typography</span>
+    <span class="cs-module-header__meta">Display · serif · mono · hand</span>
+  </div>
+  <div class="cs-type-showcase">
+    <div class="cs-type-row">
+      <div class="cs-type-row__meta">
+        <strong>Display</strong>
+        Custom Petro Serif<br>Headlines, wordmark<br>700–900 weight
+      </div>
+      <div class="cs-type-row__sample cs-type-row--display">A bistro that talks.</div>
+    </div>
+    <div class="cs-type-row">
+      <div class="cs-type-row__meta">
+        <strong>Serif</strong>
+        Newsreader<br>Body, descriptions<br>300–400 weight
+      </div>
+      <div class="cs-type-row__sample cs-type-row--serif">Generous portions, served warm.</div>
+    </div>
+    <div class="cs-type-row">
+      <div class="cs-type-row__meta">
+        <strong>Mono</strong>
+        JetBrains Mono<br>Metadata, prices<br>300–500 weight
+      </div>
+      <div class="cs-type-row__sample cs-type-row--mono">TABLE 04 · 19:30 · €82</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 COLOUR PALETTE -->
+<section class="cs-module cs-module--stone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Colour</span>
+    <span class="cs-module-header__meta">Six values · disciplined ratios</span>
+  </div>
+  <div class="cs-colors">
+    <div class="cs-color" style="background:#F0E6D2;color:#2A2520;">
+      <div><div class="cs-color__name">Petro Cream</div><div class="cs-color__hex">#F0E6D2</div></div>
+      <div class="cs-color__role">Primary BG · 70%</div>
+    </div>
+    <div class="cs-color" style="background:#5D1F2B;color:#F0E6D2;">
+      <div><div class="cs-color__name">Wine Stain</div><div class="cs-color__hex">#5D1F2B</div></div>
+      <div class="cs-color__role">Brand · 15%</div>
+    </div>
+    <div class="cs-color" style="background:#5C5A2E;color:#F0E6D2;">
+      <div><div class="cs-color__name">Olive</div><div class="cs-color__hex">#5C5A2E</div></div>
+      <div class="cs-color__role">Secondary · 5%</div>
+    </div>
+    <div class="cs-color" style="background:#2A2520;color:#F0E6D2;">
+      <div><div class="cs-color__name">Stone</div><div class="cs-color__hex">#2A2520</div></div>
+      <div class="cs-color__role">Text · 5%</div>
+    </div>
+    <div class="cs-color" style="background:#C49A4C;color:#2A2520;">
+      <div><div class="cs-color__name">Ochre</div><div class="cs-color__hex">#C49A4C</div></div>
+      <div class="cs-color__role">Accent · 3%</div>
+    </div>
+    <div class="cs-color" style="background:#C53F2C;color:#F0E6D2;">
+      <div><div class="cs-color__name">Tomato</div><div class="cs-color__hex">#C53F2C</div></div>
+      <div class="cs-color__role">Hot Pop · 2%</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 ICONOGRAPHY -->
+<!-- ПРАВКА 5: 6 колонок, единый квадратный формат, индивидуальные подписи -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Iconography</span>
+    <span class="cs-module-header__meta">Twelve hand-drawn symbols · single weight line</span>
+  </div>
+  <div class="cs-icons">
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_01.png" alt="Wine glass"><div class="cs-caption">Wine glass</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_02.png" alt="Bottle"><div class="cs-caption">Bottle</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_03.png" alt="Grape"><div class="cs-caption">Grape</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_04.png" alt="Bread"><div class="cs-caption">Bread</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_05.png" alt="Olive"><div class="cs-caption">Olive</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_06.png" alt="Fork"><div class="cs-caption">Fork</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_07.png" alt="Candle"><div class="cs-caption">Candle</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_08.png" alt="Cheese"><div class="cs-caption">Cheese</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_09.png" alt="Corkscrew"><div class="cs-caption">Corkscrew</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_10.png" alt="Plate"><div class="cs-caption">Plate</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_11.png" alt="Apron"><div class="cs-caption">Apron</div></div>
+    <div class="cs-cell cs-cell--icon"><img src="D:\davidova-site\assets\img_Petro/Icon_12.png" alt="Stamp"><div class="cs-caption">Stamp</div></div>
+  </div>
+</section>
+
+<!-- 12 PACKAGING SYSTEM -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Packaging</span>
+    <span class="cs-module-header__meta">Full system · five surfaces</span>
+  </div>
+  <div class="cs-solo">
+    <img src="D:\davidova-site\assets\img_Petro/Petro_set.png" alt="Full packaging set">
+    <div class="cs-caption">Takeaway box · wine bottle · olive oil · bread bag · napkin</div>
+  </div>
+</section>
+
+<!-- 13 TAKEAWAY BOX -->
+<!-- ПРАВКА 4+5: добавлен полноценный module-header, единая сетка -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Takeaway Box</span>
+    <span class="cs-module-header__meta">Screen-printed kraft · wax seal</span>
+  </div>
+  <div class="cs-grid-2">
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/Box_01.png" alt="Takeaway box — front">
+      <div class="cs-caption">Front · Petro portrait screen-printed in wine</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/Box_02.png" alt="Takeaway box — detail">
+      <div class="cs-caption">Detail · wax seal · ochre stamp closure</div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 WINE BOTTLE -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Wine Bottle</span>
+    <span class="cs-module-header__meta">Hand-stamped vintage · Roman numerals</span>
+  </div>
+  <div class="cs-grid-2">
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/wine_01.png" alt="Wine bottle — full">
+      <div class="cs-caption">Full bottle · cream uncoated label · linocut portrait</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/wine_03.png" alt="Wine bottle — label detail">
+      <div class="cs-caption">Label detail · hand-stamped vintage · Roman numerals</div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 MENU -->
+<!-- ПРАВКА 4: добавлены подписи к каждому кадру -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Menu</span>
+    <span class="cs-module-header__meta">Folded brochure · screen-printed cover</span>
+  </div>
+  <div class="cs-grid-2">
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/menu_01.png" alt="Menu cover">
+      <div class="cs-caption">Cover · folded brochure · screen-printed Petro portrait</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/wine_02.png" alt="Wine list">
+      <div class="cs-caption">Wine list · natural selection · single unfolded page</div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 NAPKINS · COASTERS · CHEF CARDS -->
+<!-- ПРАВКА 4: добавлен module-header, индивидуальные подписи -->
+<section class="cs-module cs-module--wine">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Table Collateral</span>
+    <span class="cs-module-header__meta">Napkins · coasters · chef cards</span>
+  </div>
+  <div class="cs-grid-3">
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/NAPKIN.png" alt="Napkin">
+      <div class="cs-caption">Napkin · single-colour linocut · uncoated cream stock</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/COASTER.png" alt="Coaster">
+      <div class="cs-caption">Coaster · cork-backed · wine burgundy print</div>
+    </div>
+    <div class="cs-cell cs-cell--square">
+      <img src="D:\davidova-site\assets\img_Petro/CHEF CARD.png" alt="Chef card">
+      <div class="cs-caption">Chef card · tonight's dish · hand-note format</div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 POSTERS -->
+<!-- ПРАВКА 5: portrait 4:5, оба постера одинакового размера -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Posters</span>
+    <span class="cs-module-header__meta">Illustrated street posters</span>
+  </div>
+  <div class="cs-grid-2">
+    <div class="cs-cell cs-cell--portrait">
+      <img src="D:\davidova-site\assets\img_Petro/Poster_01.png" alt="Poster 01">
+      <div class="cs-caption">Character poster · Petro portrait · full bleed linocut</div>
+    </div>
+    <div class="cs-cell cs-cell--portrait">
+      <img src="D:\davidova-site\assets\img_Petro/Poster_02.png" alt="Poster 02">
+      <div class="cs-caption">Typographic poster · manifesto · heavy custom serif</div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 STOREFRONT — bleed, без фона -->
+<section class="cs-module cs-module--bleed">
+  <img src="D:\davidova-site\assets\img_Petro/Store.png" alt="Petro storefront">
+</section>
+
+<!-- 22 UNIFORM -->
+<section class="cs-module cs-module--olive">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Uniform</span>
+    <span class="cs-module-header__meta">Apron · Petro emblem · cream linen</span>
+  </div>
+  <div class="cs-slot cs-slot--render" data-slot-id="▣ APRON_01">Apron on staff · on-site</div>
+  <div class="cs-caption">Staff apron · embroidered Petro emblem · cream linen · wine thread</div>
+</section>
+
+<!-- 26 CINEMATIC INTERIOR — bleed без фона -->
+<section class="cs-module cs-module--bleed">
+  <img src="D:\davidova-site\assets\img_Petro/Interior.png" alt="Petro interior">
+</section>
+
+<!-- 27 LIFESTYLE DINNER — bleed без фона -->
+<section class="cs-module cs-module--bleed">
+  <img src="D:\davidova-site\assets\img_Petro/lifestyle.png" alt="Lifestyle dinner moment">
+</section>
+
+<!-- 28 DESIGN SYSTEM SUMMARY -->
+<section class="cs-module cs-module--cream">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— System</span>
+    <span class="cs-module-header__meta">Full identity summary page</span>
+  </div>
+  <div class="cs-slot cs-slot--render" data-slot-id="✎ SYSTEM_01">Design system overview · one-page summary</div>
+  <div class="cs-caption">Complete identity overview · all tokens on one sheet</div>
+</section>
+
+<!-- 30 CLOSER -->
+<section class="cs-module cs-module--stone">
+  <p class="cs-closer__statement reveal">"Pour generously. Speak louder. <em>Stay late.</em>"</p>
+  <dl class="cs-closer__credits">
+    <div><dt>Studio</dt><dd>Davidova.Studio</dd></div>
+    <div><dt>Direction</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Identity</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Illustration</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Year</dt><dd>2026</dd></div>
+    <div><dt>Location</dt><dd>Warsaw · Worldwide</dd></div>
+  </dl>
+  <div class="cs-closer__nav">
+    <a href="/work" class="cs-closer__nav-link">More work →</a>
+    <a href="mailto:studio@davidova.studio" class="cs-closer__nav-link">studio@davidova.studio</a>
+  </div>
+</section>
+
+<script>
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>

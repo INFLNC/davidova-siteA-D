@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Showcase — Alexandra Davidova</title>
+<meta name="description" content="Full archive of CGI art direction and brand identity projects. Warsaw-based, working globally." />
+<link rel="icon" href="favicon.ico" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="mobile.css" media="(max-width: 880px)">
+</head>
+
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-logo">AD</a>
+  <nav class="site-nav">
+    <a href="work.html" class="current">Showcase<span class="count">(16)</span></a>
+    <a href="about.html">Studio</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="page-intro">
+  <div class="page-intro__label">— Selected Work · 2024—2026</div>
+  <h1>Showcase.</h1>
+  <p class="page-intro__sub">
+    The full archive — <strong>CGI campaigns, packaging visualization and brand identities</strong>
+    for premium clients. Click any project for the full case study.
+  </p>
+</section>
+
+<div class="filter-row">
+  <div class="filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="cgi">CGI · Packaging</button>
+    <button data-filter="identity">Identity</button>
+    <button data-filter="beauty">Beauty</button>
+    <button data-filter="premium">Premium Pralines</button>
+    <button data-filter="kids">Kids &amp; Sweets</button>
+  </div>
+  <div class="filter-counter" id="counter">16 projects</div>
+</div>
+
+<section class="grid" id="grid">
+
+  <!-- ===== 6 FEATURED (реальные проекты сайта) ===== -->
+  <a class="card" href="work/ego.html" data-category="cgi">
+    <div class="card-tile">
+      <div class="card-tile-ph">EGO</div>
+      <img class="static-img" src="assets/img_EGO/Hero.png" alt="VOBRO EGO" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_EGO/hover.mp4"></video>
+      <div class="card-tile-meta"><span>01 / 16</span><span>2026</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">VOBRO EGO</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packaging</span><span class="tag">Campaign</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/replica.html" data-category="identity">
+    <div class="card-tile">
+      <div class="card-tile-ph">REPLICA</div>
+      <img class="static-img" src="assets/img_Replica/Hero.png" alt="Replica" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_Replica/hover.mp4"></video>
+      <div class="card-tile-meta"><span>02 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Replica Jazz Club</div>
+      <div class="card-tags"><span class="tag">Identity</span><span class="tag">Art Direction</span><span class="tag">CGI</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/guerlain.html" data-category="beauty">
+    <div class="card-tile">
+      <div class="card-tile-ph">GUERLAIN</div>
+      <img class="static-img" src="assets/img_Guerlian/Hero.png" alt="Guerlain" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_Guerlian/hover.mp4"></video>
+      <div class="card-tile-meta"><span>03 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Guerlain</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Fragrance</span><span class="tag">Beauty</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/petro.html" data-category="identity">
+    <div class="card-tile">
+      <div class="card-tile-ph">PETRO</div>
+      <img class="static-img" src="assets/img_Petro/Hero.jpg" alt="Petro Bistro" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_Petro/hover.mp4"></video>
+      <div class="card-tile-meta"><span>04 / 16</span><span>2026</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Petro Bistro</div>
+      <div class="card-tags"><span class="tag">Identity</span><span class="tag">Illustration</span><span class="tag">Art Direction</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/aoi.html" data-category="identity">
+    <div class="card-tile">
+      <div class="card-tile-ph">AOI</div>
+      <img class="static-img" src="assets/img_AOI/cold-open.jpg" alt="Aoi" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_AOI/hover.mp4"></video>
+      <div class="card-tile-meta"><span>05 / 16</span><span>2026</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Aoi</div>
+      <div class="card-tags"><span class="tag">Strategy</span><span class="tag">Identity</span><span class="tag">CGI</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/wow.html" data-category="kids">
+    <div class="card-tile">
+      <div class="card-tile-ph">WOW</div>
+      <img class="static-img" src="assets/img_WOW/hero.png" alt="WOW Marshmallow" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_WOW/hover.mp4"></video>
+      <div class="card-tile-meta"><span>06 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">WOW Marshmallow</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Campaign</span></div>
+    </div>
+  </a>
+
+  <!-- ===== 10 VOBRO SHOWCASE ===== -->
+  <a class="card" href="work/gryzzzli.html" data-category="kids">
+    <div class="card-tile">
+      <div class="card-tile-ph">GRYZZZLI</div>
+      <img class="static-img" src="assets/img_GRYZZZLI/hero.png" alt="Gryzzzli Bears" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_GRYZZZLI/hover.mp4"></video>
+      <div class="card-tile-meta"><span>07 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Gryzzzli Bears</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Lifestyle</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/love-cherry.html" data-category="premium">
+    <div class="card-tile">
+      <div class="card-tile-ph">LOVE &amp; CHERRY</div>
+      <img class="static-img" src="assets/img_LOVECHERRY/hero.png" alt="Love & Cherry" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_LOVECHERRY/hover.mp4"></video>
+      <div class="card-tile-meta"><span>08 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Love &amp; Cherry</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Editorial</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/cherry-roses.html" data-category="premium">
+    <div class="card-tile">
+      <div class="card-tile-ph">CHERRY ROSES</div>
+      <img class="static-img" src="assets/img_CHERRYROSES/hero.png" alt="Cherry Roses" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_CHERRYROSES/hover.mp4"></video>
+      <div class="card-tile-meta"><span>09 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Cherry Roses</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Detail</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/hazelnut-passion.html" data-category="premium">
+    <div class="card-tile">
+      <div class="card-tile-ph">HAZELNUT PASSION</div>
+      <img class="static-img" src="assets/img_HAZELNUTPASSION/hero.png" alt="Hazelnut Passion" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_HAZELNUTPASSION/hover.mp4"></video>
+      <div class="card-tile-meta"><span>10 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Hazelnut Passion</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Macro</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/cherry-passion.html" data-category="premium">
+    <div class="card-tile">
+      <div class="card-tile-ph">CHERRY PASSION</div>
+      <img class="static-img" src="assets/img_CHERRYPASSION/hero.png" alt="Cherry Passion" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_CHERRYPASSION/hover.mp4"></video>
+      <div class="card-tile-meta"><span>11 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Cherry Passion</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Macro</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/frutti-di-mare.html" data-category="premium">
+    <div class="card-tile">
+      <div class="card-tile-ph">FRUTTI DI MARE</div>
+      <img class="static-img" src="assets/img_FRUTTIDIMARE/hero.png" alt="Frutti di Mare" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_FRUTTIDIMARE/hover.mp4"></video>
+      <div class="card-tile-meta"><span>12 / 16</span><span>2024</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Frutti di Mare</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Lineup</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/delissimo.html" data-category="premium">
+    <div class="card-tile">
+      <div class="card-tile-ph">DELISSIMO</div>
+      <img class="static-img" src="assets/img_DELISSIMO/hero.png" alt="Delissimo" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_DELISSIMO/hover.mp4"></video>
+      <div class="card-tile-meta"><span>13 / 16</span><span>2024</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Delissimo</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Lineup</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/dot-jelly.html" data-category="kids">
+    <div class="card-tile">
+      <div class="card-tile-ph">DOT JELLY</div>
+      <img class="static-img" src="assets/img_DOTJELLY/hero.png" alt="Dot Jelly" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_DOTJELLY/hover.mp4"></video>
+      <div class="card-tile-meta"><span>14 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">Dot Jelly</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packshot</span><span class="tag">Lifestyle</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/pzpn.html" data-category="identity">
+    <div class="card-tile">
+      <div class="card-tile-ph">PZPN</div>
+      <img class="static-img" src="assets/img_PZPN/hero.png" alt="PZPN Identity" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img_PZPN/hover.mp4"></video>
+      <div class="card-tile-meta"><span>15 / 16</span><span>2025</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">PZPN — Identity</div>
+      <div class="card-tags"><span class="tag">Visualization</span><span class="tag">Identity Mockup</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="work/project-template.html" data-category="cgi">
+    <div class="card-tile">
+      <div class="card-tile-ph">SUNSOLVE MD</div>
+      <img class="static-img" src="assets/img/sunsolve-hero.png" alt="SunsolveMD" onerror="this.style.display='none'" />
+      <video class="anim-media" muted loop playsinline preload="none" data-src="assets/img/sunsolve-hover.mp4"></video>
+      <div class="card-tile-meta"><span>16 / 16</span><span>2026</span></div>
+    </div>
+    <div class="card-caption">
+      <div class="card-name">SunsolveMD</div>
+      <div class="card-tags"><span class="tag">CGI</span><span class="tag">Packaging</span><span class="tag">Beauty</span></div>
+    </div>
+  </a>
+
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="site-footer__label">— Contact</div>
+  <h2>Let's make an<br>impact together.</h2>
+  <a href="mailto:studio@davidova.studio" class="mail">studio@davidova.studio</a>
+  <div class="site-footer__bottom">
+    <span>© 2026 Alexandra Davidova · Warsaw · Worldwide</span>
+    <span>
+      <a href="#">Instagram</a> ·
+      <a href="#">Behance</a> ·
+      <a href="#">LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // FILTER
+  const buttons = document.querySelectorAll('.filters button');
+  const cards = document.querySelectorAll('.card');
+  const counter = document.getElementById('counter');
+  function applyFilter(f) {
+    let v = 0;
+    cards.forEach(c => {
+      const m = (f === 'all' || c.dataset.category === f);
+      c.style.display = m ? '' : 'none';
+      if (m) v++;
+    });
+    counter.textContent = v + ' project' + (v === 1 ? '' : 's');
+  }
+  buttons.forEach(b => b.addEventListener('click', () => {
+    buttons.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    applyFilter(b.dataset.filter);
+  }));
+  // HOVER VIDEO
+  cards.forEach(card => {
+    const video = card.querySelector('.anim-media');
+    if (!video) return;
+    let loaded = false;
+    card.addEventListener('mouseenter', () => {
+      if (!loaded && video.dataset.src) { video.src = video.dataset.src; video.load(); loaded = true; }
+      const p = video.play(); if (p !== undefined) p.catch(() => {});
+    });
+    card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    video.addEventListener('error', () => { video.style.display = 'none'; });
+  });
+  document.querySelectorAll('.static-img').forEach(img => {
+    img.addEventListener('load', () => {
+      const ph = img.parentElement.querySelector('.card-tile-ph');
+      if (ph) ph.style.display = 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

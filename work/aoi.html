@@ -9,48 +9,49 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&family=Noto+Serif+JP:wght@200;300&family=Noto+Sans+JP:wght@100;200;300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@100;200;300;400&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
 <style>
 /* =========================================================
    AOI — Case Page
-   Inherits visual DNA from index.html
+   Davidova.Studio design system: black bg, Anton + Inter Tight + JetBrains Mono
+   Noto Serif/Sans JP retained for 青 (kanji is part of the concept)
    ========================================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 :root {
-  --ink: #0A0A0A;
-  --graphite: #141414;
-  --bone: #F0EDE6;
-  --paper: #E4E0D8;
-  --concrete: #C8C4BC;
-  --cold: #1C1C20;
-  --mid: #5A5A5A;
-  --accent: #8B2E1F;
-  --rule: rgba(10, 10, 10, 0.14);
-  --rule-light: rgba(10, 10, 10, 0.07);
+  --bg: #0a0a0a;
+  --bg-alt: #14120f;
+  --fg: #e8e6e1;
+  --muted: #6e6c66;
+  --line: #1f1d1a;
+  --tag-bg: #1a1816;
+  --tag-fg: #c9c6bf;
+  --accent: #ff2e16;
+  --tile-bg: #14120f;
+  --rule: rgba(232, 230, 225, 0.14);
+  --rule-light: rgba(232, 230, 225, 0.07);
 
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-jp-serif: 'Noto Serif JP', serif;
   --font-jp-sans: 'Noto Sans JP', sans-serif;
 
-  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --gutter: clamp(1.25rem, 2vw, 2.25rem);
   --section: clamp(4rem, 10vw, 8rem);
   --section-tight: clamp(2.5rem, 6vw, 5rem);
-
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   --max-w: 1440px;
   --reading-w: 62ch;
 }
 
 body {
-  background: var(--bone);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
@@ -60,1307 +61,1002 @@ body {
   overflow-x: hidden;
 }
 
-/* Inherits the same film grain overlay from index.html */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.04;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; }
 
-/* =========================================================
-   NAVIGATION — identical to index.html system
-   ========================================================= */
-.scroll-progress {
-  position: fixed;
-  top: 0; left: 0;
-  height: 1px;
-  width: 0;
-  background: var(--ink);
-  z-index: 101;
-  transition: width 0.1s linear;
+/* SLOT (image placeholder fallback) */
+.slot {
+  position: relative;
+  width: 100%;
+  background: var(--bg-alt);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
 }
-
-.nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 1.5rem var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  mix-blend-mode: difference;
-  color: var(--bone);
+.slot--4-5 { aspect-ratio: 4 / 5; }
+.slot--3-4 { aspect-ratio: 3 / 4; }
+.slot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: relative; z-index: 2;
 }
-
-.nav__back {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: gap 0.4s var(--ease-out-expo);
-}
-
-.nav__back:hover { gap: 0.85rem; }
-
-.nav__menu {
-  display: flex;
-  gap: 2rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.nav__link { position: relative; padding: 0.25rem 0; }
-
-.nav__link::after {
-  content: '';
+.slot::before {
+  content: attr(data-slot);
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s var(--ease-out-expo);
-}
-
-.nav__link:hover::after { transform: scaleX(1); }
-
-.wordmark {
-  position: fixed;
-  top: 1.65rem;
-  left: 50vw;
-  transform: translate(-50%, 0);
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  color: var(--bone);
-  white-space: nowrap;
-  z-index: 110;
-  mix-blend-mode: difference;
-}
-
-@media (max-width: 700px) {
-  .wordmark { font-size: 0.9rem; }
-  .nav__menu { display: none; }
-}
-
-/* =========================================================
-   COMMON ELEMENTS
-   ========================================================= */
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  inset: 0;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-}
-
-.section-label::before {
-  content: '';
-  display: inline-block;
-  width: 1.5rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(232, 230, 225, 0.18);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 1;
+  text-align: center;
+  padding: 1rem;
 }
 
 .divider {
-  width: 100%;
   height: 1px;
-  background: var(--rule);
-  margin: 0;
+  background: var(--line);
+  margin: 0 var(--gutter);
+}
+
+/* SCROLL PROGRESS */
+.scroll-progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; width: 0;
+  background: var(--accent);
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 22px var(--gutter);
+  display: flex; justify-content: space-between; align-items: center;
+  mix-blend-mode: difference;
+  color: var(--fg);
+}
+.nav__back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+.nav__back::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__back:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav__menu {
+  display: flex; gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.nav__link {
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav__link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* WORDMARK */
+.wordmark {
+  position: fixed; top: 1.55rem; left: 50vw;
+  transform: translate(-50%, 0);
+  z-index: 110;
+  mix-blend-mode: difference;
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.wordmark::after {
+  content: ""; display: inline-block;
+  width: 1.5rem; height: 2px;
+  background: currentColor;
+  margin: 0 0.5rem;
+  vertical-align: middle;
+  transition: width 0.4s var(--ease);
+}
+.wordmark:hover::after { width: 2.5rem; }
+
+/* SECTION LABEL */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  display: inline-block;
 }
 
 .caption {
+  display: block;
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  margin-top: 1rem;
-  display: block;
+  color: var(--muted);
+  margin-top: 12px;
+  letter-spacing: 0.04em;
 }
-
-/* Image slot — universal placeholder behavior matching index.html */
-.slot {
-  position: relative;
-  background: var(--graphite);
-  overflow: hidden;
-  width: 100%;
+.caption--overlay {
+  position: absolute;
+  bottom: 1rem; left: 1rem;
+  background: rgba(10,10,10,0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 6px 10px;
+  z-index: 3;
+  margin-top: 0;
+  border: 1px solid rgba(255,255,255,0.08);
 }
-
-.slot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.slot--4-5  { aspect-ratio: 4/5; }
-.slot--3-4  { aspect-ratio: 3/4; }
-.slot--1-1  { aspect-ratio: 1/1; }
-.slot--16-9 { aspect-ratio: 16/9; }
-.slot--3-2  { aspect-ratio: 3/2; }
-.slot--2-3  { aspect-ratio: 2/3; }
-.slot--5-4  { aspect-ratio: 5/4; }
-.slot--21-9 { aspect-ratio: 21/9; }
+.caption--dark { color: var(--fg); }
 
 /* =========================================================
-   01 — COLD OPEN (full-bleed hero photograph)
+   COLD OPEN — full-bleed first frame
    ========================================================= */
 .cold-open {
   position: relative;
-  height: 100vh;
-  min-height: 640px;
   width: 100%;
-  background: var(--ink);
+  height: 100vh;
+  min-height: 600px;
+  background: var(--bg);
   overflow: hidden;
 }
-
-.cold-open__image {
-  position: absolute;
-  inset: 0;
-}
-
-.cold-open__image img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-
 .cold-open__placeholder {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at 65% 70%, rgba(139, 46, 31, 0.18), transparent 60%),
-    radial-gradient(ellipse at 30% 40%, rgba(232, 228, 219, 0.06), transparent 65%),
-    linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+    radial-gradient(ellipse at 40% 50%, rgba(255, 46, 22, 0.08), transparent 60%),
+    linear-gradient(180deg, #14120f 0%, #0a0a0a 100%);
+  z-index: 1;
 }
-
+.cold-open__image {
+  position: absolute; inset: 0;
+  z-index: 2;
+}
+.cold-open__image .slot {
+  height: 100%;
+  aspect-ratio: auto;
+}
 .cold-open__meta {
-  position: absolute;
-  bottom: var(--gutter);
-  left: var(--gutter);
-  right: var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  color: var(--bone);
+  position: absolute; bottom: var(--gutter); left: var(--gutter); right: var(--gutter);
+  display: flex; justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.65;
+  font-size: 12px;
+  color: var(--fg);
+  z-index: 5;
+  mix-blend-mode: difference;
 }
 
 /* =========================================================
-   02 — TITLE CARD
+   TITLE CARD
    ========================================================= */
 .title-card {
   padding: var(--section) var(--gutter);
-  min-height: 80vh;
+  max-width: var(--max-w);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  gap: var(--section-tight);
+  min-height: 90vh;
   justify-content: space-between;
-  background: var(--bone);
 }
-
 .title-card__top {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  display: flex;
+  justify-content: space-between;
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  color: var(--muted);
 }
-
-.title-card__top > div:last-child { text-align: right; }
-
 .title-card__center {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin: 4rem 0;
+  max-width: 18ch;
 }
-
 .title-card__eyebrow {
   font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  font-size: 12px;
+  color: var(--muted);
 }
-
 .title-card__title {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 11vw, 10rem);
-  font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  font-size: clamp(3rem, 9vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
 }
-
-.title-card__title em {
-  font-style: italic;
-  color: var(--mid);
-}
-
+.title-card__title .accent { color: var(--accent); }
 .title-card__subtitle {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--mid);
-  max-width: 32ch;
-  line-height: 1.3;
+  margin-top: 1rem;
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 38ch;
+  color: var(--tag-fg);
 }
-
 .title-card__bottom {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.title-card__bottom dt {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 4px;
 }
-
-.title-card__bottom dt {
-  color: var(--mid);
-  margin-bottom: 0.5rem;
-}
-
 .title-card__bottom dd {
-  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 @media (max-width: 700px) {
-  .title-card__bottom { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .title-card__bottom { grid-template-columns: 1fr 1fr; }
 }
 
 /* =========================================================
-   03 — MANIFESTO PULL QUOTE + INTRO
+   MANIFESTO BLOCK
    ========================================================= */
 .manifesto-block {
   padding: var(--section) var(--gutter);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4rem;
-  background: var(--bone);
-}
-
-.manifesto-block__quote {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 8vw, 6.5rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  text-align: center;
-  max-width: 16ch;
-}
-
-.manifesto-block__quote em {
-  font-style: italic;
-  color: var(--mid);
-}
-
-.manifesto-block__intro {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
-  font-weight: 300;
-  line-height: 1.5;
-  color: var(--graphite);
-  max-width: 48ch;
-  text-align: center;
-}
-
-/* =========================================================
-   04 — CONTEXT
-   ========================================================= */
-.context {
-  padding: var(--section) var(--gutter);
-  background: var(--paper);
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 6rem;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: end;
   max-width: var(--max-w);
   margin: 0 auto;
 }
-
-.context__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-}
-
-.context__body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: var(--reading-w);
-}
-
-.context__body p {
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  color: var(--graphite);
-}
-
-.context__body p:first-child {
+.manifesto-block__quote {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 300;
-  line-height: 1.4;
-  color: var(--ink);
-  letter-spacing: -0.005em;
+  font-size: clamp(3rem, 9vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.manifesto-block__quote .accent { color: var(--accent); }
+.manifesto-block__intro {
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 38ch;
+  color: var(--tag-fg);
 }
 
 @media (max-width: 900px) {
-  .context { grid-template-columns: 1fr; gap: 2rem; }
+  .manifesto-block { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 /* =========================================================
-   05–06 — HERO PHOTOGRAPHY DUO
+   CONTEXT
    ========================================================= */
-.hero-duo {
+.context {
+  padding: var(--section) var(--gutter);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--rule);
-  padding: 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
+  gap: 4rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
 }
-
-.hero-duo__cell {
-  position: relative;
+.context__body {
+  max-width: var(--reading-w);
+  font-size: 17px;
+  line-height: 1.65;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-
-.hero-duo > .hero-duo__cell > .slot { aspect-ratio: 4/5; }
-
-.caption--overlay {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  margin: 0;
-  color: var(--bone);
-  mix-blend-mode: difference;
-  z-index: 2;
-  pointer-events: none;
-}
+.context__body strong { color: var(--accent); font-weight: 400; font-style: italic; font-family: var(--font-jp-serif); }
 
 @media (max-width: 900px) {
+  .context { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* =========================================================
+   HERO DUO
+   ========================================================= */
+.hero-duo {
+  padding: var(--section-tight) var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.hero-duo__cell { position: relative; }
+
+@media (max-width: 700px) {
   .hero-duo { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
-   07 — MACRO 2x2 GRID
+   MACRO GRID
    ========================================================= */
 .macro-grid {
   padding: var(--section) var(--gutter);
-  background: var(--bone);
   max-width: var(--max-w);
   margin: 0 auto;
 }
-
 .macro-grid__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 3rem;
-  gap: 2rem;
+  margin-bottom: 4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: end;
 }
-
 .macro-grid__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 22ch;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .macro-grid__intro {
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--mid);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--tag-fg);
   max-width: 32ch;
 }
-
 .macro-grid__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: var(--gutter);
 }
-
-.macro-grid__item .caption { color: var(--graphite); }
+.macro-grid__item { position: relative; }
 
 @media (max-width: 700px) {
-  .macro-grid__header { flex-direction: column; align-items: flex-start; }
-  .macro-grid__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .macro-grid__header { grid-template-columns: 1fr; }
+  .macro-grid__inner { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
-   08 — MATERIAL STUDY (3 columns)
+   MATERIALS
    ========================================================= */
 .materials {
   padding: var(--section) var(--gutter);
-  background: var(--paper);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
 .materials__header {
-  margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
 }
-
 .materials__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 24ch;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .materials__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: var(--gutter);
 }
-
-.material {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
+.material { display: flex; flex-direction: column; gap: 0.75rem; }
 .material__num {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  color: var(--accent);
+  margin-top: 12px;
 }
-
 .material__name {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
-
 .material__desc {
-  font-size: 0.9375rem;
-  line-height: 1.6;
-  color: var(--mid);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--tag-fg);
+  max-width: 30ch;
 }
 
 @media (max-width: 900px) {
-  .materials__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .materials__grid { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
-   09 — CMF SYSTEM (three SKUs, full-bleed)
+   CMF SYSTEM
    ========================================================= */
 .cmf-system {
-  background: var(--bone);
-  padding: var(--section) 0 var(--section-tight);
-}
-
-.cmf-system__header {
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 4rem;
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.cmf-system__title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.025em;
-  max-width: 18ch;
-}
-
-.cmf-system__lede {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--mid);
-  max-width: 38ch;
-  align-self: end;
-}
-
-.cmf-system .slot { aspect-ratio: 16/9; }
-
-.cmf-system__labels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  padding: 2rem var(--gutter) 0;
+  padding: var(--section) var(--gutter);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
+.cmf-system__header {
+  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: end;
+}
+.cmf-system__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+}
+.cmf-system__lede {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--tag-fg);
+  max-width: 36ch;
+}
+.cmf-system__labels {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
 .cmf-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
+.cmf-label__sku {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+}
+.cmf-label__name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.005em;
+}
+.cmf-label__finish {
+  font-size: 13px;
+  color: var(--muted);
+}
 
-.cmf-label__sku { color: var(--mid); }
-.cmf-label__name { color: var(--ink); font-weight: 500; }
-.cmf-label__finish { color: var(--mid); text-transform: none; letter-spacing: 0.02em; font-size: 12px; }
-
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .cmf-system__header { grid-template-columns: 1fr; }
-  .cmf-system__labels { grid-template-columns: 1fr; gap: 1.25rem; }
+  .cmf-system__labels { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
-   10 — IDENTITY SYSTEM
+   IDENTITY
    ========================================================= */
 .identity {
   padding: var(--section) var(--gutter);
-  background: var(--paper);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
 .identity__header {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: 4rem;
+  align-items: end;
   margin-bottom: 4rem;
 }
-
 .identity__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .identity__copy {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--graphite);
-  max-width: var(--reading-w);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tag-fg);
+  max-width: 36ch;
 }
-
+.identity__copy .accent { color: var(--accent); }
 .identity__grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  gap: var(--gutter);
 }
-
 .identity__cell { position: relative; }
-
-.identity__primary { aspect-ratio: 3/2; }
-.identity__secondary { aspect-ratio: 3/4; }
-
-.caption--dark {
-  color: var(--ink) !important;
-  mix-blend-mode: normal !important;
-}
-
+.identity__primary { aspect-ratio: 16/10; }
+.identity__secondary { aspect-ratio: 1/1; }
 .identity__spec {
+  margin-top: 2.5rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  margin-top: 3rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--rule);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.identity__spec dt {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 4px;
 }
-
-.identity__spec dt {
-  color: var(--mid);
-  margin-bottom: 0.5rem;
+.identity__spec dd {
+  font-size: 14px;
+  font-weight: 500;
 }
-
-.identity__spec dd { color: var(--ink); }
 
 @media (max-width: 900px) {
   .identity__header { grid-template-columns: 1fr; gap: 2rem; }
   .identity__grid { grid-template-columns: 1fr; }
-  .identity__spec { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .identity__spec { grid-template-columns: 1fr 1fr; }
 }
 
 /* =========================================================
-   10B — BRAND ANALYSIS MODULE
-   Japanese brutalism × precision tech × Tokyo premium
+   BRAND HERO (kanji × Latin)
    ========================================================= */
-
-/* ── Full-bleed kanji hero ── */
 .brand-hero {
-  background: var(--cold);
-  min-height: 100vh;
+  background: var(--bg);
+  padding: var(--section) var(--gutter);
   display: flex;
   flex-direction: column;
+  gap: 4rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  min-height: 100vh;
   justify-content: space-between;
-  padding: var(--section) var(--gutter);
   position: relative;
-  overflow: hidden;
 }
-
-.brand-hero::before {
-  content: '青';
-  position: absolute;
-  right: -0.05em;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-jp-serif);
-  font-weight: 200;
-  font-size: clamp(40vw, 55vw, 60vw);
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(240,237,230,0.055);
-  pointer-events: none;
-  user-select: none;
-  letter-spacing: -0.04em;
-}
-
 .brand-hero__top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-.brand-hero__section-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: rgba(240,237,230,0.38);
+  color: var(--muted);
 }
-
-.brand-hero__coords {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: rgba(240,237,230,0.25);
-  text-align: right;
-  line-height: 1.8;
-}
+.brand-hero__section-label { color: var(--accent); }
+.brand-hero__coords { text-align: right; line-height: 1.5; }
 
 .brand-hero__center {
-  position: relative;
-  z-index: 2;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
-
 .brand-hero__mark {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  line-height: 1;
+  align-items: center;
+  gap: 1.5rem;
 }
-
 .brand-hero__kanji {
   font-family: var(--font-jp-serif);
   font-weight: 200;
-  font-size: clamp(7rem, 22vw, 18rem);
-  letter-spacing: -0.03em;
-  color: var(--bone);
-  line-height: 0.9;
+  font-size: clamp(8rem, 22vw, 20rem);
+  line-height: 0.85;
+  color: var(--fg);
+  letter-spacing: -0.02em;
 }
-
 .brand-hero__rule {
-  width: 100%;
-  max-width: clamp(10rem, 30vw, 26rem);
-  height: 1px;
-  background: rgba(240,237,230,0.22);
-  margin: 1.5rem 0 1rem;
+  width: 6rem; height: 2px;
+  background: var(--accent);
 }
-
 .brand-hero__latin {
-  font-family: var(--font-mono);
-  font-size: clamp(0.55rem, 1.1vw, 0.75rem);
-  letter-spacing: 0.65em;
-  text-transform: uppercase;
-  color: rgba(240,237,230,0.45);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  letter-spacing: -0.015em;
+  color: var(--fg);
 }
-
 .brand-hero__bottom {
-  position: relative;
-  z-index: 2;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  border-top: 1px solid rgba(240,237,230,0.1);
+  gap: 1.5rem;
   padding-top: 2rem;
+  border-top: 1px solid var(--line);
 }
-
 .brand-hero__stat {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 4px;
 }
-
 .brand-hero__stat-label {
   font-family: var(--font-mono);
   font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: rgba(240,237,230,0.3);
+  color: var(--muted);
 }
-
 .brand-hero__stat-val {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2vw, 1.375rem);
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  color: rgba(240,237,230,0.85);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 @media (max-width: 700px) {
-  .brand-hero__bottom { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .brand-hero__bottom { grid-template-columns: 1fr 1fr; }
 }
 
-/* ── Construction breakdown ── */
+/* =========================================================
+   BRAND CONSTRUCTION
+   ========================================================= */
 .brand-construction {
-  background: var(--cold);
-  padding: 0 var(--gutter) var(--section);
+  background: var(--bg);
+  padding: var(--section) var(--gutter);
+  border-bottom: 1px solid var(--line);
 }
-
 .brand-construction__inner {
   max-width: var(--max-w);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  border: 1px solid rgba(240,237,230,0.1);
+  gap: 4rem;
 }
-
 .brand-construction__cell {
-  padding: 3rem 2.5rem;
-  border: 1px solid rgba(240,237,230,0.07);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  position: relative;
+  gap: 1.25rem;
 }
-
-.brand-construction__cell--full {
-  grid-column: 1 / -1;
-  border-top: 1px solid rgba(240,237,230,0.1);
-}
+.brand-construction__cell--full { grid-column: 1 / -1; }
 
 .brand-construction__cell-num {
   font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgba(240,237,230,0.25);
+  font-size: 11px;
+  color: var(--accent);
 }
-
 .brand-construction__cell-title {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--bone);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
 }
-
 .brand-construction__cell-body {
-  font-size: 0.9rem;
-  line-height: 1.75;
-  color: rgba(240,237,230,0.55);
-  max-width: 44ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--tag-fg);
+  max-width: 50ch;
 }
-
 .brand-construction__cell-body strong {
-  color: rgba(240,237,230,0.88);
-  font-weight: 400;
+  color: var(--accent);
+  font-weight: 500;
 }
 
-/* Stroke anatomy visual */
 .stroke-anatomy {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2rem;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.brand-construction__cell-kanji-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stroke-anatomy__annotations {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding-top: 1rem;
+  gap: 0.75rem;
 }
-
-.stroke-anatomy__kanji-display {
-  font-family: var(--font-jp-serif);
-  font-weight: 200;
-  font-size: clamp(4rem, 10vw, 8rem);
-  line-height: 1;
-  color: var(--bone);
-  position: relative;
-  display: inline-block;
-}
-
-.stroke-anatomy__annotations {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
 .stroke-annotation {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding-left: 1rem;
-  border-left: 1px solid rgba(240,237,230,0.15);
 }
-
 .stroke-annotation__label {
   font-family: var(--font-mono);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgba(240,237,230,0.3);
+  font-size: 10px;
+  color: var(--muted);
 }
-
 .stroke-annotation__val {
-  font-size: 0.875rem;
-  color: rgba(240,237,230,0.65);
-  line-height: 1.4;
+  font-size: 13px;
+  font-family: var(--font-jp-sans);
+  font-weight: 300;
+  color: var(--fg);
 }
 
-/* Wordmark lockup applications */
 .lockup-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(240,237,230,0.06);
+  gap: 1rem;
+  margin-top: 1rem;
 }
-
 .lockup-cell {
-  background: var(--cold);
-  padding: 2.5rem 2rem;
+  background: var(--bg-alt);
+  padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
-  min-height: 200px;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--line);
 }
-
-.lockup-cell--inv { background: var(--bone); }
-
+.lockup-cell--inv {
+  background: var(--fg);
+  color: var(--bg);
+}
 .lockup-cell__context {
   font-family: var(--font-mono);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgba(240,237,230,0.25);
+  font-size: 10px;
+  color: var(--muted);
 }
-
-.lockup-cell--inv .lockup-cell__context { color: rgba(10,10,10,0.35); }
-
-/* Wordmark variants rendered in CSS */
 .wm-seal {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  line-height: 1;
+  align-items: center;
+  gap: 0.5rem;
 }
-
 .wm-seal__k {
   font-family: var(--font-jp-serif);
   font-weight: 200;
-  color: var(--bone);
-  line-height: 0.95;
+  color: var(--fg);
+  line-height: 1;
 }
-
-.wm-seal__k--xl  { font-size: clamp(2.5rem, 5vw, 3.5rem); }
-.wm-seal__k--lg  { font-size: 2rem; }
-.wm-seal__k--sm  { font-size: 1.2rem; }
-
+.wm-seal__k--xl { font-size: 4rem; }
+.wm-seal__k--lg { font-size: 2.5rem; }
 .wm-seal__hr {
   height: 1px;
-  background: rgba(240,237,230,0.2);
-  margin: 0.6rem 0 0.45rem;
+  background: var(--fg);
 }
-
 .wm-seal__l {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.55em;
-  color: rgba(240,237,230,0.4);
+  font-family: var(--font-display);
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.wm-seal__l--xl { font-size: 1.75rem; }
+.wm-seal__l--lg { font-size: 1.25rem; }
+.wm-seal--inv .wm-seal__k,
+.wm-seal--inv .wm-seal__l,
+.wm-seal--inv .wm-seal__hr { color: var(--bg); background: var(--bg); }
+.wm-seal--inv .wm-seal__hr { background: var(--bg); }
+
+@media (max-width: 900px) {
+  .brand-construction__inner { grid-template-columns: 1fr; gap: 3rem; }
+  .stroke-anatomy { grid-template-columns: 1fr; }
+  .lockup-grid { grid-template-columns: 1fr; }
 }
 
-.wm-seal__l--xl { font-size: 0.6rem; }
-.wm-seal__l--lg { font-size: 0.5rem; }
-.wm-seal__l--sm { font-size: 0.42rem; }
-
-/* inverted variants */
-.wm-seal--inv .wm-seal__k { color: var(--ink); }
-.wm-seal--inv .wm-seal__hr { background: rgba(10,10,10,0.18); }
-.wm-seal--inv .wm-seal__l { color: rgba(10,10,10,0.4); }
-
-/* ── Typography system breakdown ── */
+/* =========================================================
+   TYPE SYSTEM
+   ========================================================= */
 .type-system {
-  background: var(--ink);
+  background: var(--bg);
   padding: var(--section) var(--gutter);
+  border-bottom: 1px solid var(--line);
 }
-
 .type-system__inner {
   max-width: var(--max-w);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 4rem;
 }
-
-.type-system__header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: end;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(240,237,230,0.1);
-}
-
+.type-system__header { max-width: 50ch; }
 .type-system__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 300;
-  letter-spacing: -0.025em;
-  line-height: 1;
-  color: var(--bone);
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.5rem;
 }
-
 .type-system__intro {
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: rgba(240,237,230,0.5);
-  max-width: 42ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tag-fg);
 }
 
-.type-scale {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.type-scale__row {
-  display: grid;
-  grid-template-columns: 160px 1fr 120px;
-  gap: 2rem;
-  align-items: baseline;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(240,237,230,0.07);
-}
-
-.type-scale__meta {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgba(240,237,230,0.25);
-  line-height: 1.8;
-}
-
-.type-scale__sample { line-height: 1; }
-
-.type-scale__spec {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: rgba(240,237,230,0.22);
-  text-align: right;
-  line-height: 1.8;
-}
-
-/* Kanji × Latin optical alignment study */
 .optical-study {
+  background: var(--bg-alt);
+  padding: 3rem;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
-  padding: 3rem;
-  border: 1px solid rgba(240,237,230,0.1);
+  gap: 2rem;
+  border: 1px solid var(--line);
 }
-
 .optical-study__label {
   font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: rgba(240,237,230,0.3);
+  font-size: 11px;
+  color: var(--accent);
 }
-
 .optical-study__pair {
   display: flex;
-  align-items: baseline;
-  gap: 1.5rem;
-  position: relative;
-  overflow: hidden;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem 0;
 }
-
-.optical-study__pair::before {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  top: 50%;
-  height: 1px;
-  background: rgba(240,237,230,0.08);
-  pointer-events: none;
-}
-
 .optical-study__k {
   font-family: var(--font-jp-serif);
   font-weight: 200;
-  font-size: clamp(5rem, 14vw, 10rem);
-  line-height: 0.9;
-  color: var(--bone);
-  position: relative;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.85;
+  color: var(--fg);
 }
-
 .optical-study__sep {
-  width: 1px;
-  height: 6rem;
-  background: rgba(240,237,230,0.12);
-  align-self: center;
-  flex-shrink: 0;
+  width: 3rem; height: 2px;
+  background: var(--accent);
 }
-
 .optical-study__latin {
   font-family: var(--font-display);
-  font-weight: 200;
-  font-size: clamp(5rem, 14vw, 10rem);
-  letter-spacing: -0.045em;
-  line-height: 0.9;
-  color: var(--bone);
-  font-style: italic;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  letter-spacing: -0.015em;
+  color: var(--fg);
 }
-
 .optical-study__annotations {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(240,237,230,0.08);
+  border-top: 1px solid var(--line);
 }
-
-.oa {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
+.oa { display: flex; flex-direction: column; gap: 0.4rem; }
 .oa__l {
   font-family: var(--font-mono);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgba(240,237,230,0.25);
+  font-size: 10px;
+  color: var(--muted);
 }
-
 .oa__v {
-  font-size: 0.875rem;
-  color: rgba(240,237,230,0.6);
+  font-size: 13px;
+  color: var(--fg);
   line-height: 1.4;
 }
 
-/* Color system */
-.color-system {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1px;
-  background: rgba(240,237,230,0.08);
+@media (max-width: 700px) {
+  .optical-study__annotations { grid-template-columns: 1fr 1fr; }
 }
 
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+.type-scale__row {
+  display: grid;
+  grid-template-columns: 140px 1fr 200px;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.type-scale__meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.type-scale__sample { overflow: hidden; }
+.type-scale__spec {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .type-scale__row { grid-template-columns: 80px 1fr; }
+  .type-scale__spec { display: none; }
+}
+
+/* COLOR SYSTEM */
+.color-system {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
 .color-swatch {
+  aspect-ratio: 1 / 1.2;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 1.25rem 1.25rem;
-  min-height: 200px;
+  border: 1px solid var(--line);
+  position: relative;
 }
-
 .color-swatch__name {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
-
 .color-swatch__hex {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  opacity: 0.55;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 6px;
 }
-
 .color-swatch__role {
-  font-size: 0.75rem;
-  line-height: 1.5;
+  font-size: 11px;
+  line-height: 1.4;
   opacity: 0.7;
-  margin-top: 0.75rem;
 }
 
-@media (max-width: 900px) {
-  .brand-construction__inner { grid-template-columns: 1fr; }
-  .brand-construction__cell--full { grid-column: 1; }
-  .stroke-anatomy__annotations { grid-template-columns: 1fr; }
-  .lockup-grid { grid-template-columns: 1fr; }
-  .type-system__header { grid-template-columns: 1fr; }
-  .type-scale__row { grid-template-columns: 100px 1fr; }
-  .type-scale__spec { display: none; }
-  .optical-study__annotations { grid-template-columns: 1fr 1fr; }
-  .color-system { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 700px) {
+  .color-system { grid-template-columns: 1fr 1fr; }
 }
-
-
 
 /* =========================================================
-   11 — TYPOGRAPHY
+   TYPOGRAPHY DISPLAY (Aoi Sans)
    ========================================================= */
 .typography {
-  background: var(--bone);
-}
-
-.typography__display {
   padding: var(--section) var(--gutter);
-  text-align: center;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  border-top: 1px solid var(--line);
 }
-
 .typography__display-text {
   font-family: var(--font-display);
-  font-size: clamp(6rem, 22vw, 20rem);
-  font-weight: 300;
-  letter-spacing: -0.05em;
+  font-size: clamp(6rem, 18vw, 18rem);
   line-height: 0.85;
-  color: var(--ink);
+  letter-spacing: -0.03em;
 }
-
-.typography__display-text em {
-  font-style: italic;
-  color: var(--mid);
-}
-
+.typography__display-text .accent { color: var(--accent); }
 .typography__caption {
-  margin-top: 2rem;
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  color: var(--muted);
+  margin-top: 1rem;
+}
+.typography__spec-wrap { position: relative; }
+
+@media (max-width: 900px) {
+  .typography { grid-template-columns: 1fr; }
 }
 
-.typography__spec {
-  padding: 0 var(--gutter) var(--section);
+/* =========================================================
+   IN THE ROOM
+   ========================================================= */
+.in-the-room {
+  padding: var(--section) var(--gutter);
   max-width: var(--max-w);
   margin: 0 auto;
 }
-
-.typography__spec-wrap { position: relative; }
-
-.typography__spec .slot { aspect-ratio: 21/9; }
-
-/* =========================================================
-   12 — IN THE ROOM (lifestyle)
-   ========================================================= */
-.in-the-room {
-  background: var(--paper);
-  padding: var(--section) 0;
-}
-
 .in-the-room__header {
-  padding: 0 var(--gutter);
-  margin-bottom: 4rem;
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 3rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 3rem;
   align-items: end;
 }
-
 .in-the-room__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 20ch;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .in-the-room__lede {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.125rem;
-  line-height: 1.5;
-  color: var(--mid);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--tag-fg);
   max-width: 36ch;
 }
-
-.in-the-room__hero {
-  width: 100%;
-  margin-bottom: 1px;
-}
-
-.in-the-room__hero .slot { aspect-ratio: 16/9; }
-
+.in-the-room__hero { margin-bottom: var(--gutter); }
+.in-the-room__hero .slot { aspect-ratio: 21/9; }
 .in-the-room__duo {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--rule);
+  gap: var(--gutter);
 }
+.in-the-room__cell { position: relative; }
 
-.in-the-room__duo .slot { aspect-ratio: 4/5; }
-
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .in-the-room__header { grid-template-columns: 1fr; }
   .in-the-room__duo { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
-   13 — PACKAGING SEQUENCE
+   PACKAGING
    ========================================================= */
 .packaging {
   padding: var(--section) var(--gutter);
-  background: var(--bone);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
 .packaging__header {
   margin-bottom: 4rem;
   display: flex;
@@ -1368,288 +1064,208 @@ img, video { max-width: 100%; display: block; }
   gap: 1.5rem;
   max-width: 60ch;
 }
-
 .packaging__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .packaging__copy {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--graphite);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tag-fg);
 }
-
 .packaging__sequence {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto auto;
-  gap: 1.5rem;
+  gap: var(--gutter);
 }
-
-.packaging__sequence .slot { aspect-ratio: 4/5; }
-
-.packaging__step {
-  display: flex;
-  flex-direction: column;
-}
-
+.packaging__step { position: relative; }
+.packaging__step .slot { aspect-ratio: 4/5; }
 .packaging__step-num {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  margin-top: 0.75rem;
   display: flex;
   justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
 }
+.packaging__step-num span:first-child { color: var(--accent); }
 
 @media (max-width: 700px) {
   .packaging__sequence { grid-template-columns: 1fr 1fr; }
 }
 
 /* =========================================================
-   14 — COMPANION APP
+   APP
    ========================================================= */
 .app {
   padding: var(--section) var(--gutter);
-  background: var(--paper);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
 .app__header {
   margin-bottom: 4rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 60ch;
 }
-
 .app__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 18ch;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .app__copy {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--graphite);
-  max-width: 42ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tag-fg);
 }
-
 .app__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: var(--gutter);
+}
+.app__screen { display: flex; flex-direction: column; gap: 1rem; }
+.app__screen .slot { aspect-ratio: 9/16; }
+.app__screen-name {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  margin-top: 0.5rem;
+}
+.app__screen-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--tag-fg);
 }
 
-.app__screen {
+@media (max-width: 700px) {
+  .app__grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   CAMPAIGN
+   ========================================================= */
+.campaign {
+  padding: var(--section) var(--gutter);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+}
+.campaign__header {
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.campaign__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+}
+.campaign__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.campaign__title .accent { color: var(--accent); }
+.campaign__frame {
+  margin-bottom: var(--section-tight);
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-
-.app__screen .slot { aspect-ratio: 9/19; }
-
-.app__screen-name {
+.campaign__frame .slot { aspect-ratio: 16/10; }
+.campaign__copy {
   font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 400;
-  letter-spacing: -0.005em;
+  font-size: clamp(1.5rem, 3.5vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin-top: 1rem;
 }
-
-.app__screen-desc {
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--mid);
-  max-width: 28ch;
-}
-
-@media (max-width: 900px) {
-  .app__header { grid-template-columns: 1fr; }
-  .app__grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; gap: 3rem; }
-}
-
-/* =========================================================
-   15 — CAMPAIGN FRAMES
-   ========================================================= */
-.campaign {
-  background: var(--ink);
-  padding: var(--section) 0;
-  color: var(--bone);
-}
-
-.campaign__header {
-  padding: 0 var(--gutter);
-  margin-bottom: 4rem;
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.campaign__label {
+.campaign__credit {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(245, 242, 236, 0.5);
-  margin-bottom: 1.5rem;
-}
-
-.campaign__title {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 7vw, 6rem);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  max-width: 14ch;
-}
-
-.campaign__title em {
-  font-style: italic;
-  color: rgba(245, 242, 236, 0.45);
-}
-
-.campaign__frame {
-  width: 100%;
-  position: relative;
-}
-
-.campaign__frame .slot {
-  aspect-ratio: 16/9;
-  background: var(--graphite);
-}
-
-.campaign__frame:not(:last-of-type) { margin-bottom: var(--section-tight); }
-
-.campaign__copy {
-  position: absolute;
-  bottom: var(--gutter);
-  left: var(--gutter);
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  font-weight: 300;
-  color: var(--bone);
-  max-width: 24ch;
-  line-height: 1.3;
-  z-index: 2;
-  pointer-events: none;
-  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
-}
-
-.campaign__credit {
-  position: absolute;
-  bottom: var(--gutter);
-  right: var(--gutter);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(245, 242, 236, 0.55);
+  color: var(--muted);
 }
 
 /* =========================================================
-   16 — SPATIAL CONCEPT
+   SPATIAL
    ========================================================= */
 .spatial {
   padding: var(--section) var(--gutter);
-  background: var(--bone);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
 .spatial__header {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 3rem;
   align-items: end;
 }
-
 .spatial__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 20ch;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
 }
-
 .spatial__lede {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--mid);
-  max-width: 42ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--tag-fg);
+  max-width: 36ch;
 }
-
 .spatial__hero .slot { aspect-ratio: 16/9; }
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .spatial__header { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
-   17 — PROCESS STRIP
+   PROCESS
    ========================================================= */
 .process {
-  padding: var(--section) var(--gutter);
-  background: var(--paper);
+  padding: var(--section-tight) var(--gutter);
+  border-top: 1px solid var(--line);
+  background: var(--bg-alt);
 }
-
 .process__inner {
   max-width: var(--max-w);
   margin: 0 auto;
 }
-
 .process__header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 2.5rem;
-  gap: 2rem;
+  margin-bottom: 2rem;
 }
-
 .process__title {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  color: var(--muted);
 }
-
 .process__strip {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
-
 .process__strip .slot {
-  aspect-ratio: 4/5;
-  background: var(--graphite);
+  aspect-ratio: 1/1;
 }
-
 .process__strip .slot::after {
   content: attr(data-num);
   position: absolute;
-  top: 6px;
-  left: 6px;
+  top: 8px; left: 8px;
   font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--bone);
-  letter-spacing: 0.1em;
-  z-index: 2;
-  mix-blend-mode: difference;
-  opacity: 0.8;
+  font-size: 10px;
+  color: var(--accent);
+  z-index: 3;
 }
 
 @media (max-width: 900px) {
@@ -1657,100 +1273,86 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* =========================================================
-   18 — CREDITS
+   CREDITS
    ========================================================= */
 .credits {
   padding: var(--section) var(--gutter);
-  background: var(--bone);
   max-width: var(--max-w);
   margin: 0 auto;
+  border-top: 1px solid var(--line);
 }
-
 .credits__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--rule);
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
 }
-
 .credits__group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 4px;
 }
-
 .credits__role {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  color: var(--muted);
 }
-
 .credits__name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: -0.005em;
-  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 @media (max-width: 900px) {
-  .credits__grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .credits__grid { grid-template-columns: 1fr 1fr; }
 }
 
 /* =========================================================
-   19 — NEXT PROJECT
+   NEXT PROJECT
    ========================================================= */
 .next-project {
   padding: var(--section) var(--gutter);
-  background: var(--ink);
-  color: var(--bone);
-  text-align: center;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
-
 .next-project__eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(245, 242, 236, 0.55);
+  color: var(--muted);
 }
-
 .next-project__link {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  transition: opacity 0.4s var(--ease-out-expo);
+  gap: 0.75rem;
+  transition: color 0.3s var(--ease);
 }
-
-.next-project__link:hover { opacity: 0.7; }
-
+.next-project__link:hover { color: var(--accent); }
 .next-project__title {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 300;
-  letter-spacing: -0.025em;
-  line-height: 1;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  position: relative;
+  padding-bottom: 4px;
+  display: inline-block;
 }
-
-.next-project__title em {
-  font-style: italic;
-  color: rgba(245, 242, 236, 0.5);
+.next-project__title::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
 }
-
+.next-project__link:hover .next-project__title::after {
+  transform: scaleX(1); transform-origin: left;
+}
 .next-project__meta {
   font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(245, 242, 236, 0.55);
+  font-size: 12px;
+  color: var(--muted);
 }
 
 /* =========================================================
@@ -1758,17 +1360,28 @@ img, video { max-width: 100%; display: block; }
    ========================================================= */
 .footer {
   padding: 3rem var(--gutter);
-  background: var(--ink);
-  color: rgba(245, 242, 236, 0.55);
+  background: var(--bg);
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  border-top: 1px solid rgba(245, 242, 236, 0.1);
+  border-top: 1px solid var(--line);
 }
+.footer a {
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.3s var(--ease);
+}
+.footer a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.footer a:hover { color: var(--fg); }
+.footer a:hover::after { transform: scaleX(1); transform-origin: left; }
 
 @media (max-width: 700px) {
   .footer { flex-direction: column; }
@@ -1783,14 +1396,15 @@ img, video { max-width: 100%; display: block; }
 
 <!-- Nav -->
 <nav class="nav" id="nav">
-  <a href="/index.html#projects" class="nav__back">← Index</a>
+  <a href="../index.html" class="nav__back">← Index</a>
   <div class="nav__menu">
-    <a href="/index.html#contact" class="nav__link">Contact</a>
+    <a href="../work.html" class="nav__link">Showcase</a>
+    <a href="../index.html#contact" class="nav__link">Contact</a>
   </div>
 </nav>
 
 <!-- Wordmark -->
-<a href="/index.html" class="wordmark">A — D</a>
+<a href="../index.html" class="wordmark">A<span></span>D</a>
 
 
 <!-- =========================================================
@@ -1799,17 +1413,13 @@ img, video { max-width: 100%; display: block; }
 <section class="cold-open">
   <div class="cold-open__placeholder"></div>
   <div class="cold-open__image">
-    <div class="slot" style="height:100%;aspect-ratio:auto;" data-slot="cold-open">
-      <img
-        src="assets/img/projects/img_Aoi/cold-open.jpg"
-        alt="Aoi — opening frame"
-        onerror="this.style.display='none'"
-      />
+    <div class="slot" data-slot="cold-open">
+      <img src="../assets/img_Aoi/cold-open.jpg" alt="Aoi — opening frame" onerror="this.style.display='none'" />
     </div>
   </div>
   <div class="cold-open__meta">
     <div>Aoi — Quiet Computing Object</div>
-    <div>Case study — 2026</div>
+    <div>Case study · 2026</div>
   </div>
 </section>
 
@@ -1819,13 +1429,13 @@ img, video { max-width: 100%; display: block; }
      ========================================================= -->
 <section class="title-card">
   <div class="title-card__top">
-    <div></div>
+    <div>— Case 01</div>
     <div>Warsaw — Kanagawa — 2026</div>
   </div>
 
   <div class="title-card__center">
     <span class="title-card__eyebrow">— A brand, an object, a system</span>
-    <h1 class="title-card__title">Aoi <em>—</em><br>Quiet Computing.</h1>
+    <h1 class="title-card__title">Aoi<span class="accent">.</span><br>Quiet Computing.</h1>
     <p class="title-card__subtitle">
       Brand strategy, identity, industrial design direction and visual system
       for an ambient memory companion.
@@ -1856,11 +1466,11 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     03 — MANIFESTO PULL QUOTE + INTRO
+     03 — MANIFESTO
      ========================================================= -->
 <section class="manifesto-block">
   <h2 class="manifesto-block__quote">
-    Made to be<br><em>forgotten.</em>
+    Made to be<br><span class="accent">forgotten.</span>
   </h2>
   <p class="manifesto-block__intro">
     Aoi listens. It does not interrupt. It does not respond.
@@ -1875,7 +1485,7 @@ img, video { max-width: 100%; display: block; }
      04 — CONTEXT
      ========================================================= -->
 <section class="context">
-  <div class="context__label">
+  <div>
     <span class="section-label">01 — Context</span>
   </div>
   <div class="context__body">
@@ -1893,7 +1503,7 @@ img, video { max-width: 100%; display: block; }
     <p>
       The brand is built on the same principle as the object: presence without
       noise. A wordmark, a circle, a horizon line. Three SKUs. One promise —
-      <em>memory, without the screen.</em>
+      <strong>memory, without the screen.</strong>
     </p>
   </div>
 </section>
@@ -1902,18 +1512,18 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     05–06 — HERO PHOTOGRAPHY DUO
+     05–06 — HERO DUO
      ========================================================= -->
 <section class="hero-duo">
   <div class="hero-duo__cell">
     <div class="slot slot--4-5" data-slot="hero-01-ink-front">
-      <img src="assets/img/projects/img_Aoi/01_hero_ink.jpg" alt="Aoi One — Ink, front view" onerror="this.style.display='none'" />
+      <img src="../assets/img_Aoi/01_hero_ink.jpg" alt="Aoi One — Ink, front view" onerror="this.style.display='none'" />
     </div>
     <span class="caption caption--overlay">R / 02 — Aoi One / Ink · Front</span>
   </div>
   <div class="hero-duo__cell">
     <div class="slot slot--4-5" data-slot="hero-02-stone-3q">
-      <img src="assets/img/projects/img_Aoi/02_hero_stone.jpg" alt="Aoi One — Stone, three-quarter view" onerror="this.style.display='none'" />
+      <img src="../assets/img_Aoi/02_hero_stone.jpg" alt="Aoi One — Stone, three-quarter view" onerror="this.style.display='none'" />
     </div>
     <span class="caption caption--overlay">R / 03 — Aoi One / Stone · 3/4 angle</span>
   </div>
@@ -1935,25 +1545,25 @@ img, video { max-width: 100%; display: block; }
   <div class="macro-grid__inner">
     <div class="macro-grid__item">
       <div class="slot slot--4-5" data-slot="macro-cork-base">
-        <img src="assets/img/projects/img_Aoi/03_macro_cork.jpg" alt="Cork base detail" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/03_macro_cork.jpg" alt="Cork base detail" onerror="this.style.display='none'" />
       </div>
       <span class="caption">R / 04 — Cork base, fine-grain natural</span>
     </div>
     <div class="macro-grid__item">
       <div class="slot slot--4-5" data-slot="macro-sapphire-top">
-        <img src="assets/img/projects/img_Aoi/04_macro_sapphire.jpg" alt="Sapphire glass top" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/04_macro_sapphire.jpg" alt="Sapphire glass top" onerror="this.style.display='none'" />
       </div>
       <span class="caption">R / 05 — Sapphire glass, 38mm</span>
     </div>
     <div class="macro-grid__item">
       <div class="slot slot--4-5" data-slot="macro-aluminium-edge">
-        <img src="assets/img/projects/img_Aoi/05_macro_edge.jpg" alt="Anodized aluminium edge" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/05_macro_edge.jpg" alt="Anodized aluminium edge" onerror="this.style.display='none'" />
       </div>
       <span class="caption">R / 06 — Anodized aluminium, satin</span>
     </div>
     <div class="macro-grid__item">
       <div class="slot slot--4-5" data-slot="macro-horizon-line">
-        <img src="assets/img/projects/img_Aoi/06_macro_engraving.jpg" alt="Engraved horizon line" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/06_macro_engraving.jpg" alt="Engraved horizon line" onerror="this.style.display='none'" />
       </div>
       <span class="caption">R / 07 — Engraved horizon line, 0.2mm</span>
     </div>
@@ -1962,7 +1572,7 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     08 — MATERIAL STUDY
+     08 — MATERIALS
      ========================================================= -->
 <section class="materials">
   <header class="materials__header">
@@ -1973,7 +1583,7 @@ img, video { max-width: 100%; display: block; }
   <div class="materials__grid">
     <article class="material">
       <div class="slot slot--3-4" data-slot="material-stoneware">
-        <img src="assets/img/projects/img_Aoi/07_mat_stoneware.jpg" alt="Stoneware finish texture" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/07_mat_stoneware.jpg" alt="Stoneware finish texture" onerror="this.style.display='none'" />
       </div>
       <span class="material__num">R / 08</span>
       <h3 class="material__name">Stoneware finish</h3>
@@ -1985,7 +1595,7 @@ img, video { max-width: 100%; display: block; }
 
     <article class="material">
       <div class="slot slot--3-4" data-slot="material-brushed-alu">
-        <img src="assets/img/projects/img_Aoi/08_mat_aluminium.jpg" alt="Brushed aluminium texture" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/08_mat_aluminium.jpg" alt="Brushed aluminium texture" onerror="this.style.display='none'" />
       </div>
       <span class="material__num">R / 09</span>
       <h3 class="material__name">Brushed aluminium</h3>
@@ -1997,7 +1607,7 @@ img, video { max-width: 100%; display: block; }
 
     <article class="material">
       <div class="slot slot--3-4" data-slot="material-cork">
-        <img src="assets/img/projects/img_Aoi/09_mat_cork.jpg" alt="Cork grain detail" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/09_mat_cork.jpg" alt="Cork grain detail" onerror="this.style.display='none'" />
       </div>
       <span class="material__num">R / 10</span>
       <h3 class="material__name">Cork base</h3>
@@ -2022,8 +1632,8 @@ img, video { max-width: 100%; display: block; }
     </p>
   </header>
 
-  <div class="slot" data-slot="cmf-system-flatlay">
-    <img src="assets/img/projects/img_Aoi/10_cmf_system.jpg" alt="Aoi One — three SKUs, top-down" onerror="this.style.display='none'" />
+  <div class="slot" data-slot="cmf-system-flatlay" style="aspect-ratio:16/9;">
+    <img src="../assets/img_Aoi/10_cmf_system.jpg" alt="Aoi One — three SKUs, top-down" onerror="this.style.display='none'" />
     <span class="caption caption--overlay">R / 11 — Stone / Ink / Ash · Top-down</span>
   </div>
 
@@ -2048,7 +1658,7 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     10 — IDENTITY SYSTEM
+     10 — IDENTITY
      ========================================================= -->
 <section class="identity">
   <header class="identity__header">
@@ -2056,7 +1666,7 @@ img, video { max-width: 100%; display: block; }
     <div class="identity__copy">
       <p>
         Aoi means a colour that exists between blue and green — the colour of dawn
-        before the sun, of unripe fruit, of distance. A word for things not yet defined.
+        before the sun, of unripe fruit, of distance. <span class="accent">A word for things not yet defined.</span>
       </p>
       <p style="margin-top: 1rem;">
         The mark is a circle bisected by a thin horizontal line. A lens. A horizon.
@@ -2068,15 +1678,15 @@ img, video { max-width: 100%; display: block; }
   <div class="identity__grid">
     <div class="identity__cell">
       <div class="slot identity__primary" data-slot="identity-mark">
-        <img src="assets/img/projects/img_Aoi/11_identity_mark.jpg" alt="Aoi mark on uncoated paper" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/11_identity_mark.jpg" alt="Aoi mark on uncoated paper" onerror="this.style.display='none'" />
       </div>
-      <span class="caption caption--overlay caption--dark">R / 12 — Mark application · embossed paper</span>
+      <span class="caption caption--overlay">R / 12 — Mark application · embossed paper</span>
     </div>
     <div class="identity__cell">
       <div class="slot identity__secondary" data-slot="identity-wordmark">
-        <img src="assets/img/projects/img_Aoi/12_identity_wordmark.jpg" alt="Aoi wordmark construction" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/12_identity_wordmark.jpg" alt="Aoi wordmark construction" onerror="this.style.display='none'" />
       </div>
-      <span class="caption caption--overlay caption--dark">R / 13 — Wordmark construction</span>
+      <span class="caption caption--overlay">R / 13 — Wordmark construction</span>
     </div>
   </div>
 
@@ -2102,11 +1712,8 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     10B — BRAND ANALYSIS: TYPOGRAPHY & IDENTITY SYSTEM
-     Japanese Brutalism × Precision Tech × Tokyo Premium
+     10B — BRAND HERO (kanji × Latin)
      ========================================================= -->
-
-<!-- Full-bleed kanji hero -->
 <section class="brand-hero">
   <div class="brand-hero__top">
     <span class="brand-hero__section-label">05 — Identity System</span>
@@ -2145,7 +1752,10 @@ img, video { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- Construction breakdown cells -->
+
+<!-- =========================================================
+     10C — BRAND CONSTRUCTION
+     ========================================================= -->
 <section class="brand-construction">
   <div class="brand-construction__inner">
 
@@ -2160,7 +1770,7 @@ img, video { max-width: 100%; display: block; }
       </p>
       <div class="stroke-anatomy">
         <span class="brand-construction__cell-kanji-display">
-          <span style="font-family:var(--font-jp-serif);font-weight:200;font-size:clamp(3.5rem,8vw,5.5rem);color:var(--bone);line-height:1;">青</span>
+          <span style="font-family:var(--font-jp-serif);font-weight:200;font-size:clamp(3.5rem,8vw,5.5rem);color:var(--fg);line-height:1;">青</span>
         </span>
         <div class="stroke-anatomy__annotations">
           <div class="stroke-annotation">
@@ -2189,8 +1799,7 @@ img, video { max-width: 100%; display: block; }
         separates registers of text. The Latin below does not translate.
         It anchors the mark in a second language, as equals in different systems.
       </p>
-      <!-- Lockup scale grid -->
-      <div class="lockup-grid" style="margin-top:1rem;">
+      <div class="lockup-grid">
         <div class="lockup-cell">
           <span class="lockup-cell__context">Primary · Large</span>
           <div class="wm-seal">
@@ -2208,11 +1817,11 @@ img, video { max-width: 100%; display: block; }
           </div>
         </div>
         <div class="lockup-cell lockup-cell--inv">
-          <span class="lockup-cell__context" style="color:rgba(10,10,10,0.3);">Inverted · Emboss</span>
-          <div class="wm-seal wm-seal--inv">
-            <span class="wm-seal__k wm-seal__k--lg" style="color:var(--ink);">青</span>
-            <div class="wm-seal__hr" style="width:2.5rem;background:rgba(10,10,10,0.18);"></div>
-            <span class="wm-seal__l wm-seal__l--lg" style="color:rgba(10,10,10,0.4);">Aoi</span>
+          <span class="lockup-cell__context" style="color:rgba(10,10,10,0.4);">Inverted · Emboss</span>
+          <div class="wm-seal">
+            <span class="wm-seal__k wm-seal__k--lg" style="color:var(--bg);">青</span>
+            <div class="wm-seal__hr" style="width:2.5rem;background:rgba(10,10,10,0.25);"></div>
+            <span class="wm-seal__l wm-seal__l--lg" style="color:rgba(10,10,10,0.6);">Aoi</span>
           </div>
         </div>
       </div>
@@ -2222,8 +1831,8 @@ img, video { max-width: 100%; display: block; }
       <span class="brand-construction__cell-num">03 — Optical alignment: kanji × Latin</span>
       <h3 class="brand-construction__cell-title">Two scripts. One optical axis.</h3>
       <p class="brand-construction__cell-body" style="max-width:60ch;">
-        Noto Serif JP at weight 200 was chosen specifically because its <strong>cap-height
-        to em-square ratio</strong> aligns closely with Fraunces' ascender line at matching
+        Noto Serif JP at weight 200 was paired with Anton at display size specifically
+        because their <strong>cap-height to em-square ratio</strong> aligns at matching
         font-size. The optical baseline — not the mathematical baseline — is shared.
         This is not accidental. Mixing scripts without this calibration produces
         the visual discomfort that makes most Japanese-Latin lockups feel naive.
@@ -2234,7 +1843,10 @@ img, video { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- Typography system -->
+
+<!-- =========================================================
+     10D — TYPE SYSTEM
+     ========================================================= -->
 <section class="type-system">
   <div class="type-system__inner">
 
@@ -2262,7 +1874,7 @@ img, video { max-width: 100%; display: block; }
         </div>
         <div class="oa">
           <span class="oa__l">Latin typeface</span>
-          <span class="oa__v">Fraunces<br>Weight 200, italic</span>
+          <span class="oa__v">Anton<br>Display, condensed</span>
         </div>
         <div class="oa">
           <span class="oa__l">Alignment</span>
@@ -2280,93 +1892,107 @@ img, video { max-width: 100%; display: block; }
       <div class="type-scale__row">
         <div class="type-scale__meta">Display<br>Hero kanji</div>
         <div class="type-scale__sample">
-          <span style="font-family:var(--font-jp-serif);font-weight:200;font-size:clamp(4rem,10vw,7rem);color:var(--bone);line-height:0.9;letter-spacing:-0.02em;">青</span>
+          <span style="font-family:var(--font-jp-serif);font-weight:200;font-size:clamp(4rem,10vw,7rem);color:var(--fg);line-height:0.9;letter-spacing:-0.02em;">青</span>
         </div>
         <div class="type-scale__spec">Noto Serif JP<br>200 / clamp 7rem<br>lh 0.9</div>
       </div>
       <div class="type-scale__row">
         <div class="type-scale__meta">Display<br>Hero Latin</div>
         <div class="type-scale__sample">
-          <span style="font-family:var(--font-display);font-weight:300;font-size:clamp(3rem,8vw,5.5rem);color:var(--bone);line-height:0.9;letter-spacing:-0.04em;font-style:italic;">Quiet</span>
+          <span style="font-family:var(--font-display);font-size:clamp(3rem,8vw,5.5rem);color:var(--fg);line-height:0.9;letter-spacing:-0.02em;">Quiet</span>
         </div>
-        <div class="type-scale__spec">Fraunces<br>300 italic / clamp 5.5rem<br>ls −0.04em</div>
+        <div class="type-scale__spec">Anton<br>display / clamp 5.5rem<br>ls −0.02em</div>
       </div>
       <div class="type-scale__row">
         <div class="type-scale__meta">Heading<br>Section</div>
         <div class="type-scale__sample">
-          <span style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.75rem,4vw,3rem);color:var(--bone);line-height:1.05;letter-spacing:-0.02em;">The object, observed.</span>
+          <span style="font-family:var(--font-display);font-size:clamp(1.75rem,4vw,3rem);color:var(--fg);line-height:1;letter-spacing:-0.01em;">The object, observed.</span>
         </div>
-        <div class="type-scale__spec">Fraunces<br>300 / clamp 3rem<br>ls −0.02em</div>
+        <div class="type-scale__spec">Anton<br>display / clamp 3rem<br>ls −0.01em</div>
       </div>
       <div class="type-scale__row">
         <div class="type-scale__meta">Body<br>Editorial</div>
         <div class="type-scale__sample">
-          <span style="font-family:var(--font-body);font-weight:300;font-size:1rem;color:rgba(240,237,230,0.6);line-height:1.7;">Technology that does not ask for attention.</span>
+          <span style="font-family:var(--font-body);font-weight:400;font-size:1rem;color:var(--tag-fg);line-height:1.6;">Technology that does not ask for attention.</span>
         </div>
-        <div class="type-scale__spec">Inter<br>300 / 1rem<br>lh 1.7</div>
+        <div class="type-scale__spec">Inter Tight<br>400 / 1rem<br>lh 1.6</div>
       </div>
       <div class="type-scale__row">
         <div class="type-scale__meta">Label<br>Metadata</div>
         <div class="type-scale__sample">
-          <span style="font-family:var(--font-mono);font-size:11px;color:rgba(240,237,230,0.3);text-transform:uppercase;letter-spacing:0.16em;">SKU 01 — Aoi One / Stone</span>
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:0.06em;">SKU 01 — Aoi One / Stone</span>
         </div>
-        <div class="type-scale__spec">JetBrains Mono<br>300 / 11px<br>ls 0.16em</div>
+        <div class="type-scale__spec">JetBrains Mono<br>400 / 11px<br>ls 0.06em</div>
       </div>
       <div class="type-scale__row" style="border-bottom:none;">
         <div class="type-scale__meta">Micro<br>System</div>
         <div class="type-scale__sample">
-          <span style="font-family:var(--font-mono);font-size:9px;color:rgba(240,237,230,0.22);text-transform:uppercase;letter-spacing:0.2em;">35.6762° N, 139.6503° E · 2026</span>
+          <span style="font-family:var(--font-mono);font-size:9px;color:rgba(232,230,225,0.3);letter-spacing:0.1em;">35.6762° N, 139.6503° E · 2026</span>
         </div>
-        <div class="type-scale__spec">JetBrains Mono<br>300 / 9px<br>ls 0.2em</div>
+        <div class="type-scale__spec">JetBrains Mono<br>400 / 9px<br>ls 0.1em</div>
       </div>
     </div>
 
-    <!-- Color system -->
+    <!-- Color system — Davidova system palette -->
     <div>
-      <div style="margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(240,237,230,0.1);">
-        <span style="font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:rgba(240,237,230,0.3);">— Color system · Tokyo concrete palette</span>
+      <div style="margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--line);">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted);">— Color system · Studio palette</span>
       </div>
       <div class="color-system">
-        <div class="color-swatch" style="background:#0A0A0A;color:#F0EDE6;">
-          <span class="color-swatch__name">Ink</span>
+        <div class="color-swatch" style="background:#0a0a0a;color:#e8e6e1;">
+          <span class="color-swatch__name">Bg</span>
           <div>
             <span class="color-swatch__hex">#0A0A0A</span>
-            <p class="color-swatch__role">Primary surface. Hardware body / Ink SKU</p>
+            <p class="color-swatch__role">Primary surface. Object body / Ink SKU</p>
           </div>
         </div>
-        <div class="color-swatch" style="background:#1C1C20;color:#F0EDE6;">
-          <span class="color-swatch__name">Cold</span>
+        <div class="color-swatch" style="background:#14120f;color:#e8e6e1;">
+          <span class="color-swatch__name">Bg Alt</span>
           <div>
-            <span class="color-swatch__hex">#1C1C20</span>
-            <p class="color-swatch__role">Campaign, identity sections, digital dark</p>
+            <span class="color-swatch__hex">#14120F</span>
+            <p class="color-swatch__role">Secondary dark, image placeholders</p>
           </div>
         </div>
-        <div class="color-swatch" style="background:#141414;color:#F0EDE6;">
-          <span class="color-swatch__name">Graphite</span>
+        <div class="color-swatch" style="background:#1a1816;color:#c9c6bf;">
+          <span class="color-swatch__name">Tag Bg</span>
           <div>
-            <span class="color-swatch__hex">#141414</span>
-            <p class="color-swatch__role">Image placeholders, secondary dark</p>
+            <span class="color-swatch__hex">#1A1816</span>
+            <p class="color-swatch__role">Capsule backgrounds, lockup tiles</p>
           </div>
         </div>
-        <div class="color-swatch" style="background:#C8C4BC;color:#0A0A0A;">
-          <span class="color-swatch__name">Concrete</span>
+        <div class="color-swatch" style="background:#1f1d1a;color:#c9c6bf;">
+          <span class="color-swatch__name">Line</span>
           <div>
-            <span class="color-swatch__hex">#C8C4BC</span>
-            <p class="color-swatch__role">Mid-tone. Brutalist texture reference</p>
+            <span class="color-swatch__hex">#1F1D1A</span>
+            <p class="color-swatch__role">Dividers, table borders</p>
           </div>
         </div>
-        <div class="color-swatch" style="background:#E4E0D8;color:#0A0A0A;">
-          <span class="color-swatch__name">Paper</span>
+        <div class="color-swatch" style="background:#6e6c66;color:#0a0a0a;">
+          <span class="color-swatch__name">Muted</span>
           <div>
-            <span class="color-swatch__hex">#E4E0D8</span>
-            <p class="color-swatch__role">Secondary light surface, material study</p>
+            <span class="color-swatch__hex">#6E6C66</span>
+            <p class="color-swatch__role">Mono labels, metadata, captions</p>
           </div>
         </div>
-        <div class="color-swatch" style="background:#F0EDE6;color:#0A0A0A;">
-          <span class="color-swatch__name">Bone</span>
+        <div class="color-swatch" style="background:#c9c6bf;color:#0a0a0a;">
+          <span class="color-swatch__name">Tag Fg</span>
           <div>
-            <span class="color-swatch__hex">#F0EDE6</span>
-            <p class="color-swatch__role">Primary light surface. Stone SKU reference</p>
+            <span class="color-swatch__hex">#C9C6BF</span>
+            <p class="color-swatch__role">Body copy on dark, secondary text</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#e8e6e1;color:#0a0a0a;">
+          <span class="color-swatch__name">Fg</span>
+          <div>
+            <span class="color-swatch__hex">#E8E6E1</span>
+            <p class="color-swatch__role">Primary text. Stone SKU reference</p>
+          </div>
+        </div>
+        <div class="color-swatch" style="background:#ff2e16;color:#e8e6e1;">
+          <span class="color-swatch__name">Accent</span>
+          <div>
+            <span class="color-swatch__hex">#FF2E16</span>
+            <p class="color-swatch__role">Single emphasis. The 'horizon' colour</p>
           </div>
         </div>
       </div>
@@ -2376,20 +2002,22 @@ img, video { max-width: 100%; display: block; }
 </section>
 
 
-  <div class="typography__display">
+<!-- =========================================================
+     11 — TYPOGRAPHY DISPLAY (Aoi Sans)
+     ========================================================= -->
+<section class="typography">
+  <div>
     <div class="typography__display-text">
-      Ao<em>i</em>
+      Ao<span class="accent">i</span>
     </div>
     <p class="typography__caption">Aoi Sans — semi-serif, custom, in development</p>
   </div>
 
-  <div class="typography__spec">
-    <div class="typography__spec-wrap">
-      <div class="slot" data-slot="typography-specimen">
-        <img src="assets/img/projects/img_Aoi/13_type_specimen.jpg" alt="Aoi Sans type specimen" onerror="this.style.display='none'" />
-      </div>
-      <span class="caption caption--overlay">R / 14 — Aoi Sans · type specimen</span>
+  <div class="typography__spec-wrap">
+    <div class="slot" data-slot="typography-specimen" style="aspect-ratio:4/5;">
+      <img src="../assets/img_Aoi/13_type_specimen.jpg" alt="Aoi Sans type specimen" onerror="this.style.display='none'" />
     </div>
+    <span class="caption caption--overlay">R / 14 — Aoi Sans · type specimen</span>
   </div>
 </section>
 
@@ -2409,7 +2037,7 @@ img, video { max-width: 100%; display: block; }
   <div class="in-the-room__hero">
     <div class="in-the-room__cell">
       <div class="slot" data-slot="lifestyle-desk">
-        <img src="assets/img/projects/img_Aoi/14_lifestyle_desk.jpg" alt="Aoi on writer's desk" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/14_lifestyle_desk.jpg" alt="Aoi on writer's desk" onerror="this.style.display='none'" />
       </div>
       <span class="caption caption--overlay">R / 15 — Tokyo architect's desk</span>
     </div>
@@ -2418,13 +2046,13 @@ img, video { max-width: 100%; display: block; }
   <div class="in-the-room__duo">
     <div class="in-the-room__cell">
       <div class="slot" data-slot="lifestyle-kitchen">
-        <img src="assets/img/projects/img_Aoi/15_lifestyle_shelf.jpg" alt="Aoi on kitchen shelf" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/15_lifestyle_shelf.jpg" alt="Aoi on kitchen shelf" onerror="this.style.display='none'" />
       </div>
       <span class="caption caption--overlay">R / 16 — Midnight kitchen, Shibuya</span>
     </div>
     <div class="in-the-room__cell">
       <div class="slot" data-slot="lifestyle-studio">
-        <img src="assets/img/projects/img_Aoi/16_lifestyle_studio.jpg" alt="Aoi in ceramicist's studio" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/16_lifestyle_studio.jpg" alt="Aoi in ceramicist's studio" onerror="this.style.display='none'" />
       </div>
       <span class="caption caption--overlay">R / 17 — Ceramicist studio, Yanaka</span>
     </div>
@@ -2433,7 +2061,7 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     13 — PACKAGING SEQUENCE
+     13 — PACKAGING
      ========================================================= -->
 <section class="packaging">
   <header class="packaging__header">
@@ -2449,37 +2077,37 @@ img, video { max-width: 100%; display: block; }
   <div class="packaging__sequence">
     <div class="packaging__step">
       <div class="slot" data-slot="package-01-closed">
-        <img src="assets/img/projects/img_Aoi/17_pkg_01.jpg" alt="Packaging step 01" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/17_pkg_01.jpg" alt="Packaging step 01" onerror="this.style.display='none'" />
       </div>
       <span class="packaging__step-num"><span>01</span><span>Closed</span></span>
     </div>
     <div class="packaging__step">
       <div class="slot" data-slot="package-02-emboss">
-        <img src="assets/img/projects/img_Aoi/18_pkg_02.jpg" alt="Packaging step 02" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/18_pkg_02.jpg" alt="Packaging step 02" onerror="this.style.display='none'" />
       </div>
       <span class="packaging__step-num"><span>02</span><span>Mark, embossed</span></span>
     </div>
     <div class="packaging__step">
       <div class="slot" data-slot="package-03-lid">
-        <img src="assets/img/projects/img_Aoi/19_pkg_03.jpg" alt="Packaging step 03" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/19_pkg_03.jpg" alt="Packaging step 03" onerror="this.style.display='none'" />
       </div>
       <span class="packaging__step-num"><span>03</span><span>Lifting the lid</span></span>
     </div>
     <div class="packaging__step">
       <div class="slot" data-slot="package-04-canvas">
-        <img src="assets/img/projects/img_Aoi/20_pkg_04.jpg" alt="Packaging step 04" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/20_pkg_04.jpg" alt="Packaging step 04" onerror="this.style.display='none'" />
       </div>
       <span class="packaging__step-num"><span>04</span><span>Canvas, folded</span></span>
     </div>
     <div class="packaging__step">
       <div class="slot" data-slot="package-05-leaf">
-        <img src="assets/img/projects/img_Aoi/21_pkg_05.jpg" alt="Packaging step 05" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/21_pkg_05.jpg" alt="Packaging step 05" onerror="this.style.display='none'" />
       </div>
       <span class="packaging__step-num"><span>05</span><span>The leaf</span></span>
     </div>
     <div class="packaging__step">
       <div class="slot" data-slot="package-06-object">
-        <img src="assets/img/projects/img_Aoi/22_pkg_06.jpg" alt="Packaging step 06" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/22_pkg_06.jpg" alt="Packaging step 06" onerror="this.style.display='none'" />
       </div>
       <span class="packaging__step-num"><span>06</span><span>The object</span></span>
     </div>
@@ -2488,7 +2116,7 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     14 — COMPANION APP
+     14 — APP
      ========================================================= -->
 <section class="app">
   <header class="app__header">
@@ -2503,7 +2131,7 @@ img, video { max-width: 100%; display: block; }
   <div class="app__grid">
     <article class="app__screen">
       <div class="slot" data-slot="app-capture">
-        <img src="assets/img/projects/img_Aoi/23_app_capture.jpg" alt="Capture screen" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/23_app_capture.jpg" alt="Capture screen" onerror="this.style.display='none'" />
       </div>
       <h3 class="app__screen-name">Capture</h3>
       <p class="app__screen-desc">
@@ -2513,7 +2141,7 @@ img, video { max-width: 100%; display: block; }
 
     <article class="app__screen">
       <div class="slot" data-slot="app-day">
-        <img src="assets/img/projects/img_Aoi/24_app_day.jpg" alt="Day screen" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/24_app_day.jpg" alt="Day screen" onerror="this.style.display='none'" />
       </div>
       <h3 class="app__screen-name">Day</h3>
       <p class="app__screen-desc">
@@ -2524,7 +2152,7 @@ img, video { max-width: 100%; display: block; }
 
     <article class="app__screen">
       <div class="slot" data-slot="app-return">
-        <img src="assets/img/projects/img_Aoi/25_app_return.jpg" alt="Return screen" onerror="this.style.display='none'" />
+        <img src="../assets/img_Aoi/25_app_return.jpg" alt="Return screen" onerror="this.style.display='none'" />
       </div>
       <h3 class="app__screen-name">Return</h3>
       <p class="app__screen-desc">
@@ -2536,19 +2164,19 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     15 — CAMPAIGN FRAMES
+     15 — CAMPAIGN
      ========================================================= -->
 <section class="campaign">
   <header class="campaign__header">
     <p class="campaign__label">04 — Campaign</p>
     <h2 class="campaign__title">
-      Three frames<br>for one<br><em>quiet promise.</em>
+      Three frames<br>for one<br><span class="accent">quiet promise.</span>
     </h2>
   </header>
 
   <div class="campaign__frame">
     <div class="slot" data-slot="campaign-01-horizon">
-      <img src="assets/img/projects/img_Aoi/26_campaign_horizon.jpg" alt="Campaign frame — horizon" onerror="this.style.display='none'" />
+      <img src="../assets/img_Aoi/26_campaign_horizon.jpg" alt="Campaign frame — horizon" onerror="this.style.display='none'" />
     </div>
     <p class="campaign__copy">Made to be forgotten.</p>
     <span class="campaign__credit">Aoi — 01 / 03</span>
@@ -2556,7 +2184,7 @@ img, video { max-width: 100%; display: block; }
 
   <div class="campaign__frame">
     <div class="slot" data-slot="campaign-02-desk">
-      <img src="assets/img/projects/img_Aoi/27_campaign_desk.jpg" alt="Campaign frame — desk" onerror="this.style.display='none'" />
+      <img src="../assets/img_Aoi/27_campaign_desk.jpg" alt="Campaign frame — desk" onerror="this.style.display='none'" />
     </div>
     <p class="campaign__copy">Listens. Remembers. Returns.</p>
     <span class="campaign__credit">Aoi — 02 / 03</span>
@@ -2564,7 +2192,7 @@ img, video { max-width: 100%; display: block; }
 
   <div class="campaign__frame">
     <div class="slot" data-slot="campaign-03-still">
-      <img src="assets/img/projects/img_Aoi/28_campaign_still.jpg" alt="Campaign frame — still life" onerror="this.style.display='none'" />
+      <img src="../assets/img_Aoi/28_campaign_still.jpg" alt="Campaign frame — still life" onerror="this.style.display='none'" />
     </div>
     <p class="campaign__copy">Memory, without the screen.</p>
     <span class="campaign__credit">Aoi — 03 / 03</span>
@@ -2573,7 +2201,7 @@ img, video { max-width: 100%; display: block; }
 
 
 <!-- =========================================================
-     16 — SPATIAL CONCEPT
+     16 — SPATIAL
      ========================================================= -->
 <section class="spatial">
   <header class="spatial__header">
@@ -2587,14 +2215,14 @@ img, video { max-width: 100%; display: block; }
 
   <div class="spatial__hero">
     <div class="slot" data-slot="spatial-retail">
-      <img src="assets/img/projects/img_Aoi/29_spatial_retail.jpg" alt="Aoi retail spatial concept" onerror="this.style.display='none'" />
+      <img src="../assets/img_Aoi/29_spatial_retail.jpg" alt="Aoi retail spatial concept" onerror="this.style.display='none'" />
     </div>
   </div>
 </section>
 
 
 <!-- =========================================================
-     17 — PROCESS STRIP
+     17 — PROCESS
      ========================================================= -->
 <section class="process">
   <div class="process__inner">
@@ -2617,10 +2245,11 @@ img, video { max-width: 100%; display: block; }
 </section>
 
 
-
-
+<!-- =========================================================
+     18 — CREDITS
+     ========================================================= -->
 <section class="credits">
-  <span class="section-label" style="margin-bottom: 2rem; display: flex;">— Credits</span>
+  <span class="section-label">— Credits</span>
   <div class="credits__grid">
     <div class="credits__group">
       <span class="credits__role">Strategy & Identity</span>
@@ -2663,9 +2292,9 @@ img, video { max-width: 100%; display: block; }
      ========================================================= -->
 <section class="next-project">
   <span class="next-project__eyebrow">— Next</span>
-  <a href="/work/ego.html" class="next-project__link">
-    <span class="next-project__title">VOBRO <em>—</em> EGO</span>
-    <span class="next-project__meta">CGI · Packaging · Campaign · 2026</span>
+  <a href="work/gryzzzli.html" class="next-project__link">
+    <span class="next-project__title">Gryzzzli Bears</span>
+    <span class="next-project__meta">CGI · Packaging · Campaign · 2025</span>
   </a>
 </section>
 
@@ -2708,7 +2337,7 @@ img, video { max-width: 100%; display: block; }
   targets.forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.9s cubic-bezier(0.19,1,0.22,1), transform 0.9s cubic-bezier(0.19,1,0.22,1)';
+    el.style.transition = 'opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1)';
     io.observe(el);
   });
 })();

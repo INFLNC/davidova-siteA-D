@@ -12,435 +12,622 @@
      ============================================================ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
 
 <style>
-/* ============================================================
-   RESET + BRAND TOKENS — inherited from davidova.studio
-   ============================================================ */
+
+/* =========================================================
+   EGO — Davidova.Studio system
+   ========================================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 :root {
-  --ink: #0A0A0A;
-  --graphite: #1F1F1F;
-  --bone: #F5F2EC;
-  --paper: #E8E4DB;
-  --mid: #6B6B6B;
-  --accent: #8B2E1F;
+  --bg: #0a0a0a;
+  --bg-alt: #14120f;
+  --fg: #e8e6e1;
+  --muted: #6e6c66;
+  --line: #1f1d1a;
+  --tag-bg: #1a1816;
+  --tag-fg: #c9c6bf;
+  --accent: #ff2e16;
 
-  --font-display: 'Fraunces', 'PP Editorial New', Georgia, serif;
-  --font-body: 'Inter', 'PP Neue Montreal', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'PP Fraktion Mono', monospace;
+  /* EGO brand flavor colours — content tokens, not chrome */
+  --ego-pistachio: #1F5C2E;
+  --ego-plum:      #4B1F5C;
+  --ego-cherry:    #6B1228;
+  --ego-almond:    #E8DDC8;
+  --ego-hazelnut:  #3A2418;
+  --ego-gold:      #C9A84C;
 
-  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --ink: #0a0a0a;
+  --bone: #e8e6e1;
+
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.25rem, 2vw, 2.25rem);
   --section: clamp(4rem, 10vw, 8rem);
-
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --max-w: 1440px;
 }
 
 body {
-  background: var(--bone);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-/* Subtle film grain — same as main site */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.04;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 a { color: inherit; text-decoration: none; }
-img, video { max-width: 100%; display: block; }
+img, video { max-width: 100%; display: block; height: auto; }
 
-/* ============================================================
-   NAV — identical to main site, blends across pages
-   ============================================================ */
+em { font-style: normal; color: var(--accent); }
+
+/* ===== NAV ===== */
 .nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+  position: fixed; top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 1.5rem var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  mix-blend-mode: difference;
-  color: var(--bone);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px var(--gutter);
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
 }
-
 .nav__logo {
   font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  font-size: 22px;
+  letter-spacing: -0.005em;
+  display: inline-flex; align-items: center;
 }
-
+.nav__logo::after { content: "."; color: var(--accent); }
 .nav__logo-line {
   display: inline-block;
-  width: 1.5rem;
-  height: 1px;
+  width: 1.2rem; height: 1px;
   background: currentColor;
-  transition: width 0.4s var(--ease-out-expo);
+  margin: 0 6px;
 }
-
-.nav__logo:hover .nav__logo-line { width: 2.5rem; }
-
 .nav__menu {
-  display: flex;
-  gap: 2rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  display: flex; gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
 }
-
-.nav__link { position: relative; padding: 0.25rem 0; }
-.nav__link::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s var(--ease-out-expo);
-}
-.nav__link:hover::after { transform: scaleX(1); }
-
-/* ============================================================
-   CASE STUDY MODULES
-   Each .cs-module is one section in the case study
-   ============================================================ */
-.cs-module {
+.nav__link {
   position: relative;
-  padding: var(--section) var(--gutter);
+  padding-bottom: 4px;
+}
+.nav__link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ===== HERO ===== */
+.cs-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-alt);
+  overflow: hidden;
+}
+.cs-hero > img {
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+.cs-hero__meta {
+  position: absolute;
+  bottom: var(--gutter);
+  right: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg);
+  text-align: right;
+  z-index: 5;
+  mix-blend-mode: difference;
+  line-height: 1.6;
 }
 
-/* Background variants — match the brand surfaces */
-.cs-module--bone { background: var(--bone); color: var(--ink); }
-.cs-module--paper { background: var(--paper); color: var(--ink); }
-.cs-module--ink { background: var(--ink); color: var(--bone); }
-.cs-module--graphite { background: var(--graphite); color: var(--bone); }
-.cs-module--bleed { padding: 0; background: var(--ink); }
+/* ===== MODULE ===== */
+.cs-module {
+  padding: var(--section) var(--gutter);
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.cs-module:last-of-type { border-bottom: none; }
 
-/* Section header used at the top of most modules */
+/* All original EGO module backgrounds → studio black */
+.cs-module--bone,
+.cs-module--paper,
+.cs-module--graphite,
+.cs-module--almond { background: var(--bg); }
+
+/* Concept block — slightly darker */
+.cs-module--ink { background: var(--bg-alt); }
+
+/* Flavor modules — accent border for "world" feel without overwhelming colour */
+.cs-module--hazelnut { background: var(--bg); border-left: 4px solid var(--ego-hazelnut); }
+.cs-module--plum     { background: var(--bg); border-left: 4px solid var(--ego-plum); }
+.cs-module--pistachio{ background: var(--bg); border-left: 4px solid var(--ego-pistachio); }
+.cs-module--cherry   { background: var(--bg); border-left: 4px solid var(--ego-cherry); }
+
+/* Bleed = full-width image, no padding */
+.cs-module--bleed {
+  padding: 0;
+  background: var(--bg);
+}
+.cs-module--bleed > img,
+.cs-module--bleed img {
+  width: 100%; height: auto; display: block;
+}
+.cs-module--bleed .cs-caption {
+  padding: 12px var(--gutter);
+}
+
+/* ===== MODULE HEADER ===== */
 .cs-module-header {
+  max-width: var(--max-w);
+  margin: 0 auto 3rem;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.cs-module-header__title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.cs-module-header__meta {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  color: var(--muted);
 }
-.cs-module--ink .cs-module-header,
-.cs-module--graphite .cs-module-header { color: var(--mid); }
-.cs-module--ink .cs-module-header__title,
-.cs-module--graphite .cs-module-header__title { color: var(--bone); }
 
-.cs-module-header__title { color: var(--ink); }
-.cs-module-header__meta { color: var(--mid); }
+/* ===== INTRO ===== */
+.cs-intro {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+.cs-intro__metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.cs-intro__metadata > div {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cs-intro__metadata dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.cs-intro__metadata dd {
+  font-size: 14px;
+  font-weight: 500;
+}
+.cs-intro__wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 14rem);
+  line-height: 0.85;
+  letter-spacing: -0.025em;
+  display: block;
+  margin-bottom: 2rem;
+}
+.cs-intro__wordmark em { color: var(--accent); font-style: italic; }
+.cs-intro__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.cs-intro__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+}
+.cs-intro__headline em { color: var(--accent); font-style: normal; }
+.cs-intro__body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--tag-fg);
+  max-width: 60ch;
+}
+@media (max-width: 900px) {
+  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
+  .cs-intro__wordmark { font-size: clamp(4rem, 18vw, 8rem); }
+}
 
-/* Slot indicator — visible while you're building, hide on production */
+/* ===== CONCEPT ===== */
+.cs-concept {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+.cs-concept__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+}
+.cs-concept__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+.cs-concept__headline em { color: var(--accent); font-style: normal; }
+.cs-concept__body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--tag-fg);
+  max-width: 60ch;
+  margin-top: 1rem;
+}
+
+/* ===== GRIDS ===== */
+.cs-grid-3x3 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.cs-grid-3x3 > div { display: flex; flex-direction: column; }
+.cs-grid-3x3 > div > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.cs-grid-2 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.cs-grid-2 > div { display: flex; flex-direction: column; }
+.cs-grid-2 > div > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.cs-grid-3 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.cs-grid-3 > div { display: flex; flex-direction: column; }
+.cs-grid-3 > div > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.cs-grid-4 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.cs-grid-4 > div { display: flex; flex-direction: column; }
+@media (max-width: 700px) {
+  .cs-grid-3x3 { grid-template-columns: 1fr 1fr; }
+  .cs-grid-2, .cs-grid-3 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .cs-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+.cs-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* ===== SLOT placeholder ===== */
 .cs-slot {
   position: relative;
   width: 100%;
-  background: rgba(107, 107, 107, 0.08);
-  border: 1px dashed var(--mid);
+  background: var(--bg-alt);
+  border: 1px dashed var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  text-align: center;
+  color: var(--muted);
+  letter-spacing: 0.08em;
   padding: 2rem;
-}
-.cs-slot::before {
-  content: attr(data-slot-id);
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  font-size: 9px;
-  opacity: 0.7;
-}
-.cs-slot--render { aspect-ratio: 16/9; }
-.cs-slot--portrait { aspect-ratio: 4/5; }
-.cs-slot--square { aspect-ratio: 1/1; }
-.cs-slot--strip { aspect-ratio: 21/9; }
-
-.cs-caption {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
   text-align: center;
-}
-
-/* Grids */
-.cs-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.cs-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.cs-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.cs-grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-
-@media (max-width: 700px) {
-  .cs-grid-3, .cs-grid-4, .cs-grid-3x3 { grid-template-columns: repeat(2, 1fr); }
-  .cs-grid-2 { grid-template-columns: 1fr; }
-}
-
-/* ============================================================
-   MODULE 01 — HERO COVER (full bleed)
-   ============================================================ */
-.cs-hero {
-  position: relative;
-  height: 100vh;
-  min-height: 600px;
-  background: var(--ink);
   overflow: hidden;
 }
-.cs-hero__media,
-.cs-hero .cs-slot {
+.cs-slot--square { aspect-ratio: 1 / 1; }
+.cs-slot--render { aspect-ratio: 16 / 9; }
+.cs-slot[data-slot-id]::before {
+  content: attr(data-slot-id);
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: #1a1a1a;
+  top: 12px; left: 12px;
+  font-size: 10px;
+  color: var(--accent);
+  opacity: 0.7;
 }
-.cs-hero__meta {
+.cs-slot > img, .cs-slot > video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* ===== FLAVOR ===== */
+.cs-flavor {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.cs-flavor--horizontal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.cs-flavor--reverse .cs-flavor__media { order: 2; }
+.cs-flavor__media img {
+  width: 100%; height: auto;
+}
+.cs-flavor__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.cs-flavor__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.cs-flavor__name {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+.cs-flavor__tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  color: var(--accent);
+}
+.cs-flavor__description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tag-fg);
+  max-width: 42ch;
+}
+@media (max-width: 900px) {
+  .cs-flavor--horizontal { grid-template-columns: 1fr; gap: 2rem; }
+  .cs-flavor--reverse .cs-flavor__media { order: 0; }
+}
+
+/* ===== LIFESTYLE — original flavor backgrounds kept as content ===== */
+.cs-lifestyle {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  padding: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.cs-lifestyle__media {
+  position: relative;
+  width: 100%;
+}
+.cs-lifestyle__media img {
+  width: 100%; height: auto; display: block;
+}
+.cs-lifestyle__caption {
   position: absolute;
   bottom: var(--gutter);
   left: var(--gutter);
   right: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
-  color: var(--bone);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  z-index: 2;
+  gap: 1rem;
+  letter-spacing: 0.02em;
+  mix-blend-mode: difference;
+  color: var(--fg);
 }
 
-/* ============================================================
-   MODULE 02 — PROJECT INTRO (two-column)
-   ============================================================ */
-.cs-intro {
-  display: grid;
-  grid-template-columns: 30% 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-@media (max-width: 800px) {
-  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
-}
-
-.cs-intro__metadata {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  line-height: 1.8;
-}
-.cs-intro__metadata dt {
-  display: inline-block;
-  width: 7rem;
-  color: var(--mid);
-}
-.cs-intro__metadata dd {
-  display: inline-block;
-  color: var(--ink);
-}
-.cs-intro__metadata > div { display: block; }
-
-.cs-intro__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  margin-bottom: 1rem;
-}
-
-.cs-intro__headline {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
-  max-width: 25ch;
-}
-.cs-intro__headline em { font-style: italic; color: var(--mid); }
-
-.cs-intro__body {
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 60ch;
-  font-weight: 300;
-}
-
-/* ============================================================
-   MODULE 03 — CONCEPT (centered, inverted)
-   ============================================================ */
-.cs-concept {
-  text-align: center;
-  max-width: 600px;
+/* ===== SPECS ===== */
+.cs-specs {
+  max-width: var(--max-w);
   margin: 0 auto;
 }
-.cs-concept__label {
+.cs-specs table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cs-specs tr {
+  border-bottom: 1px solid var(--line);
+}
+.cs-specs tr:first-child { border-top: 1px solid var(--line); }
+.cs-specs td {
+  padding: 18px 0;
+  font-size: 14px;
+  vertical-align: top;
+}
+.cs-specs__label {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.7;
-  margin-bottom: 2rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  width: 220px;
 }
-.cs-concept__headline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
-}
-.cs-concept__body {
-  font-size: 18px;
-  line-height: 1.7;
-  font-weight: 300;
-  max-width: 50ch;
-  margin: 0 auto;
-  opacity: 0.85;
+.cs-specs__value { font-weight: 500; }
+@media (max-width: 700px) {
+  .cs-specs__label { width: 140px; }
 }
 
-/* ============================================================
-   MODULE 30 — CLOSER
-   ============================================================ */
+/* ===== CLOSER ===== */
 .cs-closer__statement {
-  text-align: center;
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1.1;
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1;
   letter-spacing: -0.02em;
-  margin-bottom: 5rem;
-  max-width: 20ch;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
+  max-width: 22ch;
+  margin: 0 auto 4rem;
 }
+.cs-closer__statement em { color: var(--accent); font-style: normal; }
 .cs-closer__credits {
+  max-width: var(--max-w);
+  margin: 0 auto 4rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem 4rem;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.cs-closer__credits > div {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cs-closer__credits dt {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  max-width: 600px;
-  margin: 0 auto 5rem;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(245, 242, 236, 0.15);
-  border-bottom: 1px solid rgba(245, 242, 236, 0.15);
+  color: var(--muted);
 }
-.cs-closer__credits dt { color: var(--mid); }
-.cs-closer__credits dd { color: var(--bone); }
+.cs-closer__credits dd {
+  font-size: 14px;
+  font-weight: 500;
+}
 .cs-closer__nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  max-width: 800px;
-  margin: 0 auto;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 .cs-closer__nav-link {
   font-family: var(--font-display);
-  font-weight: 300;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
-  letter-spacing: -0.01em;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  position: relative;
+  padding-bottom: 4px;
+  display: inline-block;
+  transition: color 0.3s var(--ease);
+}
+.cs-closer__nav-link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.cs-closer__nav-link:hover { color: var(--accent); }
+.cs-closer__nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+@media (max-width: 900px) {
+  .cs-closer__credits { grid-template-columns: 1fr 1fr; }
+  .cs-closer__nav { flex-direction: column; gap: 1rem; }
 }
 
-/* ============================================================
-   MODULE STYLE — sketches, references, breakdowns
-   Reusable layout primitives
-   ============================================================ */
-.cs-strip-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.cs-strip-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (max-width: 700px) {
-  .cs-strip-3, .cs-strip-4 { grid-template-columns: 1fr; }
+  .nav { padding: 16px var(--gutter); }
+  .nav__menu { gap: 16px; font-size: 12px; }
 }
 
-.cs-shader-row {
+/* ===== Дополнительные классы для guerlain / replica / wow ===== */
+.cs-hero__media { position: relative; width: 100%; }
+.cs-hero__media img, .cs-hero__media video {
+  width: 100%; min-height: 100vh; object-fit: cover; display: block;
+}
+
+/* Slot варианты */
+.cs-slot--portrait { aspect-ratio: 4 / 5; }
+.cs-slot--strip { aspect-ratio: 21 / 9; }
+
+/* Strip-сетки (горизонтальные ряды кадров) */
+.cs-strip-3 {
+  max-width: var(--max-w);
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 60% 40%;
-  gap: 12px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.cs-strip-4 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.cs-strip-3 > *, .cs-strip-4 > * { display: flex; flex-direction: column; }
+.cs-strip-3 img, .cs-strip-4 img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+@media (max-width: 700px) {
+  .cs-strip-3, .cs-strip-4 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Shader/render label-строки (технические подписи в стиле basement) */
+.cs-shader-row {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .cs-shader-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--bone);
-  margin-bottom: 8px;
+  color: var(--tag-fg);
+  background: var(--tag-bg);
+  padding: 6px 10px;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
-/* Tech specs table */
-.cs-specs {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 2;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.cs-specs dt {
-  display: inline-block;
-  width: 12rem;
-  color: var(--mid);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 11px;
-}
-.cs-specs dd {
-  display: inline-block;
-  color: var(--bone);
-}
-.cs-specs > div { display: block; }
-
-/* Reveal-on-scroll */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
-}
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
 </style>
 </head>
 
@@ -450,10 +637,10 @@ img, video { max-width: 100%; display: block; }
      NAV — same as main site
      ============================================================ -->
 <nav class="nav">
-  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <a href="../index.html" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
   <div class="nav__menu">
-    <a href="/work" class="nav__link">Work</a>
-    <a href="/about" class="nav__link">About</a>
+    <a href="../work.html" class="nav__link">Work</a>
+    <a href="../about.html" class="nav__link">About</a>
     <a href="/contact" class="nav__link">Contact</a>
   </div>
 </nav>
@@ -463,8 +650,8 @@ img, video { max-width: 100%; display: block; }
      SLOT: HERO_01_landscape.jpg (full bleed background)
      ============================================================ -->
 <section class="cs-hero">
-  <img src="D:\davidova-site\assets\img_Replica/Hero.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <img src="../assets/img_Replica/Hero.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
 
   <div class="cs-hero__meta">
@@ -523,48 +710,48 @@ silence in the composition as the pause before scent.</p>
 
   <div class="cs-grid-3x3">
   <div>
-    <img src="D:\davidova-site\assets\img_Replica\REF_01.png" alt="Reid Miles, Blue Note 1965" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_01.png" alt="Reid Miles, Blue Note 1965" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Reid Miles, Blue Note 1965 — typographic restraint, asymmetry</div>
   </div>   
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_02.png" alt="Saul Leiter, NYC 1957" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_02.png" alt="Saul Leiter, NYC 1957" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Saul Leiter, NYC 1957 — warm rim light through atmosphere</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_03.png" alt="Wong Kar-wai, In the Mood for Love" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_03.png" alt="Wong Kar-wai, In the Mood for Love" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Wong Kar-wai, In the Mood for Love — intimate negative space</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_04.png" alt="Aesop campaign — figure-ground discipline" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_04.png" alt="Aesop campaign — figure-ground discipline" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Aesop campaign — figure-ground discipline</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_05.png" alt="Maison Margiela Replica" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_05.png" alt="Maison Margiela Replica" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Maison Margiela Replica — brand DNA reference</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_06.png" alt="Vinyl macro" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_06.png" alt="Vinyl macro" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Vinyl macro — surface texture, micro-scratches</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_07.png" alt="Caravaggio, Calling of Saint Matthew" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_07.png" alt="Caravaggio, Calling of Saint Matthew" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Caravaggio, Calling of Saint Matthew — single light source</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_08.png" alt="Tom Ford Private Blend" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_08.png" alt="Tom Ford Private Blend" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Tom Ford Private Blend — heavy glass, restrained label</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/REF_09.png" alt="Hotel bar interior" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/REF_09.png" alt="Hotel bar interior" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Hotel bar interior — practical light, warm ambient</div>
   </div>
   </div>
@@ -581,18 +768,18 @@ silence in the composition as the pause before scent.</p>
 
   <div class="cs-strip-3">
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/SKETCH 01.png" alt="Hero framing" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/SKETCH 01.png" alt="Hero framing" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Hero framing · key light direction</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/SKETCH 02.png" alt="Macro detail composition" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/SKETCH 02.png" alt="Macro detail composition" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Macro detail composition</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/SKETCH 03.png" alt="Top-down lighting plan" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/SKETCH 03.png" alt="Top-down lighting plan" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Top-down lighting plan</div>
   </div>
   </div>
@@ -609,23 +796,23 @@ silence in the composition as the pause before scent.</p>
 
   <div class="cs-grid-4">
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/MODEL_01.png" alt="Wireframe" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/MODEL_01.png" alt="Wireframe" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Wireframe</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/MODEL_02.png" alt="Solid" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/MODEL_02.png" alt="Solid" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Solid</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/MODEL_03.png" alt="Material Preview" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/MODEL_03.png" alt="Material Preview" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Material Preview</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/MODEL_04.png" alt="Rendered" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/MODEL_04.png" alt="Rendered" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Rendered</div>
   </div>
   </div>
@@ -645,40 +832,40 @@ silence in the composition as the pause before scent.</p>
     <!-- ROW 1, LEFT — GLASS -->
     <div>
       <div class="cs-shader-label">01 / GLASS</div>
-      <img src="D:\davidova-site\assets\img_Replica/Shader_1.png" alt="Glass shader node graph and preview" 
-           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <img src="../assets/img_Replica/Shader_1.png" alt="Glass shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;" onerror="this.style.display='none'">
       <div class="cs-caption">IOR 1.52 · dispersion enabled · micro-roughness 0.05</div>
     </div>
 
     <!-- ROW 1, RIGHT — METALLIC -->
     <div>
       <div class="cs-shader-label">02 / METALLIC</div>
-      <img src="D:\davidova-site\assets\img_Replica/Shader_2.png" alt="Metallic shader node graph and preview" 
-           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <img src="../assets/img_Replica/Shader_2.png" alt="Metallic shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;" onerror="this.style.display='none'">
       <div class="cs-caption">Anisotropic brushed · roughness 0.3 · metallic 1.0</div>
     </div>
 
     <!-- ROW 2, LEFT — FABRIC -->
     <div>
       <div class="cs-shader-label">03 / FABRIC</div>
-      <img src="D:\davidova-site\assets\img_Replica/Shader_3.png" alt="Fabric shader node graph and preview" 
-           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <img src="../assets/img_Replica/Shader_3.png" alt="Fabric shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;" onerror="this.style.display='none'">
       <div class="cs-caption">Cotton texture · roughness 0.85 · subsurface scattering enabled</div>
     </div>
 
     <!-- ROW 2, RIGHT — ROCK -->
     <div>
       <div class="cs-shader-label">04 / ROCK</div>
-      <img src="D:\davidova-site\assets\img_Replica/Shader_4.png" alt="Rock shader node graph and preview" 
-           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <img src="../assets/img_Replica/Shader_4.png" alt="Rock shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;" onerror="this.style.display='none'">
       <div class="cs-caption">Granite texture · roughness 0.95 · ambient occlusion baked</div>
     </div>
 
     <!-- ROW 3, LEFT — LIQUID -->
     <div>
       <div class="cs-shader-label">05 / LIQUID</div>
-      <img src="D:\davidova-site\assets\img_Replica/Shader_5.png" alt="Liquid shader node graph and preview" 
-           style="width:100%; height:auto; display:block; margin-bottom: 8px;">
+      <img src="../assets/img_Replica/Shader_5.png" alt="Liquid shader node graph and preview" 
+           style="width:100%; height:auto; display:block; margin-bottom: 8px;" onerror="this.style.display='none'">
       <div class="cs-caption">Volume absorption · density 2.4 · color attenuation enabled</div>
     </div>
     
@@ -689,8 +876,8 @@ silence in the composition as the pause before scent.</p>
      MODULE 09 · HERO FULL BLEED
      ============================================================ -->
 <section class="cs-module cs-module--bleed">
-    <img src="D:\davidova-site\assets\img_Replica/Hero Full Bleed.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Hero Full Bleed.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">Hero Full Bleed</div>
 </section>
 
@@ -699,8 +886,8 @@ silence in the composition as the pause before scent.</p>
      ============================================================ -->
 <section class="cs-module cs-module--bone">
   <div style="max-width: 80%; margin: 0 auto;">
-    <img src="D:\davidova-site\assets\img_Replica/45° Premium Shot.png" alt="45° Premium Shot" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/45° Premium Shot.png" alt="45° Premium Shot" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     </div>
     <div class="cs-caption">Three-quarter view</div>
   </div>
@@ -711,8 +898,8 @@ silence in the composition as the pause before scent.</p>
      ============================================================ -->
 <section class="cs-module cs-module--bone">
   <div style="max-width: 60%; margin: 0 auto;">
-    <img src="D:\davidova-site\assets\img_Replica/Front Pack Shot.png" alt="Front pack" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Front Pack Shot.png" alt="Front pack" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Front pack</div>
   </div>
 </section>
@@ -723,18 +910,18 @@ silence in the composition as the pause before scent.</p>
 <section class="cs-module cs-module--ink">
   <div class="cs-strip-3">
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/Macro_1.png" alt="Cap & Twine" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/Macro_1.png" alt="Cap & Twine" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Cap & Twine</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/Macro_2.png" alt="Liquid Through Glass" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/Macro_2.png" alt="Liquid Through Glass" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Liquid Through Glass</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/Macro_3.png" alt="Letterpress Label" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/Macro_3.png" alt="Letterpress Label" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Letterpress Label</div>
   </div>
 </section>
@@ -744,8 +931,8 @@ silence in the composition as the pause before scent.</p>
      ============================================================ -->
 <section class="cs-module cs-module--bone">
   <div>
-    <img src="D:\davidova-site\assets\img_Replica/Label & Type Detail.png" alt="Label & Type Detail (Wide)" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Label & Type Detail.png" alt="Label & Type Detail (Wide)" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Label & Type Detail (Wide)</div>
   </div>
 </section>
@@ -756,18 +943,18 @@ silence in the composition as the pause before scent.</p>
 <section class="cs-module cs-module--paper">
   <div class="cs-strip-3">
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/Mat_1.png" alt="Glass Shoulder" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Mat_1.png" alt="Glass Shoulder" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Glass Shoulder</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/Mat_2.png" alt="Amber Liquid" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Mat_2.png" alt="Amber Liquid" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Amber Liquid</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/Mat_3.png" alt="Linen & Twine" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Mat_3.png" alt="Linen & Twine" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Linen & Twine</div>
   </div>
 </section>
@@ -777,8 +964,8 @@ silence in the composition as the pause before scent.</p>
      ============================================================ -->
 <section class="cs-module cs-module--ink">
   <div>
-    <img src="D:\davidova-site\assets\img_Replica/Manhattan Building Facade.png" alt="Manhattan Building Facade" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/Manhattan Building Facade.png" alt="Manhattan Building Facade" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">LIFESTYLE / IN-CONTEXT (Manhattan Building Facade)</div>
   </div>
 </section>
@@ -788,8 +975,8 @@ silence in the composition as the pause before scent.</p>
      ============================================================ -->
 <section class="cs-module cs-module--ink">
    <div>
-    <img src="D:\davidova-site\assets\img_Replica/NYC Subway Station.png" alt="NYC Subway Station" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/NYC Subway Station.png" alt="NYC Subway Station" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">LIFESTYLE / IN-CONTEXT (NYC Subway Station)</div>
   </div>
 </section>
@@ -800,18 +987,18 @@ silence in the composition as the pause before scent.</p>
 <section class="cs-module cs-module--ink">
   <div class="cs-strip-3">
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/SYS_1.png" alt="COLOR PALETTE" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/SYS_1.png" alt="COLOR PALETTE" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">COLOR PALETTE</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/SYS_2.png" alt="MATERIAL LIBRARY" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/SYS_2.png" alt="MATERIAL LIBRARY" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">MATERIAL LIBRARY</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/SYS_3.png" alt="COMPOSITION RULES" 
-         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;">
+    <img src="../assets/img_Replica/SYS_3.png" alt="COMPOSITION RULES" 
+         style="width:100%; height:auto; display:block; aspect-ratio:1/1; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">COMPOSITION RULES</div>
   </div>
 </section>
@@ -849,18 +1036,18 @@ silence in the composition as the pause before scent.</p>
 
   <div class="cs-grid-3">
     <div>
-    <img src="D:\davidova-site\assets\img_Replica/INST_1.png" alt="Square 1:1" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/INST_1.png" alt="Square 1:1" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Square 1:1</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/INST_2.png" alt="Portrait 4:5" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/INST_2.png" alt="Portrait 4:5" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Portrait 4:5</div>
   </div>
 <div>
-    <img src="D:\davidova-site\assets\img_Replica/INST_3.png" alt="Story 9:16" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+    <img src="../assets/img_Replica/INST_3.png" alt="Story 9:16" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     <div class="cs-caption">Story 9:16</div>
   </div>
 </section>

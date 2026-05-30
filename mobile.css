@@ -1,0 +1,204 @@
+/* =========================================================
+   mobile.css — Davidova.Studio
+   Мобильная версия. Подключается ПОСЛЕ основного стиля:
+     корень:  <link rel="stylesheet" href="mobile.css" media="(max-width: 880px)">
+     work/:   <link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
+
+   Картинки НЕ дублируются — мобильная версия использует
+   те же файлы из assets/, что и десктоп.
+   ========================================================= */
+
+/* ====================== ПЛАНШЕТ / МОБИЛКА (≤880px) ====================== */
+@media (max-width: 880px) {
+
+  /* --- HEADER / NAV --- */
+  .site-header,
+  .nav {
+    padding: 14px 1.25rem;
+  }
+  .site-logo,
+  .nav__logo { font-size: 19px; }
+  .site-nav,
+  .nav__menu { gap: 16px; font-size: 13px; }
+  .site-nav a .count,
+  .nav__menu a .count,
+  .nav__link .count { font-size: 9px; }
+
+  /* --- INTRO / PAGE TITLE --- */
+  .page-intro { padding: 90px 1.25rem 32px; }
+  .page-intro h1 { font-size: 16vw; line-height: 0.9; }
+  .page-intro__sub { font-size: 15px; margin-top: 28px; }
+
+  /* --- FILTER BAR: горизонтальный скролл --- */
+  .filter-row {
+    padding: 24px 1.25rem 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters button { flex: 0 0 auto; white-space: nowrap; }
+
+  /* --- PROJECT GRID: одна колонка --- */
+  .grid {
+    padding: 24px 1.25rem 60px;
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  .card-tile { aspect-ratio: 4 / 3; }
+  .card-name { font-size: 24px; }
+  .card-tile-meta { font-size: 9px; top: 10px; left: 10px; right: 10px; }
+  .tag { font-size: 10px; padding: 4px 8px; }
+
+  /* На тач-экранах нет наведения → показываем статичный рендер,
+     hover-видео отключаем */
+  .card .anim-media { display: none !important; }
+  .card .static-img { opacity: 1 !important; transform: none !important; }
+
+  /* --- SEE ALL --- */
+  .see-all { padding: 4rem 1.25rem; }
+  .see-all a { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+
+  /* --- FOOTER --- */
+  .site-footer { padding: 48px 1.25rem 24px; }
+  .site-footer h2 { font-size: 12vw; }
+  .site-footer .mail { font-size: 6.5vw; word-break: break-all; }
+  .site-footer__bottom {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 48px;
+  }
+
+  /* ============ ABOUT page ============ */
+  .about-hero { padding: 90px 1.25rem 40px; grid-template-columns: 1fr; gap: 1.5rem; }
+  .about-hero__heading { font-size: 13vw; }
+  .about-body { padding: 40px 1.25rem; grid-template-columns: 1fr; gap: 1.25rem; }
+  .about-body__text { font-size: 16px; }
+  .beliefs { padding: 56px 1.25rem; }
+  .beliefs__head { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .beliefs__list { grid-template-columns: 1fr; }
+  .cv { padding: 56px 1.25rem; grid-template-columns: 1fr; gap: 1.5rem; }
+  .cv__list { grid-template-columns: 80px 1fr; }
+  .contact { padding: 56px 1.25rem; }
+
+  /* ============ CASE STUDY pages (petro, ego, guerlain, replica, wow, aoi) ============ */
+  .cs-hero, .cs-hero > img, .cs-hero__img,
+  .cs-hero__media, .cs-hero__media img,
+  .project-hero { min-height: 60vh !important; height: auto; }
+  .cs-hero__meta, .cold-open__meta { font-size: 10px; }
+
+  .cs-module { padding: 3rem 1.25rem !important; }
+  .cs-module-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-bottom: 2rem; }
+
+  /* Любые 2-колоночные блоки → одна колонка */
+  .cs-intro,
+  .cs-story,
+  .cs-anatomy,
+  .cs-flavor--horizontal,
+  .context,
+  .hero-duo,
+  .manifesto-block,
+  .identity__header,
+  .identity__grid,
+  .macro-grid__header,
+  .macro-grid__inner,
+  .cmf-system__header,
+  .brand-construction__inner,
+  .in-the-room__header,
+  .in-the-room__duo,
+  .spatial__header,
+  .typography,
+  .title-card__bottom,
+  .brand-hero__bottom {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Сетки изображений */
+  .cs-grid-3x3 { grid-template-columns: 1fr 1fr !important; }
+  .cs-grid-2, .cs-grid-3, .cs-grid-4,
+  .cs-strip-3, .cs-strip-4,
+  .packaging__sequence,
+  .app__grid,
+  .materials__grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+
+  .cs-colors, .color-system { grid-template-columns: 1fr 1fr !important; }
+  .cs-icons { grid-template-columns: repeat(3, 1fr) !important; }
+  .cmf-system__labels { grid-template-columns: 1fr !important; }
+
+  /* Reverse-блоки выпрямляем */
+  .cs-flavor--reverse .cs-flavor__media { order: 0 !important; }
+
+  /* Type rows / shader rows */
+  .cs-type-row, .type-scale__row { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
+  .type-scale__spec { display: none; }
+
+  /* Closer / credits */
+  .cs-closer__credits, .credits__grid, .brand-hero__bottom,
+  .title-card__bottom, .identity__spec {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .cs-closer__nav, .next-project, .next__link { flex-direction: column !important; gap: 1rem !important; align-items: flex-start; }
+
+  /* Большие заголовки */
+  .cs-intro__wordmark { font-size: clamp(4rem, 18vw, 8rem) !important; }
+  .brand-hero__kanji { font-size: clamp(7rem, 30vw, 12rem) !important; }
+  .cs-concept__headline,
+  .campaign__title,
+  .manifesto-block__quote,
+  .manifesto__text { font-size: clamp(2.5rem, 11vw, 5rem) !important; }
+  .pull-quote blockquote { font-size: clamp(2rem, 8vw, 4rem) !important; }
+
+  /* project-template */
+  .project-meta { grid-template-columns: 1fr 1fr; padding: 56px 1.25rem 0; }
+  .project-header, .story__section { grid-template-columns: 1fr !important; gap: 1.5rem !important; padding: 48px 1.25rem; }
+  .media-grid { grid-template-columns: 1fr !important; padding: 48px 1.25rem; }
+  .credits { grid-template-columns: 1fr 1fr; padding: 48px 1.25rem; }
+  .next { padding: 48px 1.25rem; }
+
+  /* На тач отключаем все hover-видео в case study тоже */
+  .project__preview, .project__thumbs { display: none !important; }
+
+  /* Studio intro (index sticky portrait) — упрощаем для мобилки */
+  .studio-intro { height: auto !important; }
+  .studio-intro__sticky { position: static !important; height: auto !important; flex-direction: column; padding: 60px 1.25rem; gap: 2rem; }
+  .studio-intro__photo { position: static !important; transform: none !important; width: 70vw !important; left: auto !important; }
+  .studio-intro__content { position: static !important; transform: none !important; opacity: 1 !important; max-width: 100% !important; left: auto !important; }
+
+  /* Project stream (index sticky stack) — расклеиваем в обычный поток */
+  .project-wrap { height: auto !important; }
+  .project { position: static !important; height: auto !important; min-height: 70vh !important; }
+  .project.is-collapsed .project__inner { opacity: 1 !important; }
+  .project__collapsed-bar { display: none !important; }
+}
+
+/* ====================== ТЕЛЕФОН (≤480px) ====================== */
+@media (max-width: 480px) {
+  .page-intro h1 { font-size: 18vw; }
+  .about-hero__heading { font-size: 15vw; }
+  .card-tile { aspect-ratio: 1 / 1; }
+
+  .cs-grid-3x3,
+  .cs-colors, .color-system { grid-template-columns: 1fr !important; }
+  .cs-icons { grid-template-columns: repeat(2, 1fr) !important; }
+  .cs-closer__credits, .credits__grid,
+  .title-card__bottom, .identity__spec,
+  .brand-hero__bottom, .project-meta { grid-template-columns: 1fr 1fr !important; }
+
+  /* Меню в одну линию помельче если совсем узко */
+  .site-nav, .nav__menu { gap: 12px; font-size: 12px; }
+}
+
+/* ====================== Очень узкие (≤360px) ====================== */
+@media (max-width: 360px) {
+  .site-nav, .nav__menu { gap: 10px; font-size: 11px; }
+  .site-logo, .nav__logo { font-size: 17px; }
+}

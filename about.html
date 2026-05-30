@@ -3,139 +3,206 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About — Alexandra Davidova</title>
+<title>Studio — Alexandra Davidova</title>
+<meta name="description" content="CGI art direction studio based in Warsaw, working with international brands on product visualization, packaging imagery and visual systems." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="mobile.css" media="(max-width: 880px)">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --ink: #0A0A0A;
-  --graphite: #1F1F1F;
-  --bone: #F5F2EC;
-  --paper: #E8E4DB;
-  --mid: #6B6B6B;
-  --accent: #8B2E1F;
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --bg: #0a0a0a;
+  --fg: #e8e6e1;
+  --muted: #6e6c66;
+  --line: #1f1d1a;
+  --tag-bg: #1a1816;
+  --tag-fg: #c9c6bf;
+  --accent: #ff2e16;
+  --tile-bg: #14120f;
+  --gutter: clamp(1.25rem, 2vw, 2.25rem);
   --section: clamp(4rem, 10vw, 8rem);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+html { scroll-behavior: smooth; }
+
 body {
-  background: var(--bone);
-  color: var(--ink);
-  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a { color: inherit; text-decoration: none; }
 
-/* NAV — same as index */
+/* ====================== HEADER ====================== */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 1.5rem var(--gutter);
-  display: flex; justify-content: space-between; align-items: center;
-  background: var(--bone);
-  border-bottom: 1px solid rgba(10,10,10,0.08);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px var(--gutter);
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
 }
 
 .nav__logo {
-  font-family: var(--font-display); font-size: 1.125rem;
-  display: flex; align-items: center; gap: 0.75rem;
+  font-family: 'Anton', sans-serif;
+  font-size: 22px;
+  letter-spacing: -0.005em;
 }
-
-.nav__logo-line {
-  display: inline-block; width: 1.5rem; height: 1px; background: currentColor;
+.nav__logo::after {
+  content: ".";
+  color: var(--accent);
 }
 
 .nav__menu {
-  display: flex; gap: 2rem;
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.nav__menu a {
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
+.nav__menu a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__menu a:hover::after,
+.nav__menu a.current::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.nav__menu a.current { color: var(--accent); }
+.nav__menu a .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  vertical-align: super;
+  color: var(--muted);
+  margin-left: 2px;
+  font-weight: 400;
 }
 
-/* HERO TEXT */
+/* ====================== HERO ====================== */
 .about-hero {
-  padding: 12rem var(--gutter) 6rem;
+  padding: 140px var(--gutter) 80px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
   gap: 4rem;
   align-items: start;
 }
 
 .about-hero__label {
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--mid);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
   padding-top: 1rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--fg);
 }
 
 .about-hero__heading {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  max-width: 22ch;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(48px, 8vw, 128px);
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  max-width: 18ch;
 }
-
-.about-hero__heading em {
-  font-style: italic;
-  color: var(--mid);
+.about-hero__heading .accent {
+  color: var(--accent);
 }
 
 @media (max-width: 900px) {
-  .about-hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 8rem; }
+  .about-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 100px var(--gutter) 60px;
+  }
 }
 
-/* TWO COLUMN TEXT */
+/* ====================== BIO ====================== */
 .about-body {
-  padding: 4rem var(--gutter);
+  padding: 60px var(--gutter);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
   gap: 4rem;
-  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  border-top: 1px solid var(--line);
 }
 
 .about-body__label {
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--mid);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .about-body__text {
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 19px;
+  line-height: 1.5;
   max-width: 60ch;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  color: var(--graphite);
+  gap: 1.5rem;
+  color: var(--fg);
+  font-weight: 400;
+}
+
+.about-body__text strong {
+  color: var(--fg);
+  font-weight: 500;
 }
 
 @media (max-width: 900px) {
   .about-body { grid-template-columns: 1fr; gap: 1.5rem; }
+  .about-body__text { font-size: 16px; }
 }
 
-/* BELIEFS / PRINCIPLES */
+/* ====================== BELIEFS ====================== */
 .beliefs {
   padding: var(--section) var(--gutter);
-  background: var(--paper);
-  border-top: 1px solid var(--graphite);
+  border-top: 1px solid var(--line);
+}
+
+.beliefs__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4rem;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .beliefs__label {
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--mid); margin-bottom: 4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.beliefs__heading {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
 }
 
 .beliefs__list {
@@ -143,200 +210,304 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 0;
-  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  border-top: 1px solid var(--line);
 }
 
 .belief {
-  padding: 3rem 1.5rem 3rem 0;
-  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+  padding: 2.5rem 1.5rem 2.5rem 0;
+  border-bottom: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
 .belief__num {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.1em; color: var(--mid);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
 }
 
 .belief__title {
-  font-family: var(--font-display); font-size: 1.5rem;
-  font-weight: 300; line-height: 1.2; letter-spacing: -0.01em;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 
-.belief__desc { font-size: 15px; color: var(--graphite); max-width: 30ch; }
+.belief__desc {
+  font-size: 15px;
+  color: var(--tag-fg);
+  max-width: 32ch;
+  line-height: 1.55;
+}
 
-/* CV / TABLE */
+/* ====================== CV / CAPABILITIES ====================== */
 .cv {
   padding: var(--section) var(--gutter);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
   gap: 4rem;
-  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  border-top: 1px solid var(--line);
 }
 
 .cv__label {
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--mid);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .cv__sections {
-  display: flex; flex-direction: column; gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 .cv__section h3 {
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--ink); margin-bottom: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+}
+
+.cv__section h3 .count {
+  color: var(--muted);
+  font-weight: 400;
 }
 
 .cv__list {
   list-style: none;
   display: grid;
   grid-template-columns: 100px 1fr;
-  gap: 1rem 2rem;
+  gap: 0.85rem 2rem;
   font-size: 15px;
 }
 
 .cv__year {
-  font-family: var(--font-mono); font-size: 12px;
-  color: var(--mid); padding-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.cv__item {
+  color: var(--fg);
+  font-weight: 400;
+}
+
+/* TAG CAPSULES for services/industries — basement style */
+.cv__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cv__tag {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 
 @media (max-width: 900px) {
   .cv { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cv__list { grid-template-columns: 80px 1fr; }
 }
 
-/* CONTACT CTA */
+/* ====================== CONTACT CTA ====================== */
 .contact {
   padding: var(--section) var(--gutter);
-  background: var(--ink);
-  color: var(--bone);
+  border-top: 1px solid var(--line);
 }
 
 .contact__label {
-  font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--mid); margin-bottom: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.contact__heading {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
 }
 
 .contact__email {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 7vw, 6rem);
-  font-weight: 300; letter-spacing: -0.02em;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  letter-spacing: -0.01em;
   position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  line-height: 1;
 }
 
 .contact__email::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0.1em;
-  height: 1px; background: var(--bone);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.6s var(--ease-out-expo);
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.contact__email:hover { color: var(--accent); }
+
+/* ====================== FOOTER ====================== */
+footer {
+  padding: 40px var(--gutter);
+  border-top: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.contact__email:hover::after { transform: scaleX(1); }
+footer a {
+  position: relative;
+  padding-bottom: 2px;
+}
+footer a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+footer a:hover {
+  color: var(--fg);
+}
+footer a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (max-width: 880px) {
+  .nav { padding: 16px var(--gutter); }
+  .nav__menu { gap: 16px; font-size: 12px; }
+  footer { flex-direction: column; gap: 8px; }
+}
 </style>
 </head>
 
 <body>
 
 <nav class="nav">
-  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <a href="index.html" class="nav__logo">AD</a>
   <div class="nav__menu">
-    <a href="/work">Work</a>
-    <a href="/about">About</a>
-    <a href="/contact">Contact</a>
+    <a href="work.html">Showcase<span class="count">(10)</span></a>
+    <a href="about.html" class="current">Studio</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="about-hero">
-  <div class="about-hero__label">About / Studio</div>
+  <div class="about-hero__label">— About / Studio</div>
   <h1 class="about-hero__heading">
-    A practice <em>built around</em> objects, light, and the time it takes to get them right.
+    A practice built around objects, <span class="accent">light</span>, and the time it takes to get them right.
   </h1>
 </section>
 
 <!-- BIO -->
 <section class="about-body">
-  <div class="about-body__label">Studio</div>
+  <div class="about-body__label">— Studio</div>
   <div class="about-body__text">
-    <p>Alexandra Davidova works in CGI the way a director works in film — through light, composition and intent. Based in Warsaw and available internationally, she builds image systems for brands that treat their products as objects of design rather than units to photograph.</p>
-    <p>Her practice spans fragrance, beauty, packaging, fashion and tech — always with a preference for restraint over effect. Each project starts from a single question: what is this object, and what light does it deserve?</p>
-    <p>She collaborates with agencies, in-house creative teams and founders on campaigns, launches and long-form visual identities. Currently available for projects through 2026.</p>
+    <p>Alexandra Davidova works in CGI the way a director works in film — through <strong>light, composition and intent</strong>. Based in Warsaw and available internationally, she builds image systems for brands that treat their products as objects of design rather than units to photograph.</p>
+    <p>Her practice spans fragrance, beauty, packaging, fashion and tech — always with a preference for <strong>restraint over effect</strong>. Each project starts from a single question: what is this object, and what light does it deserve?</p>
+    <p>She collaborates with agencies, in-house creative teams and founders on campaigns, launches and long-form visual identities. <strong>Currently available for projects through 2026.</strong></p>
   </div>
 </section>
 
 <!-- BELIEFS -->
 <section class="beliefs">
-  <div class="beliefs__label">Principles / How we work</div>
+  <div class="beliefs__head">
+    <span class="beliefs__label">— Principles / How we work</span>
+    <h2 class="beliefs__heading">Four rules.</h2>
+  </div>
   <ul class="beliefs__list">
     <li class="belief">
-      <span class="belief__num">01</span>
+      <span class="belief__num">01 / 04</span>
       <h3 class="belief__title">Direction before render</h3>
       <p class="belief__desc">Every project starts with a brief, references and a written intent. The image follows the idea, not the other way around.</p>
     </li>
     <li class="belief">
-      <span class="belief__num">02</span>
+      <span class="belief__num">02 / 04</span>
       <h3 class="belief__title">One source of light</h3>
       <p class="belief__desc">A lighting decision is a directing decision. We start with a single key, and only add what the frame can't live without.</p>
     </li>
     <li class="belief">
-      <span class="belief__num">03</span>
+      <span class="belief__num">03 / 04</span>
       <h3 class="belief__title">Materials as language</h3>
       <p class="belief__desc">Surface tells the story. Glass is not a material — it's a sentence about heaviness, clarity and time.</p>
     </li>
     <li class="belief">
-      <span class="belief__num">04</span>
+      <span class="belief__num">04 / 04</span>
       <h3 class="belief__title">Slow is fast</h3>
       <p class="belief__desc">Considered process produces images that don't need explaining. We work in days, not in hours, and it shows in the frame.</p>
     </li>
   </ul>
 </section>
 
-<!-- CV / TABLE -->
+<!-- CV / CAPABILITIES -->
 <section class="cv">
-  <div class="cv__label">Capabilities</div>
+  <div class="cv__label">— Capabilities</div>
   <div class="cv__sections">
 
     <div class="cv__section">
-      <h3>Services</h3>
+      <h3><span>Services</span> <span class="count">(04)</span></h3>
+      <div class="cv__tags">
+        <span class="cv__tag">CGI Art Direction</span>
+        <span class="cv__tag">Product &amp; Packaging Imagery</span>
+        <span class="cv__tag">Cinematic Motion &amp; Loops</span>
+        <span class="cv__tag">Visual Systems for Brands</span>
+      </div>
+    </div>
+
+    <div class="cv__section">
+      <h3><span>Industries</span> <span class="count">(04)</span></h3>
+      <div class="cv__tags">
+        <span class="cv__tag">Fragrance &amp; Beauty</span>
+        <span class="cv__tag">Premium FMCG &amp; Food</span>
+        <span class="cv__tag">Fashion Accessories</span>
+        <span class="cv__tag">Tech &amp; Consumer Hardware</span>
+      </div>
+    </div>
+
+    <div class="cv__section">
+      <h3><span>Tools</span> <span class="count">(04)</span></h3>
       <ul class="cv__list">
-        <li class="cv__year">—</li><li>CGI Art Direction</li>
-        <li class="cv__year">—</li><li>Product & Packaging Imagery</li>
-        <li class="cv__year">—</li><li>Cinematic Motion & Loops</li>
-        <li class="cv__year">—</li><li>Visual Systems for Brands</li>
+        <li class="cv__year">3D</li><li class="cv__item">Blender · Cycles</li>
+        <li class="cv__year">Post</li><li class="cv__item">DaVinci Resolve · Photoshop</li>
+        <li class="cv__year">Motion</li><li class="cv__item">After Effects</li>
+        <li class="cv__year">Brand</li><li class="cv__item">Figma · Illustrator</li>
       </ul>
     </div>
 
     <div class="cv__section">
-      <h3>Industries</h3>
+      <h3><span>Background</span> <span class="count">(02)</span></h3>
       <ul class="cv__list">
-        <li class="cv__year">—</li><li>Fragrance & Beauty</li>
-        <li class="cv__year">—</li><li>Premium FMCG & Food</li>
-        <li class="cv__year">—</li><li>Fashion Accessories</li>
-        <li class="cv__year">—</li><li>Tech & Consumer Hardware</li>
-      </ul>
-    </div>
-
-    <div class="cv__section">
-      <h3>Tools</h3>
-      <ul class="cv__list">
-        <li class="cv__year">3D</li><li>Blender · Cycles</li>
-        <li class="cv__year">Post</li><li>DaVinci Resolve · Photoshop</li>
-        <li class="cv__year">Motion</li><li>After Effects</li>
-        <li class="cv__year">Brand</li><li>Figma · Illustrator</li>
-      </ul>
-    </div>
-
-    <div class="cv__section">
-      <h3>Background</h3>
-      <ul class="cv__list">
-        <li class="cv__year">2026</li><li>Independent practice — Warsaw / Worldwide</li>
-        <li class="cv__year">2021</li><li>Began working in CGI and product visualization</li>
+        <li class="cv__year">2026</li><li class="cv__item">Independent practice — Warsaw / Worldwide</li>
+        <li class="cv__year">2021</li><li class="cv__item">Began working in CGI and product visualization</li>
       </ul>
     </div>
 
@@ -344,10 +515,21 @@ a { color: inherit; text-decoration: none; }
 </section>
 
 <!-- CONTACT -->
-<section class="contact">
-  <div class="contact__label">Let's work together</div>
+<section class="contact" id="contact">
+  <div class="contact__label">— Contact</div>
+  <h2 class="contact__heading">Let's make an<br>impact together.</h2>
   <a href="mailto:studio@davidova.studio" class="contact__email">studio@davidova.studio</a>
 </section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Alexandra Davidova · Warsaw · Worldwide</span>
+  <span>
+    <a href="#">Instagram</a> ·
+    <a href="#">Behance</a> ·
+    <a href="#">LinkedIn</a>
+  </span>
+</footer>
 
 </body>
 </html>

@@ -9,287 +9,309 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 :root {
-  --ink: #0A0A0A; --graphite: #1F1F1F; --bone: #F5F2EC; --paper: #E8E4DB; --mid: #6B6B6B; --accent: #8B2E1F;
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --bg: #0a0a0a;
+  --bg-alt: #14120f;
+  --fg: #e8e6e1;
+  --muted: #6e6c66;
+  --line: #1f1d1a;
+  --tag-bg: #1a1816;
+  --tag-fg: #c9c6bf;
+  --accent: #ff2e16;
+  --tile-bg: #14120f;
+
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --gutter: clamp(1.25rem, 2vw, 2.25rem);
   --section: clamp(4rem, 10vw, 8rem);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 body {
-  background: var(--bone); color: var(--ink); font-family: var(--font-body);
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body);
   font-weight: 400; font-size: 16px; line-height: 1.5;
-  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;
-}
-
-body::after {
-  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.04; mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; }
 
-/* PRELOADER */
+/* ============== PRELOADER ============== */
 .preloader {
-  position: fixed; inset: 0; background: var(--ink); color: var(--bone); z-index: 10000;
-  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2.5rem;
-  transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s;
+  position: fixed; inset: 0;
+  background: var(--bg); color: var(--fg);
+  z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 2.5rem;
+  transition: opacity 0.8s var(--ease), visibility 0.8s;
 }
 .preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
 
 .preloader__wordmark {
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 11vw, 9rem);
-  font-weight: 300;
-  letter-spacing: -0.04em;
-  line-height: 1;
+  letter-spacing: -0.015em;
+  line-height: 0.92;
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  display: flex; align-items: center; justify-content: center;
 }
+
+.preloader__wordmark::after { content: "."; color: var(--accent); margin-left: 4px; }
 
 .preloader__char {
   display: inline-block;
   opacity: 0;
   transform: translateY(0);
-  transition: opacity 0.5s var(--ease-out-expo);
+  transition: opacity 0.5s var(--ease);
 }
-
 .preloader__char--keep {
   opacity: 1;
-  animation: preloaderLetterIn 0.8s var(--ease-out-expo) 0.2s backwards;
+  animation: preloaderLetterIn 0.8s var(--ease) 0.2s backwards;
 }
-
 @keyframes preloaderLetterIn {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .preloader__dash-line {
-  display: inline-block; width: 2rem; margin: 0; height: 2px; background: var(--bone);
-  opacity: 1; animation: dashGrow 0.8s var(--ease-out-expo) 0.4s forwards;
+  display: inline-block; width: 2rem; height: 3px; background: var(--fg);
+  margin: 0 0.4rem;
+  opacity: 1; animation: dashGrow 0.8s var(--ease) 0.4s forwards;
 }
-
 @keyframes dashGrow { to { width: 3.5rem; } }
 
 .preloader__wordmark.expanded .preloader__dash-line {
   width: 1.2rem; margin: 0 0.3rem;
-  transition: width 0.6s var(--ease-out-expo), margin 0.6s var(--ease-out-expo);
+  transition: width 0.6s var(--ease), margin 0.6s var(--ease);
 }
-
 .preloader__wordmark.expanded .preloader__char { opacity: 1; }
 
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(2) { transition-delay: 0.05s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(3) { transition-delay: 0.1s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(4) { transition-delay: 0.15s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(5) { transition-delay: 0.2s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(6) { transition-delay: 0.25s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(7) { transition-delay: 0.3s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(8) { transition-delay: 0.35s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(9) { transition-delay: 0.4s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(2)  { transition-delay: 0.05s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(3)  { transition-delay: 0.10s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(4)  { transition-delay: 0.15s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(5)  { transition-delay: 0.20s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(6)  { transition-delay: 0.25s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(7)  { transition-delay: 0.30s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(8)  { transition-delay: 0.35s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(9)  { transition-delay: 0.40s; }
 .preloader__wordmark.expanded .preloader__char--fade:nth-child(12) { transition-delay: 0.05s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(13) { transition-delay: 0.1s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(13) { transition-delay: 0.10s; }
 .preloader__wordmark.expanded .preloader__char--fade:nth-child(14) { transition-delay: 0.15s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(15) { transition-delay: 0.2s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(15) { transition-delay: 0.20s; }
 .preloader__wordmark.expanded .preloader__char--fade:nth-child(16) { transition-delay: 0.25s; }
-.preloader__wordmark.expanded .preloader__char--fade:nth-child(17) { transition-delay: 0.3s; }
+.preloader__wordmark.expanded .preloader__char--fade:nth-child(17) { transition-delay: 0.30s; }
 .preloader__wordmark.expanded .preloader__char--fade:nth-child(18) { transition-delay: 0.35s; }
 
 .preloader__count {
-  font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.1em; opacity: 0.7;
+  font-family: var(--font-mono);
+  font-size: 22px; letter-spacing: 0.05em;
+  color: var(--muted);
 }
 
-/* NAV */
+/* ============== NAV ============== */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem var(--gutter);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 22px var(--gutter);
   display: flex; justify-content: space-between; align-items: center;
-  mix-blend-mode: difference; color: var(--bone);
-  opacity: 0; transition: opacity 0.6s var(--ease-out-expo) 0.4s;
+  mix-blend-mode: difference;
+  color: var(--fg);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease) 0.4s;
 }
 .nav.visible { opacity: 1; }
 
 .nav__logo {
-  font-family: var(--font-display); font-size: 1.125rem; font-weight: 400; letter-spacing: -0.01em;
-  display: flex; align-items: center; gap: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.005em;
+  position: relative;
+  display: inline-block;
+}
+.nav__logo::after {
+  content: ".";
+  color: var(--accent);
 }
 
 .nav__menu {
-  display: flex; gap: 2rem; font-family: var(--font-mono); font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.12em;
+  display: flex; gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
 }
-
-.nav__link { position: relative; padding: 0.25rem 0; }
+.nav__link {
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s ease;
+}
 .nav__link::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
-  transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease-out-expo);
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
 }
-.nav__link:hover::after { transform: scaleX(1); }
+.nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav__link .count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  vertical-align: super;
+  color: var(--muted);
+  margin-left: 2px;
+  font-weight: 400;
+}
 
 .scroll-progress {
-  position: fixed; top: 0; left: 0; height: 1px; width: 0;
-  background: var(--ink); z-index: 101; transition: width 0.1s linear;
+  position: fixed; top: 0; left: 0;
+  height: 2px; width: 0;
+  background: var(--accent);
+  z-index: 101;
+  transition: width 0.1s linear;
 }
 
-/* WORDMARK */
+/* ============== WORDMARK (centered, on hero) ============== */
 .wordmark {
-  position: fixed; top: 1.65rem; left: 50vw;
+  position: fixed; top: 1.55rem; left: 50vw;
   transform: translate(-50%, 0);
-  font-family: var(--font-display); font-size: 1.125rem; font-weight: 400;
-  letter-spacing: -0.01em; line-height: 1; color: var(--bone);
-  white-space: nowrap; z-index: 110; pointer-events: auto; cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.005em;
+  line-height: 1; color: var(--fg);
+  white-space: nowrap;
+  z-index: 110; pointer-events: auto; cursor: pointer;
   mix-blend-mode: difference;
-  opacity: 0; transition: opacity 0.8s var(--ease-out-expo) 0.6s;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 0.6s;
 }
-
 .wordmark.visible { opacity: 1; }
 
 .wordmark__char {
   display: inline-block;
-  transition: opacity 0.6s var(--ease-out-expo), letter-spacing 0.6s var(--ease-out-expo);
+  transition: opacity 0.6s var(--ease), letter-spacing 0.6s var(--ease);
 }
-
 .wordmark__dash {
-  display: inline-block; width: 1.5rem; height: 1px; background: currentColor;
-  margin: 0 0.75rem; vertical-align: middle;
-  transition: width 0.4s var(--ease-out-expo);
+  display: inline-block; width: 1.5rem; height: 2px; background: currentColor;
+  margin: 0 0.5rem; vertical-align: middle;
+  transition: width 0.4s var(--ease);
 }
-
 .wordmark:hover .wordmark__dash { width: 2.5rem; }
 
 .wordmark.is-collapsed .wordmark__char--fade {
   opacity: 0; letter-spacing: -0.5em;
 }
-
 .wordmark.is-collapsed .wordmark__dash {
-  margin: 0 0.5rem; width: 1.2rem;
+  margin: 0 0.4rem; width: 1.2rem;
 }
 
-@media (max-width: 700px) { .wordmark { font-size: 0.9rem; } }
+@media (max-width: 700px) { .wordmark { font-size: 18px; } }
 
-/* A—D collapsed wordmark — appears on scroll, replaces full name */
+/* A.D. collapsed wordmark */
 .wordmark-collapse {
-  position: fixed;
-  top: 1.65rem;
-  left: 50vw;
+  position: fixed; top: 1.55rem; left: 50vw;
   transform: translate(-50%, 0);
   font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--bone);
+  font-size: 22px;
+  letter-spacing: -0.005em;
+  color: var(--fg);
   z-index: 110;
   mix-blend-mode: difference;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 0; pointer-events: none;
   transition: opacity 0.2s linear;
-  display: flex;
-  align-items: center;
-  gap: 0;
+  display: flex; align-items: center;
 }
-
-.wordmark-collapse.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
+.wordmark-collapse.visible { opacity: 1; pointer-events: auto; }
 
 .wordmark-collapse__dash {
-  display: inline-block;
-  width: 1.5rem;
-  height: 1px;
-  background: currentColor;
-  margin: 0 0.75rem;
-  vertical-align: middle;
-  transition: width 0.4s var(--ease-out-expo), margin 0.4s var(--ease-out-expo);
+  display: inline-block; width: 1.5rem; height: 2px; background: currentColor;
+  margin: 0 0.5rem; vertical-align: middle;
+  transition: width 0.4s var(--ease), margin 0.4s var(--ease);
 }
-
 .wordmark-collapse:hover .wordmark-collapse__dash {
-  width: 2.5rem;
-  margin: 0 1.25rem;
+  width: 2.5rem; margin: 0 0.9rem;
 }
 
-/* HERO */
+/* ============== HERO ============== */
 .hero {
-  position: relative; height: 100vh; min-height: 600px; overflow: hidden; background: var(--ink);
+  position: relative; height: 100vh; min-height: 600px;
+  overflow: hidden; background: var(--bg);
 }
 
 .hero__placeholder {
   position: absolute; inset: 0; opacity: 0;
-  transition: opacity 1s var(--ease-out-expo) 0.2s;
+  transition: opacity 1s var(--ease) 0.2s;
   background:
-    radial-gradient(ellipse at 30% 60%, rgba(139, 46, 31, 0.25), transparent 65%),
-    radial-gradient(ellipse at 70% 70%, rgba(107, 122, 133, 0.15), transparent 65%),
-    linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+    radial-gradient(ellipse at 30% 60%, rgba(255, 46, 22, 0.18), transparent 65%),
+    radial-gradient(ellipse at 70% 70%, rgba(110, 108, 102, 0.10), transparent 65%),
+    linear-gradient(180deg, #14120f 0%, #0a0a0a 100%);
 }
 .hero__placeholder.visible { opacity: 1; }
 
 .hero__meta {
   position: absolute; bottom: var(--gutter); left: var(--gutter); right: var(--gutter);
-  display: flex; justify-content: space-between; align-items: flex-end; color: var(--bone);
-  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
-  opacity: 0; transition: opacity 0.8s var(--ease-out-expo) 0.8s;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  opacity: 0; transition: opacity 0.8s var(--ease) 0.8s;
 }
-.hero__meta.visible { opacity: 0.7; }
+.hero__meta.visible { opacity: 0.75; }
+.hero__meta div span.dot { color: var(--accent); margin: 0 6px; }
 
 .hero__scroll {
-  position: absolute; bottom: var(--gutter); left: 50%; transform: translateX(-50%);
-  color: var(--bone); font-family: var(--font-mono); font-size: 10px;
-  text-transform: uppercase; letter-spacing: 0.2em;
+  position: absolute; bottom: var(--gutter); left: 50%;
+  transform: translateX(-50%);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
   display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
-  opacity: 0; transition: opacity 0.8s var(--ease-out-expo) 1s;
+  opacity: 0; transition: opacity 0.8s var(--ease) 1s;
 }
-.hero__scroll.visible { opacity: 0.6; }
+.hero__scroll.visible { opacity: 0.65; }
 
 .hero__scroll-line {
   width: 1px; height: 32px; background: currentColor;
-  animation: scrollPulse 2s var(--ease-in-out-expo) infinite;
+  animation: scrollPulse 2s var(--ease-in-out) infinite;
 }
-
 @keyframes scrollPulse {
   0%, 100% { transform: scaleY(1); opacity: 0.3; }
-  50% { transform: scaleY(1.3); opacity: 0.8; }
+  50%      { transform: scaleY(1.3); opacity: 0.8; }
 }
 
-/* MANIFESTO — replaces news/awards block */
+/* ============== MANIFESTO ============== */
 .manifesto {
-  padding: var(--section) var(--gutter); min-height: 60vh;
+  padding: var(--section) var(--gutter);
+  min-height: 60vh;
   display: flex; align-items: center; justify-content: center;
-  background: var(--bone);
-  position: relative;
-  z-index: 5;
+  background: var(--bg);
+  position: relative; z-index: 5;
+  border-top: 1px solid var(--line);
 }
 
 .manifesto__text {
-  font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem);
-  font-weight: 300; line-height: 0.95; letter-spacing: -0.03em;
-  text-align: center; max-width: 18ch;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 11vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-align: center;
+  max-width: 16ch;
 }
+.manifesto__text .loud { color: var(--accent); }
 
-.manifesto__text em { font-style: italic; color: var(--mid); }
-
-/* =========================================================
-   PROJECT STREAM — SNP-style sticky stack
-   Each project = full viewport sticky
-   On scroll past → collapses into thin bar at top
-   ========================================================= */
+/* ============== PROJECT STREAM ============== */
 .project-stream {
   position: relative;
-  background: var(--bone);
+  background: var(--bg);
 }
 
-/* Each project gets its OWN scrolling segment — but the project itself is sticky inside */
 .project-wrap {
   position: relative;
   height: 100vh;
@@ -302,130 +324,111 @@ img, video { max-width: 100%; display: block; }
   width: 100%;
   height: 100vh;
   min-height: 700px;
-  background: var(--bone);
+  background: var(--bg);
   overflow: hidden;
 }
 
-/* Z-index increases per project so newer cards stack on top */
 .project-wrap:nth-child(1) .project { z-index: 1; }
 .project-wrap:nth-child(2) .project { z-index: 2; }
 .project-wrap:nth-child(3) .project { z-index: 3; }
 .project-wrap:nth-child(4) .project { z-index: 4; }
 
-/* Alternating background tones for visual depth */
-.project-wrap:nth-child(odd) .project { background: var(--bone); }
-.project-wrap:nth-child(even) .project { background: var(--paper); }
+.project-wrap:nth-child(odd)  .project { background: var(--bg); }
+.project-wrap:nth-child(even) .project { background: var(--bg-alt); }
 
 .project__inner {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   padding: 7rem var(--gutter) 4rem;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
 }
 
-/* COLLAPSED BAR — name strip when project is scrolled past */
+/* COLLAPSED BAR */
 .project__collapsed-bar {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 0;
-  background: var(--ink);
-  color: var(--bone);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--accent);
+  color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: height 0.5s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo);
+  opacity: 0; pointer-events: none;
+  transition: height 0.5s var(--ease), opacity 0.3s var(--ease);
   z-index: 50;
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  font-size: 18px;
+  letter-spacing: -0.005em;
 }
 
 .project.is-collapsed .project__collapsed-bar {
-  height: 56px;
-  opacity: 1;
-  pointer-events: auto;
+  height: 56px; opacity: 1; pointer-events: auto;
   cursor: pointer;
 }
 
 .project.is-collapsed .project__inner {
   opacity: 0;
-  transition: opacity 0.4s var(--ease-out-expo);
+  transition: opacity 0.4s var(--ease);
 }
 
-/* HERO IMAGE — FULL WIDTH background */
+/* HERO IMAGE */
 .project__hero {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  cursor: pointer;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  overflow: hidden; cursor: pointer;
   z-index: 1;
+  background: var(--bg-alt);
 }
 
 .project__hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.6s var(--ease-out-expo), filter 0.6s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  width: 100%; height: 100%; object-fit: cover;
+  transition: opacity 0.6s var(--ease), filter 0.6s var(--ease), transform 0.8s var(--ease);
 }
 
-/* When user hovers a thumbnail — base hero fades to background */
+.project__hero .ph {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1a1816 0%, #0d0c0a 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  color: #3a3833;
+  font-size: clamp(40px, 7vw, 96px);
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
 .project.is-thumb-hover .project__hero img {
   opacity: 0.25;
   filter: blur(2px);
 }
 
-/* Floating preview image — shown when thumb is hovered */
 .project__preview {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   width: clamp(280px, 35vw, 500px);
   aspect-ratio: 4/5;
   transform: translate(-50%, -50%) scale(0.9);
-  opacity: 0;
-  pointer-events: none;
+  opacity: 0; pointer-events: none;
   z-index: 3;
-  transition: opacity 0.4s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  background: var(--bg-alt);
 }
-
-.project__preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.project__preview img { width: 100%; height: 100%; object-fit: cover; }
 
 .project.is-thumb-hover .project__preview {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  opacity: 1; transform: translate(-50%, -50%) scale(1);
 }
 
-/* META OVERLAYS — sit ON TOP of hero */
+/* META LAYER */
 .project__meta-layer {
   position: relative;
   z-index: 4;
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   justify-content: space-between;
   pointer-events: none;
 }
+.project__meta-layer > * { pointer-events: auto; }
 
-.project__meta-layer > * {
-  pointer-events: auto;
-}
-
-/* Top row: number + tags */
 .project__top {
   display: flex;
   justify-content: space-between;
@@ -436,33 +439,32 @@ img, video { max-width: 100%; display: block; }
 .project__num {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--bone);
-  mix-blend-mode: difference;
-  background: rgba(245,242,236,0.7);
-  padding: 0.4rem 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+  background: rgba(10,10,10,0.6);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .project__meta-right {
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   gap: 0.3rem;
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   text-align: right;
-  color: var(--ink);
-  background: rgba(245,242,236,0.7);
-  padding: 0.6rem 0.8rem;
+  color: var(--fg);
+  background: rgba(10,10,10,0.6);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-.project__category { color: var(--ink); font-weight: 500; }
-.project__tag { color: var(--mid); }
+.project__category { color: var(--fg); font-weight: 500; }
+.project__tag { color: var(--tag-fg); }
 
-/* Bottom row: thumbnails + year, and BIG title centered */
 .project__bottom {
   display: flex;
   justify-content: space-between;
@@ -471,43 +473,36 @@ img, video { max-width: 100%; display: block; }
 }
 
 .project__thumbs {
-  display: flex;
-  gap: 0.5rem;
-  z-index: 5;
+  display: flex; gap: 0.5rem; z-index: 5;
 }
 
 .project__thumb {
-  width: 64px;
-  height: 80px;
-  background: rgba(10,10,10,0.3);
-  cursor: pointer;
-  overflow: hidden;
+  width: 64px; height: 80px;
+  background: rgba(10,10,10,0.4);
+  cursor: pointer; overflow: hidden;
   opacity: 0.7;
-  transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
   position: relative;
-  border: 1px solid rgba(245,242,236,0.3);
+  border: 1px solid rgba(255,255,255,0.15);
 }
-
 .project__thumb:hover,
 .project__thumb.active {
-  opacity: 1;
-  transform: translateY(-6px);
+  opacity: 1; transform: translateY(-6px);
+  border-color: var(--accent);
 }
-
-.project__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.project__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.project__thumb .ph-mini {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1a1816 0%, #0d0c0a 100%);
 }
 
 .project__thumb-num {
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 4px; left: 4px;
   font-family: var(--font-mono);
   font-size: 9px;
-  color: var(--bone);
-  letter-spacing: 0.1em;
+  color: var(--fg);
+  letter-spacing: 0.04em;
   z-index: 2;
   text-shadow: 0 0 4px rgba(0,0,0,0.6);
 }
@@ -515,37 +510,33 @@ img, video { max-width: 100%; display: block; }
 .project__year {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--ink);
-  background: rgba(245,242,236,0.7);
-  padding: 0.4rem 0.7rem;
+  color: var(--fg);
+  background: rgba(10,10,10,0.6);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* TITLE — center bottom, BIG */
 .project__title {
   position: absolute;
   bottom: 5rem;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 7vw, 6rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 7vw, 7rem);
+  letter-spacing: -0.015em;
   line-height: 0.95;
   text-align: center;
   white-space: nowrap;
-  color: var(--bone);
+  color: var(--fg);
   z-index: 4;
   cursor: pointer;
   pointer-events: auto;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.4);
-  transition: opacity 0.3s var(--ease-out-expo);
+  text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.5);
+  transition: color 0.3s var(--ease);
 }
-
-.project__title:hover {
-  opacity: 0.85;
-}
+.project__title:hover { color: var(--accent); }
 
 .project__title::after {
   content: 'Learn more →';
@@ -554,20 +545,16 @@ img, video { max-width: 100%; display: block; }
   left: 50%;
   transform: translateX(-50%) translateY(-6px);
   font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
   white-space: nowrap;
-  color: var(--bone);
+  color: var(--fg);
   text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
-
 .project__title:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  opacity: 1; transform: translateX(-50%) translateY(0);
 }
 
 @media (max-width: 900px) {
@@ -576,38 +563,27 @@ img, video { max-width: 100%; display: block; }
   .project__meta-right, .project__num, .project__year { font-size: 9px; }
 }
 
-/* =========================================================
-   STUDIO INTRO — SNP-style scroll-driven portrait motion
-   Portrait travels left→right, grayscale→color
-   Text appears on left when portrait reaches right side
-   ========================================================= */
+/* ============== STUDIO INTRO ============== */
 .studio-intro {
   position: relative;
-  background: var(--ink);
-  color: var(--bone);
-  /* Tall enough to give scroll room for the motion */
+  background: var(--bg);
+  color: var(--fg);
   height: 200vh;
   z-index: 5;
+  border-top: 1px solid var(--line);
 }
 
-/* Sticky inner container */
 .studio-intro__sticky {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: sticky; top: 0;
+  width: 100%; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   padding: 0 var(--gutter);
 }
 
-/* Photo — circular, moves left to right on scroll */
 .studio-intro__photo {
   position: absolute;
   top: 50%;
-  /* Start position: off-screen left */
   left: -30%;
   transform: translateY(-50%);
   width: clamp(280px, 38vw, 560px);
@@ -617,96 +593,96 @@ img, video { max-width: 100%; display: block; }
   will-change: left, transform;
   cursor: pointer;
   z-index: 2;
+  background: var(--bg-alt);
 }
 
 .studio-intro__photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%; height: 100%; object-fit: cover;
   filter: grayscale(100%) contrast(1.05);
   transition: filter 0.4s linear;
   will-change: filter;
   display: block;
 }
+.studio-intro__photo .ph {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1a1816 0%, #0d0c0a 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  color: #3a3833;
+  font-size: 32px;
+}
 
-/* Text content — appears as portrait moves right */
 .studio-intro__content {
   position: absolute;
-  top: 50%;
-  left: 8vw;
+  top: 50%; left: 8vw;
   transform: translateY(-50%);
-  max-width: 32ch;
-  display: flex;
-  flex-direction: column;
+  max-width: 36ch;
+  display: flex; flex-direction: column;
   gap: 1.25rem;
   opacity: 0;
   z-index: 1;
   will-change: opacity, transform;
-  transition: opacity 0.6s var(--ease-out-expo);
+  transition: opacity 0.6s var(--ease);
 }
-
-.studio-intro__content.is-visible {
-  opacity: 1;
-}
+.studio-intro__content.is-visible { opacity: 1; }
 
 .studio-intro__label {
   font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .studio-intro__title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
-  font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
 }
+.studio-intro__title .accent { color: var(--accent); }
 
 .studio-intro__bio {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(245, 242, 236, 0.7);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--tag-fg);
 }
 
 .studio-intro__cta {
   font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-size: 12px;
   align-self: flex-start;
-  border-bottom: 1px solid currentColor;
+  position: relative;
   padding-bottom: 4px;
-  transition: gap 0.3s var(--ease-out-expo);
-  display: inline-flex;
-  align-items: center;
+  display: inline-flex; align-items: center;
   gap: 0.5rem;
   margin-top: 1rem;
+  transition: gap 0.3s var(--ease), color 0.3s var(--ease);
 }
+.studio-intro__cta::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(1); transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.studio-intro__cta:hover { gap: 1rem; color: var(--accent); }
 
-.studio-intro__cta:hover { gap: 1rem; }
-
-/* Custom cursor on photo */
 .studio-cursor {
   position: fixed;
   top: 0; left: 0;
   width: 80px; height: 80px;
   border-radius: 50%;
-  background: var(--bone);
-  color: var(--ink);
+  background: var(--accent);
+  color: var(--fg);
   font-family: var(--font-mono);
   font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   display: flex; align-items: center; justify-content: center;
   text-align: center;
   pointer-events: none;
   z-index: 9000;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.5);
-  transition: opacity 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
   will-change: transform, opacity;
   line-height: 1.3;
 }
@@ -717,57 +693,69 @@ img, video { max-width: 100%; display: block; }
   .studio-intro__content { max-width: 90vw; padding: 0 1rem; }
 }
 
-/* =========================================================
-   CONTACT
-   ========================================================= */
+/* ============== CONTACT ============== */
 .contact {
   padding: var(--section) var(--gutter);
-  background: var(--ink); color: var(--bone);
+  background: var(--bg); color: var(--fg);
   position: relative; z-index: 5;
+  border-top: 1px solid var(--line);
 }
 
 .contact__label {
-  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
-  letter-spacing: 0.12em; color: var(--mid); margin-bottom: 2rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 2rem;
 }
 
 .contact__email {
-  font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 6rem);
-  font-weight: 300; letter-spacing: -0.02em; display: inline-block; position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  letter-spacing: -0.015em;
+  display: inline-block; position: relative;
+  line-height: 1;
+  padding-bottom: 4px;
+  transition: color 0.3s var(--ease);
 }
-
 .contact__email::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0.1em; height: 1px;
-  background: var(--bone); transform: scaleX(0); transform-origin: left;
-  transition: transform 0.6s var(--ease-out-expo);
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: currentColor;
+  transform: scaleX(1); transform-origin: left;
+  transition: transform 0.6s var(--ease);
 }
-
-.contact__email:hover::after { transform: scaleX(1); }
+.contact__email:hover { color: var(--accent); }
 
 .contact__statement {
   margin-top: 4rem;
-  max-width: 50ch;
+  max-width: 56ch;
   font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(245, 242, 236, 0.8);
+  line-height: 1.6;
+  color: var(--tag-fg);
 }
 
 .contact__meta {
-  margin-top: 4rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
-  font-family: var(--font-mono); font-size: 11px; text-transform: uppercase;
-  letter-spacing: 0.12em; color: var(--mid);
-  padding-top: 2rem; border-top: 1px solid rgba(245, 242, 236, 0.15);
+  margin-top: 4rem;
+  display: flex; justify-content: space-between;
+  flex-wrap: wrap; gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  padding-top: 2rem; border-top: 1px solid var(--line);
 }
 
 .contact__socials { display: flex; gap: 1.5rem; }
-.contact__social { position: relative; padding-bottom: 2px; }
-
-.contact__social::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
-  transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease-out-expo);
+.contact__social {
+  position: relative; padding-bottom: 2px;
+  transition: color 0.3s var(--ease);
 }
-
-.contact__social:hover::after { transform: scaleX(1); }
+.contact__social::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.contact__social:hover { color: var(--fg); }
+.contact__social:hover::after { transform: scaleX(1); transform-origin: left; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -786,9 +774,7 @@ img, video { max-width: 100%; display: block; }
 
 <!-- PRELOADER -->
 <div class="preloader" id="preloader">
-  <div class="preloader__wordmark" id="preloader-wordmark">
-    <span class="preloader__char preloader__char--keep">A</span><span class="preloader__char preloader__char--fade">L</span><span class="preloader__char preloader__char--fade">E</span><span class="preloader__char preloader__char--fade">X</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">N</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">R</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__dash-line"></span><span class="preloader__char preloader__char--keep">D</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">I</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">O</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">A</span>
-  </div>
+  <div class="preloader__wordmark" id="preloader-wordmark"><span class="preloader__char preloader__char--keep">A</span><span class="preloader__char preloader__char--fade">L</span><span class="preloader__char preloader__char--fade">E</span><span class="preloader__char preloader__char--fade">X</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">N</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">R</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__dash-line"></span><span class="preloader__char preloader__char--keep">D</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">I</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">O</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">A</span></div>
   <div class="preloader__count" id="count">000</div>
 </div>
 
@@ -796,20 +782,20 @@ img, video { max-width: 100%; display: block; }
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <div class="nav__logo"></div>
+  <a href="index.html" class="nav__logo">AD</a>
   <div class="nav__menu">
-    <a href="/work.html" class="nav__link">Work</a>
-    <a href="/about.html" class="nav__link">Studio</a>
+    <a href="work.html" class="nav__link">Showcase<span class="count">(10)</span></a>
+    <a href="about.html" class="nav__link">Studio</a>
     <a href="#contact" class="nav__link">Contact</a>
   </div>
 </nav>
 
-<!-- Wordmark — clickable returns to top -->
+<!-- Wordmark -->
 <a href="#studio" class="wordmark" id="wordmark">
   <span class="wordmark__char wordmark__char--keep">A</span><span class="wordmark__char wordmark__char--fade">L</span><span class="wordmark__char wordmark__char--fade">E</span><span class="wordmark__char wordmark__char--fade">X</span><span class="wordmark__char wordmark__char--fade">A</span><span class="wordmark__char wordmark__char--fade">N</span><span class="wordmark__char wordmark__char--fade">D</span><span class="wordmark__char wordmark__char--fade">R</span><span class="wordmark__char wordmark__char--fade">A</span><span class="wordmark__dash"></span><span class="wordmark__char wordmark__char--keep">D</span><span class="wordmark__char wordmark__char--fade">A</span><span class="wordmark__char wordmark__char--fade">V</span><span class="wordmark__char wordmark__char--fade">I</span><span class="wordmark__char wordmark__char--fade">D</span><span class="wordmark__char wordmark__char--fade">O</span><span class="wordmark__char wordmark__char--fade">V</span><span class="wordmark__char wordmark__char--fade">A</span>
 </a>
 
-<!-- A—D collapsed wordmark, appears on scroll, returns to top -->
+<!-- A.D. collapsed -->
 <a href="#top" class="wordmark-collapse" id="wordmark-collapse" aria-label="Back to top">
   A<span class="wordmark-collapse__dash"></span>D
 </a>
@@ -819,8 +805,8 @@ img, video { max-width: 100%; display: block; }
   <div class="hero__placeholder" id="hero-bg"></div>
 
   <div class="hero__meta" id="hero-meta">
-    <div>Alexandra Davidova — CGI Art Direction</div>
-    <div>Available for projects — 2026 / Warsaw</div>
+    <div>Alexandra Davidova<span class="dot">·</span>CGI Art Direction</div>
+    <div>Available 2026<span class="dot">·</span>Warsaw / Worldwide</div>
   </div>
 
   <div class="hero__scroll" id="hero-scroll">
@@ -832,242 +818,241 @@ img, video { max-width: 100%; display: block; }
 <!-- MANIFESTO -->
 <section class="manifesto">
   <h2 class="manifesto__text">
-    Quiet objects.<br><em>Loud intent.</em>
+    Quiet objects.<br><span class="loud">Loud intent.</span>
   </h2>
 </section>
 
-<!-- ============================================
-     PROJECT STREAM — sticky stack
-     ============================================ -->
+<!-- ============ PROJECT STREAM ============ -->
 <section class="project-stream" id="project-stream">
 
-  <!-- PROJECT 01 — EGO / VOBRO -->
-  <article class="project" data-name="VOBRO — EGO" data-href="work/ego.html">
-    <div class="project__collapsed-bar">VOBRO — EGO</div>
+  <!-- 01 — GRYZZZLI -->
+  <div class="project-wrap">
+    <article class="project" data-name="Gryzzzli Bears">
+      <div class="project__collapsed-bar">Gryzzzli Bears →</div>
 
-    <a href="work/ego.html" class="project__hero">
-      <img
-        src="assets/img/projects/img_EGO/hero.png"
-        data-default="assets/img/projects/img_EGO/hero.png"
-        alt="VOBRO — EGO"
-      />
-    </a>
+      <a href="work/gryzzzli.html" class="project__hero">
+        <div class="ph">GRYZZZLI</div>
+        <img src="assets/img_GRYZZZLI/hero.png" alt="Gryzzzli Bears" onerror="this.style.display='none'" />
+      </a>
 
-    <div class="project__preview" id="preview-1">
-      <img src="" alt="" />
-    </div>
+      <div class="project__preview" id="preview-1"><img src="" alt="" /></div>
 
-    <div class="project__inner">
-      <div class="project__meta-layer">
-        <div class="project__top">
-          <span class="project__num">01 / 04</span>
-          <div class="project__meta-right">
-            <span class="project__category">CGI · Packaging · Campaign</span>
-            <span class="project__tag">CGI Art Direction</span>
-            <span class="project__tag">Visualization</span>
+      <div class="project__inner">
+        <div class="project__meta-layer">
+          <div class="project__top">
+            <span class="project__num">01 / 04</span>
+            <div class="project__meta-right">
+              <span class="project__category">CGI · Packaging · Campaign</span>
+              <span class="project__tag">Visualization</span>
+              <span class="project__tag">Vobro</span>
+            </div>
+          </div>
+
+          <div class="project__bottom">
+            <div class="project__thumbs" data-target="1">
+              <div class="project__thumb active" data-src="assets/img_GRYZZZLI/01.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_GRYZZZLI/01.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">01</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_GRYZZZLI/02.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_GRYZZZLI/02.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">02</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_GRYZZZLI/03.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_GRYZZZLI/03.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">03</span>
+              </div>
+            </div>
+            <span class="project__year">Warsaw · 2025</span>
           </div>
         </div>
 
-        <div class="project__bottom">
-          <div class="project__thumbs" data-target="1">
-            <div class="project__thumb active" data-src="assets/img/projects/img_EGO/01.png">
-              <img src="assets/img/projects/img_EGO/01.png" alt="" /><span class="project__thumb-num">01</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_EGO/02.png">
-              <img src="assets/img/projects/img_EGO/02.png" alt="" /><span class="project__thumb-num">02</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_EGO/03.png">
-              <img src="assets/img/projects/img_EGO/03.png" alt="" /><span class="project__thumb-num">03</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_EGO/04.png">
-              <img src="assets/img/projects/img_EGO/04.png" alt="" /><span class="project__thumb-num">04</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_EGO/05.png">
-              <img src="assets/img/projects/img_EGO/05.png" alt="" /><span class="project__thumb-num">05</span>
-            </div>
-          </div>
-          <span class="project__year">Warsaw · 2026</span>
-        </div>
+        <a href="work/gryzzzli.html" class="project__title">Gryzzzli Bears</a>
       </div>
+    </article>
+  </div>
 
-      <a href="work/ego.html" class="project__title">VOBRO — EGO</a>
-    </div>
-  </article>
+  <!-- 02 — LOVE & CHERRY -->
+  <div class="project-wrap">
+    <article class="project" data-name="Love & Cherry">
+      <div class="project__collapsed-bar">Love &amp; Cherry →</div>
 
-  <!-- PROJECT 02 — REPLICA -->
-  <article class="project" data-name="Replica — Jazz Club" data-href="work/replica.html">
-    <div class="project__collapsed-bar">Replica — Jazz Club</div>
+      <a href="work/love-cherry.html" class="project__hero">
+        <div class="ph">LOVE & CHERRY</div>
+        <img src="assets/img_LOVECHERRY/hero.png" alt="Love & Cherry" onerror="this.style.display='none'" />
+      </a>
 
-    <a href="work/replica.html" class="project__hero">
-      <img
-        src="assets/img/projects/img_Replica/hero.png"
-        data-default="assets/img/projects/img_Replica/hero.png"
-        alt="Maison Margiela — Replica Jazz Club"
-      />
-    </a>
+      <div class="project__preview" id="preview-2"><img src="" alt="" /></div>
 
-    <div class="project__preview" id="preview-2">
-      <img src="" alt="" />
-    </div>
+      <div class="project__inner">
+        <div class="project__meta-layer">
+          <div class="project__top">
+            <span class="project__num">02 / 04</span>
+            <div class="project__meta-right">
+              <span class="project__category">CGI · Packshot · Editorial</span>
+              <span class="project__tag">Visualization</span>
+              <span class="project__tag">Vobro</span>
+            </div>
+          </div>
 
-    <div class="project__inner">
-      <div class="project__meta-layer">
-        <div class="project__top">
-          <span class="project__num">02 / 04</span>
-          <div class="project__meta-right">
-            <span class="project__category">CGI · Fragrance</span>
-            <span class="project__tag">Concept · Modeling</span>
-            <span class="project__tag">Shading · Lighting</span>
+          <div class="project__bottom">
+            <div class="project__thumbs" data-target="2">
+              <div class="project__thumb active" data-src="assets/img_LOVECHERRY/01.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_LOVECHERRY/01.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">01</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_LOVECHERRY/02.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_LOVECHERRY/02.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">02</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_LOVECHERRY/03.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_LOVECHERRY/03.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">03</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_LOVECHERRY/04.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_LOVECHERRY/04.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">04</span>
+              </div>
+            </div>
+            <span class="project__year">Warsaw · 2025</span>
           </div>
         </div>
 
-        <div class="project__bottom">
-          <div class="project__thumbs" data-target="2">
-            <div class="project__thumb active" data-src="assets/img/projects/img_Replica/01.png">
-              <img src="assets/img/projects/img_Replica/01.png" alt="" /><span class="project__thumb-num">01</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Replica/02.png">
-              <img src="assets/img/projects/img_Replica/02.png" alt="" /><span class="project__thumb-num">02</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Replica/03.png">
-              <img src="assets/img/projects/img_Replica/03.png" alt="" /><span class="project__thumb-num">03</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Replica/04.png">
-              <img src="assets/img/projects/img_Replica/04.png" alt="" /><span class="project__thumb-num">04</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Replica/05.png">
-              <img src="assets/img/projects/img_Replica/05.png" alt="" /><span class="project__thumb-num">05</span>
-            </div>
-          </div>
-          <span class="project__year">Warsaw · 2025</span>
-        </div>
+        <a href="work/love-cherry.html" class="project__title">Love &amp; Cherry</a>
       </div>
+    </article>
+  </div>
 
-      <a href="work/replica.html" class="project__title">Replica — Jazz Club</a>
-    </div>
-  </article>
+  <!-- 03 — HAZELNUT PASSION -->
+  <div class="project-wrap">
+    <article class="project" data-name="Hazelnut Passion">
+      <div class="project__collapsed-bar">Hazelnut Passion →</div>
 
-  <!-- PROJECT 03 — GUERLAIN LUMEN -->
-  <article class="project" data-name="Guerlain — Lumen Serum" data-href="work/guerlain.html">
-    <div class="project__collapsed-bar">Guerlain — Lumen Serum</div>
+      <a href="work/hazelnut-passion.html" class="project__hero">
+        <div class="ph">HAZELNUT PASSION</div>
+        <img src="assets/img_HAZELNUTPASSION/hero.png" alt="Hazelnut Passion" onerror="this.style.display='none'" />
+      </a>
 
-    <a href="work/guerlain.html" class="project__hero">
-      <img
-        src="assets/img/projects/img_Guerlian/hero.png"
-        data-default="assets/img/projects/img_Guerlian/hero.png"
-        alt="Guerlain — Lumen Serum"
-      />
-    </a>
+      <div class="project__preview" id="preview-3"><img src="" alt="" /></div>
 
-    <div class="project__preview" id="preview-3">
-      <img src="" alt="" />
-    </div>
+      <div class="project__inner">
+        <div class="project__meta-layer">
+          <div class="project__top">
+            <span class="project__num">03 / 04</span>
+            <div class="project__meta-right">
+              <span class="project__category">CGI · Packshot · In-tray Macro</span>
+              <span class="project__tag">Visualization</span>
+              <span class="project__tag">Vobro</span>
+            </div>
+          </div>
 
-    <div class="project__inner">
-      <div class="project__meta-layer">
-        <div class="project__top">
-          <span class="project__num">03 / 04</span>
-          <div class="project__meta-right">
-            <span class="project__category">CGI · Skincare</span>
-            <span class="project__tag">Concept · Modeling</span>
-            <span class="project__tag">Shading · Lighting</span>
+          <div class="project__bottom">
+            <div class="project__thumbs" data-target="3">
+              <div class="project__thumb active" data-src="assets/img_HAZELNUTPASSION/01.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_HAZELNUTPASSION/01.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">01</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_HAZELNUTPASSION/02.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_HAZELNUTPASSION/02.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">02</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_HAZELNUTPASSION/03.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_HAZELNUTPASSION/03.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">03</span>
+              </div>
+            </div>
+            <span class="project__year">Warsaw · 2025</span>
           </div>
         </div>
 
-        <div class="project__bottom">
-          <div class="project__thumbs" data-target="3">
-            <div class="project__thumb active" data-src="assets/img/projects/img_Guerlian/01.png">
-              <img src="assets/img/projects/img_Guerlian/01.png" alt="" /><span class="project__thumb-num">01</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Guerlian/02.png">
-              <img src="assets/img/projects/img_Guerlian/02.png" alt="" /><span class="project__thumb-num">02</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Guerlian/03.png">
-              <img src="assets/img/projects/img_Guerlian/03.png" alt="" /><span class="project__thumb-num">03</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Guerlian/04.png">
-              <img src="assets/img/projects/img_Guerlian/04.png" alt="" /><span class="project__thumb-num">04</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Guerlian/05.png">
-              <img src="assets/img/projects/img_Guerlian/05.png" alt="" /><span class="project__thumb-num">05</span>
-            </div>
-          </div>
-          <span class="project__year">Warsaw · 2025</span>
-        </div>
+        <a href="work/hazelnut-passion.html" class="project__title">Hazelnut Passion</a>
       </div>
+    </article>
+  </div>
 
-      <a href="work/guerlain.html" class="project__title">Guerlain — Lumen Serum</a>
-    </div>
-  </article>
+  <!-- 04 — WOW MARSHMALLOW -->
+  <div class="project-wrap">
+    <article class="project" data-name="WOW Marshmallow">
+      <div class="project__collapsed-bar">WOW Marshmallow →</div>
 
-  <!-- PROJECT 04 — PETRO -->
-  <article class="project" data-name="Petro — Restaurant" data-href="work/petro.html">
-    <div class="project__collapsed-bar">Petro — Restaurant</div>
+      <a href="work/wow.html" class="project__hero">
+        <div class="ph">WOW</div>
+        <img src="assets/img_WOW/hero.png" alt="WOW Marshmallow" onerror="this.style.display='none'" />
+      </a>
 
-    <a href="work/petro.html" class="project__hero">
-      <img
-        src="assets/img/projects/img_Petro/hero.png"
-        data-default="assets/img/projects/img_Petro/hero.png"
-        alt="Petro — Restaurant Identity"
-      />
-    </a>
+      <div class="project__preview" id="preview-4"><img src="" alt="" /></div>
 
-    <div class="project__preview" id="preview-4">
-      <img src="" alt="" />
-    </div>
+      <div class="project__inner">
+        <div class="project__meta-layer">
+          <div class="project__top">
+            <span class="project__num">04 / 04</span>
+            <div class="project__meta-right">
+              <span class="project__category">CGI · Packshot · Campaign</span>
+              <span class="project__tag">Visualization</span>
+              <span class="project__tag">Vobro</span>
+            </div>
+          </div>
 
-    <div class="project__inner">
-      <div class="project__meta-layer">
-        <div class="project__top">
-          <span class="project__num">04 / 04</span>
-          <div class="project__meta-right">
-            <span class="project__category">Brand Identity</span>
-            <span class="project__tag">Strategy · Identity</span>
-            <span class="project__tag">Illustration · Art Direction</span>
+          <div class="project__bottom">
+            <div class="project__thumbs" data-target="4">
+              <div class="project__thumb active" data-src="assets/img_WOW/01.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_WOW/01.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">01</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_WOW/02.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_WOW/02.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">02</span>
+              </div>
+              <div class="project__thumb" data-src="assets/img_WOW/03.png">
+                <div class="ph-mini"></div>
+                <img src="assets/img_WOW/03.png" alt="" onerror="this.style.display='none'" />
+                <span class="project__thumb-num">03</span>
+              </div>
+            </div>
+            <span class="project__year">Warsaw · 2025</span>
           </div>
         </div>
 
-        <div class="project__bottom">
-          <div class="project__thumbs" data-target="4">
-            <div class="project__thumb active" data-src="assets/img/projects/img_Petro/01.png">
-              <img src="assets/img/projects/img_Petro/01.png" alt="" /><span class="project__thumb-num">01</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Petro/02.png">
-              <img src="assets/img/projects/img_Petro/02.png" alt="" /><span class="project__thumb-num">02</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Petro/03.png">
-              <img src="assets/img/projects/img_Petro/03.png" alt="" /><span class="project__thumb-num">03</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Petro/04.png">
-              <img src="assets/img/projects/img_Petro/04.png" alt="" /><span class="project__thumb-num">04</span>
-            </div>
-            <div class="project__thumb" data-src="assets/img/projects/img_Petro/05.png">
-              <img src="assets/img/projects/img_Petro/05.png" alt="" /><span class="project__thumb-num">05</span>
-            </div>
-          </div>
-          <span class="project__year">Warsaw · 2026</span>
-        </div>
+        <a href="work/wow.html" class="project__title">WOW Marshmallow</a>
       </div>
-
-      <a href="work/petro.html" class="project__title">Petro — Restaurant</a>
-    </div>
-  </article>
+    </article>
+  </div>
 
 </section>
 
-<!-- STUDIO INTRO — scroll-driven portrait motion -->
+<!-- See all projects link -->
+<section style="padding: 6rem var(--gutter); text-align: center; border-top: 1px solid var(--line); background: var(--bg);">
+  <a href="work.html" style="font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -0.01em; position: relative; padding-bottom: 4px; display: inline-block; transition: color 0.3s var(--ease);"
+     onmouseover="this.style.color='var(--accent)'"
+     onmouseout="this.style.color='var(--fg)'">
+    See all 10 projects →
+  </a>
+</section>
+
+<!-- STUDIO INTRO -->
 <section class="studio-intro" id="studio">
   <div class="studio-intro__sticky">
 
-    <!-- Portrait — moves L→R, grayscale→color on scroll -->
     <a href="about.html" class="studio-intro__photo" id="studio-photo">
-      <img src="assets/img/portrait.jpg" alt="Alexandra Davidova" id="studio-portrait" />
+      <div class="ph">AD</div>
+      <img src="assets/img/portrait.jpg" alt="Alexandra Davidova" id="studio-portrait" onerror="this.style.display='none'" />
     </a>
 
-    <!-- Text — appears when portrait reaches the right -->
     <div class="studio-intro__content" id="studio-content">
       <span class="studio-intro__label">— Studio</span>
-      <h2 class="studio-intro__title">An independent CGI art director crafting cinematic product imagery for premium brands.</h2>
+      <h2 class="studio-intro__title">An independent CGI art director crafting cinematic product imagery for <span class="accent">premium brands.</span></h2>
       <p class="studio-intro__bio">Davidova Studio is a one-woman practice based in Warsaw, working with brands across fragrance, cosmetics, fashion, and tech. The work is quiet, considered, and built to carry intent — from concept through final frame.</p>
       <a href="about.html" class="studio-intro__cta">More about the studio <span>→</span></a>
     </div>
@@ -1077,7 +1062,7 @@ img, video { max-width: 100%; display: block; }
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="contact__label">Let's work together</div>
+  <div class="contact__label">— Let's work together</div>
   <a href="mailto:studio@davidova.studio" class="contact__email">studio@davidova.studio</a>
 
   <p class="contact__statement">
@@ -1095,20 +1080,20 @@ img, video { max-width: 100%; display: block; }
 </section>
 
 <script>
-/* Preloader */
+/* ===== PRELOADER ===== */
 (function() {
   const preloader = document.getElementById('preloader');
-  const preloaderWordmark = document.getElementById('preloader-wordmark');
   const count = document.getElementById('count');
+  const preloaderWordmark = document.getElementById('preloader-wordmark');
+  const heroBg = document.getElementById('hero-bg');
   const wordmark = document.getElementById('wordmark');
   const nav = document.getElementById('nav');
-  const heroBg = document.getElementById('hero-bg');
   const heroMeta = document.getElementById('hero-meta');
   const heroScroll = document.getElementById('hero-scroll');
 
   let n = 0;
   const tick = setInterval(() => {
-    n += Math.ceil(Math.random() * 6);
+    n += Math.ceil(Math.random() * 8);
     if (n >= 100) { n = 100; clearInterval(tick); }
     count.textContent = String(n).padStart(3, '0');
     if (n >= 25 && !preloaderWordmark.classList.contains('expanded')) {
@@ -1130,7 +1115,7 @@ img, video { max-width: 100%; display: block; }
   });
 })();
 
-/* Scroll progress */
+/* ===== Scroll progress ===== */
 (function() {
   const bar = document.getElementById('progress');
   window.addEventListener('scroll', () => {
@@ -1140,7 +1125,7 @@ img, video { max-width: 100%; display: block; }
   }, { passive: true });
 })();
 
-/* Wordmark scroll: ALEXANDRA—DAVIDOVA → A—D */
+/* ===== Wordmark collapse on scroll ===== */
 (function() {
   const wordmark = document.getElementById('wordmark');
   const wordmarkCollapse = document.getElementById('wordmark-collapse');
@@ -1149,7 +1134,6 @@ img, video { max-width: 100%; display: block; }
   const onScroll = () => {
     const scrollY = window.scrollY;
     const heroHeight = window.innerHeight;
-
     if (scrollY > heroHeight * 0.3) {
       wordmark.style.opacity = '0';
       wordmark.style.pointerEvents = 'none';
@@ -1160,23 +1144,20 @@ img, video { max-width: 100%; display: block; }
       wordmarkCollapse.classList.remove('visible');
     }
   };
-
   window.addEventListener('scroll', onScroll, { passive: true });
   setTimeout(onScroll, 800);
 })();
 
-/* Studio photo — custom cursor */
+/* ===== Studio photo custom cursor ===== */
 (function() {
   const photo = document.getElementById('studio-photo');
   const cursor = document.getElementById('studio-cursor');
   if (!photo || !cursor) return;
 
-  let mouseX = 0, mouseY = 0;
-  let cursorVisible = false;
+  let mouseX = 0, mouseY = 0, cursorVisible = false;
 
   document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    mouseX = e.clientX; mouseY = e.clientY;
     if (cursorVisible) {
       cursor.style.left = mouseX + 'px';
       cursor.style.top = mouseY + 'px';
@@ -1198,42 +1179,32 @@ img, video { max-width: 100%; display: block; }
   });
 })();
 
-/* =========================================================
-   STUDIO INTRO — scroll-driven portrait motion
-   Portrait travels L→R, grayscale→color
-   Text fades in when portrait reaches right side
-   ========================================================= */
+/* ===== Studio intro scroll-driven portrait ===== */
 (function() {
   const section = document.getElementById('studio');
   const photo = document.getElementById('studio-photo');
   const portrait = document.getElementById('studio-portrait');
   const content = document.getElementById('studio-content');
-  if (!section || !photo || !portrait || !content) return;
+  if (!section || !photo || !content) return;
 
   const onScroll = () => {
     const rect = section.getBoundingClientRect();
     const winH = window.innerHeight;
     const sectionH = section.offsetHeight;
 
-    /* Section is "200vh" tall, sticky inner is 100vh */
-    /* Progress: 0 when section top hits viewport top, 1 when section bottom hits viewport bottom */
     const scrolled = -rect.top;
     const scrollableDist = sectionH - winH;
     let progress = scrolled / scrollableDist;
     progress = Math.max(0, Math.min(1, progress));
 
-    /* Portrait position: from left (-30%) to right (~ 62vw) */
-    /* Container width ~38vw → start at -30%, end so right edge is at right gutter */
-    const startLeft = -30; /* -30% from viewport width */
-    const endLeft = 100 - 38 - 2; /* 100% - photo width - small gutter */
+    const startLeft = -30;
+    const endLeft = 100 - 38 - 2;
     const currentLeft = startLeft + (endLeft - startLeft) * progress;
     photo.style.left = currentLeft + 'vw';
 
-    /* Grayscale → Color (start 0% gray, end 100% color) */
     const grayAmount = 100 - (progress * 100);
-    portrait.style.filter = `grayscale(${grayAmount}%) contrast(${1.05 - progress * 0.05})`;
+    if (portrait) portrait.style.filter = `grayscale(${grayAmount}%) contrast(${1.05 - progress * 0.05})`;
 
-    /* Text appears when portrait is past 55% */
     if (progress > 0.55) {
       const textProgress = (progress - 0.55) / 0.45;
       content.style.opacity = textProgress.toFixed(2);
@@ -1249,43 +1220,26 @@ img, video { max-width: 100%; display: block; }
   onScroll();
 })();
 
-/* =========================================================
-   PROJECT STACK — collapse on scroll past
-   ========================================================= */
+/* ===== Project stack collapse ===== */
 (function() {
   const projects = document.querySelectorAll('.project');
   if (!projects.length) return;
 
   const onScroll = () => {
     projects.forEach((project, idx) => {
-      const rect = project.getBoundingClientRect();
-      const winH = window.innerHeight;
-
-      /* Collapse when this project is scrolled past (top crosses about -20% of viewport) */
-      /* AND when the next project is already on top */
       const nextProject = projects[idx + 1];
       let shouldCollapse = false;
-
       if (nextProject) {
         const nextRect = nextProject.getBoundingClientRect();
-        /* If next project's top has reached 0 or above, this one is collapsed */
-        if (nextRect.top <= 0) {
-          shouldCollapse = true;
-        }
+        if (nextRect.top <= 0) shouldCollapse = true;
       }
-
-      if (shouldCollapse) {
-        project.classList.add('is-collapsed');
-      } else {
-        project.classList.remove('is-collapsed');
-      }
+      project.classList.toggle('is-collapsed', shouldCollapse);
     });
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* Click on collapsed bar → scroll back up to that project */
   projects.forEach(project => {
     const bar = project.querySelector('.project__collapsed-bar');
     if (!bar) return;
@@ -1295,10 +1249,7 @@ img, video { max-width: 100%; display: block; }
   });
 })();
 
-/* =========================================================
-   PROJECT THUMBNAILS — hover shows floating preview
-   Hero stays in background (blurred), preview pops up
-   ========================================================= */
+/* ===== Project thumbnails hover preview ===== */
 (function() {
   document.querySelectorAll('.project__thumbs').forEach(thumbsContainer => {
     const targetIdx = thumbsContainer.getAttribute('data-target');
@@ -1321,10 +1272,8 @@ img, video { max-width: 100%; display: block; }
       });
     });
 
-    /* When leaving the thumbs area entirely — hide preview, reset to hero */
     thumbsContainer.addEventListener('mouseleave', () => {
       project.classList.remove('is-thumb-hover');
-      /* Mark first as active again */
       thumbs.forEach(t => t.classList.remove('active'));
       if (thumbs[0]) thumbs[0].classList.add('active');
     });

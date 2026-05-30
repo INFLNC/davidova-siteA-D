@@ -8,504 +8,567 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
 <style>
+/* =========================================================
+   EGO — Davidova.Studio system
+   ========================================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 :root {
-  --ink: #0A0A0A;
-  --graphite: #1F1F1F;
-  --bone: #F5F2EC;
-  --paper: #E8E4DB;
-  --mid: #6B6B6B;
+  --bg: #0a0a0a;
+  --bg-alt: #14120f;
+  --fg: #e8e6e1;
+  --muted: #6e6c66;
+  --line: #1f1d1a;
+  --tag-bg: #1a1816;
+  --tag-fg: #c9c6bf;
+  --accent: #ff2e16;
 
-  /* EGO flavor worlds */
-  --ego-hazelnut: #1F5C2E;
-  --ego-plum: #4B1F5C;
-  --ego-pistachio: #7DB833;
-  --ego-cherry: #C4258A;
-  --ego-almond: #E8DDC8;
-  --ego-gold: #C9A84C;
-  
-  /* Sky for hero */
-  --sky: #6BB6E8;
+  /* EGO brand flavor colours — content tokens, not chrome */
+  --ego-pistachio: #1F5C2E;
+  --ego-plum:      #4B1F5C;
+  --ego-cherry:    #6B1228;
+  --ego-almond:    #E8DDC8;
+  --ego-hazelnut:  #3A2418;
+  --ego-gold:      #C9A84C;
 
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --ink: #0a0a0a;
+  --bone: #e8e6e1;
+
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  --gutter: clamp(1.25rem, 2vw, 2rem);
+  --gutter: clamp(1.25rem, 2vw, 2.25rem);
   --section: clamp(4rem, 10vw, 8rem);
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --max-w: 1440px;
 }
 
 body {
-  background: var(--bone);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-body);
+  font-weight: 400;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
-img, video { max-width: 100%; display: block; }
+img, video { max-width: 100%; display: block; height: auto; }
 
-/* NAV */
+em { font-style: normal; color: var(--accent); }
+
+/* ===== NAV ===== */
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 1.5rem var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  mix-blend-mode: difference;
-  color: var(--bone);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px var(--gutter);
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
 }
-
 .nav__logo {
   font-family: var(--font-display);
-  font-size: 1.125rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  font-size: 22px;
+  letter-spacing: -0.005em;
+  display: inline-flex; align-items: center;
 }
-
+.nav__logo::after { content: "."; color: var(--accent); }
 .nav__logo-line {
   display: inline-block;
-  width: 1.5rem; height: 1px;
+  width: 1.2rem; height: 1px;
   background: currentColor;
-  transition: width 0.4s var(--ease-out-expo);
+  margin: 0 6px;
 }
-
-.nav__logo:hover .nav__logo-line { width: 2.5rem; }
-
 .nav__menu {
-  display: flex;
-  gap: 2rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  display: flex; gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
 }
-
-.nav__link { position: relative; padding: 0.25rem 0; }
-.nav__link::after {
-  content: ''; position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px; background: currentColor;
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.4s var(--ease-out-expo);
-}
-.nav__link:hover::after { transform: scaleX(1); }
-
-/* MODULES */
-.cs-module {
+.nav__link {
   position: relative;
-  padding: var(--section) var(--gutter);
+  padding-bottom: 4px;
+}
+.nav__link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ===== HERO ===== */
+.cs-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-alt);
+  overflow: hidden;
+}
+.cs-hero > img {
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+.cs-hero__meta {
+  position: absolute;
+  bottom: var(--gutter);
+  right: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg);
+  text-align: right;
+  z-index: 5;
+  mix-blend-mode: difference;
+  line-height: 1.6;
 }
 
-.cs-module--bone { background: var(--bone); color: var(--ink); }
-.cs-module--paper { background: var(--paper); color: var(--ink); }
-.cs-module--ink { background: var(--ink); color: var(--bone); }
-.cs-module--graphite { background: var(--graphite); color: var(--bone); }
-.cs-module--bleed { padding: 0; background: var(--ink); }
+/* ===== MODULE ===== */
+.cs-module {
+  padding: var(--section) var(--gutter);
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.cs-module:last-of-type { border-bottom: none; }
 
-.cs-module--hazelnut { background: var(--ego-hazelnut); color: var(--bone); }
-.cs-module--plum { background: var(--ego-plum); color: var(--bone); }
-.cs-module--pistachio { background: var(--ego-pistachio); color: var(--ink); }
-.cs-module--cherry { background: var(--ego-cherry); color: var(--bone); }
-.cs-module--almond { background: var(--ego-almond); color: var(--ink); }
-.cs-module--sky { background: var(--sky); color: var(--ink); }
+/* All original EGO module backgrounds → studio black */
+.cs-module--bone,
+.cs-module--paper,
+.cs-module--graphite,
+.cs-module--almond { background: var(--bg); }
 
+/* Concept block — slightly darker */
+.cs-module--ink { background: var(--bg-alt); }
+
+/* Flavor modules — accent border for "world" feel without overwhelming colour */
+.cs-module--hazelnut { background: var(--bg); border-left: 4px solid var(--ego-hazelnut); }
+.cs-module--plum     { background: var(--bg); border-left: 4px solid var(--ego-plum); }
+.cs-module--pistachio{ background: var(--bg); border-left: 4px solid var(--ego-pistachio); }
+.cs-module--cherry   { background: var(--bg); border-left: 4px solid var(--ego-cherry); }
+
+/* Bleed = full-width image, no padding */
+.cs-module--bleed {
+  padding: 0;
+  background: var(--bg);
+}
+.cs-module--bleed > img,
+.cs-module--bleed img {
+  width: 100%; height: auto; display: block;
+}
+.cs-module--bleed .cs-caption {
+  padding: 12px var(--gutter);
+}
+
+/* ===== MODULE HEADER ===== */
 .cs-module-header {
+  max-width: var(--max-w);
+  margin: 0 auto 3rem;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.cs-module-header__title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.cs-module-header__meta {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  color: var(--muted);
 }
-.cs-module--ink .cs-module-header,
-.cs-module--graphite .cs-module-header,
-.cs-module--hazelnut .cs-module-header,
-.cs-module--plum .cs-module-header,
-.cs-module--cherry .cs-module-header { color: rgba(245, 242, 236, 0.6); }
-.cs-module--ink .cs-module-header__title,
-.cs-module--graphite .cs-module-header__title,
-.cs-module--hazelnut .cs-module-header__title,
-.cs-module--plum .cs-module-header__title,
-.cs-module--cherry .cs-module-header__title { color: var(--bone); }
 
-.cs-module-header__title { color: var(--ink); }
-.cs-module-header__meta { color: var(--mid); }
+/* ===== INTRO ===== */
+.cs-intro {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+.cs-intro__metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.cs-intro__metadata > div {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cs-intro__metadata dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.cs-intro__metadata dd {
+  font-size: 14px;
+  font-weight: 500;
+}
+.cs-intro__wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 14rem);
+  line-height: 0.85;
+  letter-spacing: -0.025em;
+  display: block;
+  margin-bottom: 2rem;
+}
+.cs-intro__wordmark em { color: var(--accent); font-style: italic; }
+.cs-intro__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.cs-intro__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+}
+.cs-intro__headline em { color: var(--accent); font-style: normal; }
+.cs-intro__body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--tag-fg);
+  max-width: 60ch;
+}
+@media (max-width: 900px) {
+  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
+  .cs-intro__wordmark { font-size: clamp(4rem, 18vw, 8rem); }
+}
 
-/* SLOT */
+/* ===== CONCEPT ===== */
+.cs-concept {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+.cs-concept__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+}
+.cs-concept__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+.cs-concept__headline em { color: var(--accent); font-style: normal; }
+.cs-concept__body {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--tag-fg);
+  max-width: 60ch;
+  margin-top: 1rem;
+}
+
+/* ===== GRIDS ===== */
+.cs-grid-3x3 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.cs-grid-3x3 > div { display: flex; flex-direction: column; }
+.cs-grid-3x3 > div > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.cs-grid-2 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.cs-grid-2 > div { display: flex; flex-direction: column; }
+.cs-grid-2 > div > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.cs-grid-3 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.cs-grid-3 > div { display: flex; flex-direction: column; }
+.cs-grid-3 > div > img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.cs-grid-4 {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.cs-grid-4 > div { display: flex; flex-direction: column; }
+@media (max-width: 700px) {
+  .cs-grid-3x3 { grid-template-columns: 1fr 1fr; }
+  .cs-grid-2, .cs-grid-3 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .cs-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+.cs-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* ===== SLOT placeholder ===== */
 .cs-slot {
   position: relative;
   width: 100%;
-  background: rgba(107, 107, 107, 0.08);
-  border: 1px dashed var(--mid);
+  background: var(--bg-alt);
+  border: 1px dashed var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  text-align: center;
+  color: var(--muted);
+  letter-spacing: 0.08em;
   padding: 2rem;
-}
-.cs-slot::before {
-  content: attr(data-slot-id);
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  font-size: 9px;
-  opacity: 0.7;
-}
-.cs-slot--render { aspect-ratio: 16/9; }
-.cs-slot--portrait { aspect-ratio: 4/5; }
-.cs-slot--vertical { aspect-ratio: 9/16; }
-.cs-slot--square { aspect-ratio: 1/1; }
-.cs-slot--strip { aspect-ratio: 21/9; }
-
-.cs-caption {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
   text-align: center;
-}
-
-.cs-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.cs-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.cs-grid-3x2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.cs-grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.cs-grid-4 { 
-  display: grid; 
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 12px;
-  width: 100%;
-}
-
-@media (max-width: 1200px) {
-  .cs-grid-4 { 
-    grid-template-columns: repeat(2, 1fr); 
-  }
-}
-
-@media (max-width: 700px) {
-  .cs-grid-4 { 
-    grid-template-columns: 1fr; 
-  }
-}
-@media (max-width: 700px) {
-  .cs-grid-3, .cs-grid-3x2, .cs-grid-3x3 { grid-template-columns: repeat(2, 1fr); }
-  .cs-grid-2 { grid-template-columns: 1fr; }
-}
-
-/* HERO */
-.cs-hero {
-  position: relative;
-  height: 100vh;
-  min-height: 600px;
-  background: var(--sky);
   overflow: hidden;
 }
-.cs-hero .cs-slot {
+.cs-slot--square { aspect-ratio: 1 / 1; }
+.cs-slot--render { aspect-ratio: 16 / 9; }
+.cs-slot[data-slot-id]::before {
+  content: attr(data-slot-id);
   position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  border: none;
-  background: linear-gradient(180deg, #6BB6E8 0%, #A8D2EF 100%);
-  font-size: 14px;
-}
-.cs-hero__meta {
-  position: absolute;
-  bottom: var(--gutter);
-  left: var(--gutter);
-  right: var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  z-index: 2;
-}
-
-/* INTRO */
-.cs-intro {
-  display: grid;
-  grid-template-columns: 30% 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-@media (max-width: 800px) {
-  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
-}
-
-.cs-intro__metadata {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  line-height: 1.8;
-}
-.cs-intro__metadata dt {
-  display: inline-block;
-  width: 7rem;
-  color: var(--mid);
-}
-.cs-intro__metadata dd {
-  display: inline-block;
-  color: var(--ink);
-}
-.cs-intro__metadata > div { display: block; }
-
-.cs-intro__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  margin-bottom: 1rem;
-}
-
-.cs-intro__headline {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
-  max-width: 25ch;
-}
-.cs-intro__headline em { font-style: italic; color: var(--mid); }
-
-.cs-intro__body {
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 60ch;
-  font-weight: 300;
-}
-
-/* CONCEPT */
-.cs-concept {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.cs-concept__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  top: 12px; left: 12px;
+  font-size: 10px;
+  color: var(--accent);
   opacity: 0.7;
-  margin-bottom: 2rem;
 }
-.cs-concept__headline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
-}
-.cs-concept__body {
-  font-size: 18px;
-  line-height: 1.7;
-  font-weight: 300;
-  max-width: 50ch;
-  margin: 0 auto;
-  opacity: 0.85;
+.cs-slot > img, .cs-slot > video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
 
-/* FLAVOR (macro modules) */
+/* ===== FLAVOR ===== */
 .cs-flavor {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.cs-flavor--horizontal {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
 }
-@media (max-width: 800px) {
-  .cs-flavor { grid-template-columns: 1fr; gap: 2rem; }
+.cs-flavor--reverse .cs-flavor__media { order: 2; }
+.cs-flavor__media img {
+  width: 100%; height: auto;
 }
-
-.cs-flavor__media { position: relative; }
-.cs-flavor__copy { padding: 2rem 0; }
-
+.cs-flavor__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
 .cs-flavor__label {
   font-family: var(--font-mono);
   font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.7;
-  margin-bottom: 1rem;
+  color: var(--accent);
+  letter-spacing: 0.02em;
 }
-
 .cs-flavor__name {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3rem, 7vw, 6rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   line-height: 1;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+  letter-spacing: -0.015em;
+  color: var(--fg);
 }
-
 .cs-flavor__tagline {
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  line-height: 1.3;
-  margin-bottom: 2rem;
-  opacity: 0.85;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  color: var(--accent);
 }
-
 .cs-flavor__description {
   font-size: 16px;
   line-height: 1.6;
-  max-width: 40ch;
-  font-weight: 300;
-  opacity: 0.75;
+  color: var(--tag-fg);
+  max-width: 42ch;
+}
+@media (max-width: 900px) {
+  .cs-flavor--horizontal { grid-template-columns: 1fr; gap: 2rem; }
+  .cs-flavor--reverse .cs-flavor__media { order: 0; }
 }
 
-/* LIFESTYLE — full bleed wide */
+/* ===== LIFESTYLE — original flavor backgrounds kept as content ===== */
 .cs-lifestyle {
   position: relative;
+  width: 100%;
+  min-height: 60vh;
   padding: 0;
-  min-height: 80vh;
-  display: grid;
-  align-items: stretch;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .cs-lifestyle__media {
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 80vh;
 }
-.cs-lifestyle__media .cs-slot {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px dashed rgba(245,242,236,0.3);
-  background: rgba(0,0,0,0.1);
+.cs-lifestyle__media img {
+  width: 100%; height: auto; display: block;
 }
 .cs-lifestyle__caption {
   position: absolute;
   bottom: var(--gutter);
   left: var(--gutter);
   right: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  gap: 1rem;
+  letter-spacing: 0.02em;
+  mix-blend-mode: difference;
+  color: var(--fg);
 }
 
-/* SHADER ROW */
-.cs-shader-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.cs-shader-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--bone);
-  margin-bottom: 8px;
-}
-
-/* SPECS */
-.cs-specs { font-family: var(--font-mono); max-width: 800px; margin: 0 auto; }
-.cs-specs table { width: 100%; border-collapse: collapse; }
-.cs-specs td { padding: 12px 0; font-size: 11px; vertical-align: top; }
-.cs-specs tr { border-bottom: 1px solid rgba(245, 242, 236, 0.15); }
-.cs-specs tr:last-child { border-bottom: none; }
-.cs-specs__label {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  width: 12rem;
-  padding-right: 40px !important;
-}
-.cs-specs__value { color: var(--bone); }
-
-/* CLOSER */
-.cs-closer__statement {
-  text-align: center;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 5rem;
-  max-width: 22ch;
-  margin-left: auto; margin-right: auto;
-}
-.cs-closer__credits {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem 4rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  max-width: 600px;
-  margin: 0 auto 5rem;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(245, 242, 236, 0.15);
-  border-bottom: 1px solid rgba(245, 242, 236, 0.15);
-}
-.cs-closer__credits dt { color: var(--mid); }
-.cs-closer__credits dd { color: var(--bone); }
-.cs-closer__nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  max-width: 800px;
+/* ===== SPECS ===== */
+.cs-specs {
+  max-width: var(--max-w);
   margin: 0 auto;
+}
+.cs-specs table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cs-specs tr {
+  border-bottom: 1px solid var(--line);
+}
+.cs-specs tr:first-child { border-top: 1px solid var(--line); }
+.cs-specs td {
+  padding: 18px 0;
+  font-size: 14px;
+  vertical-align: top;
+}
+.cs-specs__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  width: 220px;
+}
+.cs-specs__value { font-weight: 500; }
+@media (max-width: 700px) {
+  .cs-specs__label { width: 140px; }
+}
+
+/* ===== CLOSER ===== */
+.cs-closer__statement {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  max-width: 22ch;
+  margin: 0 auto 4rem;
+}
+.cs-closer__statement em { color: var(--accent); font-style: normal; }
+.cs-closer__credits {
+  max-width: var(--max-w);
+  margin: 0 auto 4rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.cs-closer__credits > div {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cs-closer__credits dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.cs-closer__credits dd {
+  font-size: 14px;
+  font-weight: 500;
+}
+.cs-closer__nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 .cs-closer__nav-link {
   font-family: var(--font-display);
-  font-weight: 300;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
-  letter-spacing: -0.01em;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  position: relative;
+  padding-bottom: 4px;
+  display: inline-block;
+  transition: color 0.3s var(--ease);
+}
+.cs-closer__nav-link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.cs-closer__nav-link:hover { color: var(--accent); }
+.cs-closer__nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+@media (max-width: 900px) {
+  .cs-closer__credits { grid-template-columns: 1fr 1fr; }
+  .cs-closer__nav { flex-direction: column; gap: 1rem; }
 }
 
-/* REVEAL */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+  transform: translateY(20px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+@media (max-width: 700px) {
+  .nav { padding: 16px var(--gutter); }
+  .nav__menu { gap: 16px; font-size: 12px; }
 }
 </style>
 </head>
@@ -523,8 +586,8 @@ img, video { max-width: 100%; display: block; }
 
 <!-- 01 HERO — 5 PACKS ON ROPE / SKY -->
 <section class="cs-hero">
- <img src="D:\davidova-site\assets\img_EGO/Hero.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+ <img src="../assets/img_EGO/Hero.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
   <div class="cs-hero__meta">
     <div>VOBRO — EGO</div>
@@ -570,15 +633,15 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__meta">Lifestyle FMCG · bold colour · playful confidence</span>
   </div>
   <div class="cs-grid-3x3">
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_01.png"><div class="cs-caption">Sundae Body Mists by Jo Cutri Studio — Y2K-tinted FMCG</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_02.png"><div class="cs-caption">Zingo Snacks — basket scene, bold playful</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_03.png"><div class="cs-caption">flora glow hydrogel masks — clothesline composition</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_04.png"><div class="cs-caption">Cosnori mask — sky backdrop, single hero</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_05.png"><div class="cs-caption">Claire cosmetics — fruit + product chiaroscuro</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_06.png"><div class="cs-caption">net bag of citrus</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_07.png"><div class="cs-caption">Mango skin — cream net flat-lay</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_08.png"><div class="cs-caption">Jacquemus bag — basket overflow, colour clash</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/REF_09.png"><div class="cs-caption">Doorderma cream — editorial fashion campaign</div></div>
+    <div><img src="../assets/img_EGO/REF_01.png" onerror="this.style.display='none'"><div class="cs-caption">Sundae Body Mists by Jo Cutri Studio — Y2K-tinted FMCG</div></div>
+    <div><img src="../assets/img_EGO/REF_02.png" onerror="this.style.display='none'"><div class="cs-caption">Zingo Snacks — basket scene, bold playful</div></div>
+    <div><img src="../assets/img_EGO/REF_03.png" onerror="this.style.display='none'"><div class="cs-caption">flora glow hydrogel masks — clothesline composition</div></div>
+    <div><img src="../assets/img_EGO/REF_04.png" onerror="this.style.display='none'"><div class="cs-caption">Cosnori mask — sky backdrop, single hero</div></div>
+    <div><img src="../assets/img_EGO/REF_05.png" onerror="this.style.display='none'"><div class="cs-caption">Claire cosmetics — fruit + product chiaroscuro</div></div>
+    <div><img src="../assets/img_EGO/REF_06.png" onerror="this.style.display='none'"><div class="cs-caption">net bag of citrus</div></div>
+    <div><img src="../assets/img_EGO/REF_07.png" onerror="this.style.display='none'"><div class="cs-caption">Mango skin — cream net flat-lay</div></div>
+    <div><img src="../assets/img_EGO/REF_08.png" onerror="this.style.display='none'"><div class="cs-caption">Jacquemus bag — basket overflow, colour clash</div></div>
+    <div><img src="../assets/img_EGO/REF_09.png" onerror="this.style.display='none'"><div class="cs-caption">Doorderma cream — editorial fashion campaign</div></div>
   </div>
 </section>
 
@@ -589,12 +652,12 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__meta">EGO wordmark across colour environments</span>
   </div>
   <div class="cs-grid-3">
-    <div><img src="D:\davidova-site\assets\img_EGO/Identity_1.png"></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Identity_2.png"></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Identity_3.png"></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Identity_4.png"></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Identity_5.png"></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Identity_6.png"></div>
+    <div><img src="../assets/img_EGO/Identity_1.png" onerror="this.style.display='none'"></div>
+    <div><img src="../assets/img_EGO/Identity_2.png" onerror="this.style.display='none'"></div>
+    <div><img src="../assets/img_EGO/Identity_3.png" onerror="this.style.display='none'"></div>
+    <div><img src="../assets/img_EGO/Identity_4.png" onerror="this.style.display='none'"></div>
+    <div><img src="../assets/img_EGO/Identity_5.png" onerror="this.style.display='none'"></div>
+    <div><img src="../assets/img_EGO/Identity_6.png" onerror="this.style.display='none'"></div>
   </div>
 </section>
 
@@ -604,8 +667,8 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__title">— Colour</span>
     <span class="cs-module-header__meta">Five flavours · five worlds · gold anchor</span>
   </div>
-<img src="D:\davidova-site\assets\img_EGO/COLOR SYSTEM.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+<img src="../assets/img_EGO/COLOR SYSTEM.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
   <div class="cs-caption">#1F5C2E · #4B1F5C · #7DB833 · #C4258A · #E8DDC8 · #C9A84C</div>
 </section>
@@ -617,8 +680,8 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__meta">Vobro signature on chocolate</span>
   </div>
   <div class="cs-grid-2">
-    <div><img src="D:\davidova-site\assets\img_EGO/Emblem_1.png"><div class="cs-caption">01-logo system</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Emblem_2.png"><div class="cs-caption">02-logo system</div></div>
+    <div><img src="../assets/img_EGO/Emblem_1.png" onerror="this.style.display='none'"><div class="cs-caption">01-logo system</div></div>
+    <div><img src="../assets/img_EGO/Emblem_2.png" onerror="this.style.display='none'"><div class="cs-caption">02-logo system</div></div>
   </div>
 </section>
 
@@ -628,8 +691,8 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__title">— Packaging</span>
     <span class="cs-module-header__meta">Five SKUs · unified system</span>
   </div>
-  <img src="D:\davidova-site\assets\img_EGO/PACKAGING SYSTEM.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;"><div class="cs-caption">ALL 5 POUCHES FRONT VIEW</div></div>
+  <img src="../assets/img_EGO/PACKAGING SYSTEM.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'"><div class="cs-caption">ALL 5 POUCHES FRONT VIEW</div></div>
 </section>
 
 <!-- 11 PACKAGING DETAIL -->
@@ -639,10 +702,10 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__meta">Gold foil · embossing · finish</span>
   </div>
   <div class="cs-grid-2">
-    <div><img src="D:\davidova-site\assets\img_EGO/Mat_1.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;"><div class="cs-caption">GOLD FOIL LOGO MACRO</div></div>
-    <div><img src="D:\davidova-site\assets\img_EGO/Mat_2.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;"><div class="cs-caption">POUCH MATERIAL TEXTURE</div></div>
+    <div><img src="../assets/img_EGO/Mat_1.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'"><div class="cs-caption">GOLD FOIL LOGO MACRO</div></div>
+    <div><img src="../assets/img_EGO/Mat_2.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'"><div class="cs-caption">POUCH MATERIAL TEXTURE</div></div>
   </div>
 </section>
 
@@ -656,7 +719,7 @@ img, video { max-width: 100%; display: block; }
     <div>
       <div class="cs-slot cs-slot--square" data-slot-id="⬚ DTP_01">
         <video width="1000" height="1000" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;">
-          <source src="D:\davidova-site/assets/img_EGO/DTP_carousel.mp4" type="video/mp4">
+          <source src="../assets/img_EGO/DTP_carousel.mp4" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
       </div>
@@ -665,7 +728,7 @@ img, video { max-width: 100%; display: block; }
     
     <div>
       <div class="cs-slot cs-slot--square" data-slot-id="⬚ DTP_02">
-        <img src="D:\davidova-site/assets/img_EGO/DTP_02_print.png" alt="Print-Ready File" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="../assets/img_EGO/DTP_02_print.png" alt="Print-Ready File" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.style.display='none'">
       </div>
       <div class="cs-caption">02 — CMYK + Pantone gold</div>
     </div>
@@ -674,16 +737,16 @@ img, video { max-width: 100%; display: block; }
 
 <!-- 13 CGI HERO 1 -->
 <section class="cs-module cs-module--bleed">
-  <img src="D:\davidova-site\assets\img_EGO/Hero Full Bleed.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <img src="../assets/img_EGO/Hero Full Bleed.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
    <div class="cs-caption">— HERO SHOT</div>
 </section>
 
 <!-- 15 CGI HERO 3 — EDITORIAL MODEL -->
 <section class="cs-module cs-module--almond">
-   <img src="D:\davidova-site\assets\img_EGO/Front Pack Shot.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+   <img src="../assets/img_EGO/Front Pack Shot.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
   <div class="cs-caption">— Editorial campaign hero</div>
 </section>
@@ -692,8 +755,8 @@ img, video { max-width: 100%; display: block; }
 <section class="cs-module cs-module--hazelnut">
   <div class="cs-flavor cs-flavor--horizontal">
     <div class="cs-flavor__media">
-      <img src="D:\davidova-site\assets\img_EGO/Macro_1.png" alt="Hazelnut Macro" 
-           style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/Macro_1.png" alt="Hazelnut Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     </div>
     <div class="cs-flavor__copy">
       <div class="cs-flavor__label">— 01 / Hazelnut Passion</div>
@@ -714,8 +777,8 @@ img, video { max-width: 100%; display: block; }
       <p class="cs-flavor__description">Two-layer filling — white cream with cocoa pieces, deep plum reduction. Twilight in a praline.</p>
     </div>
     <div class="cs-flavor__media">
-      <img src="D:\davidova-site\assets\img_EGO/Macro_2.png" alt="Plum Macro" 
-           style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/Macro_2.png" alt="Plum Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -724,8 +787,8 @@ img, video { max-width: 100%; display: block; }
 <section class="cs-module cs-module--pistachio">
   <div class="cs-flavor cs-flavor--horizontal">
     <div class="cs-flavor__media">
-      <img src="D:\davidova-site\assets\img_EGO/Macro_3.png" alt="Pistachio Macro" 
-           style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/Macro_3.png" alt="Pistachio Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     </div>
     <div class="cs-flavor__copy">
       <div class="cs-flavor__label">— 03 / Pistachio Passion</div>
@@ -746,8 +809,8 @@ img, video { max-width: 100%; display: block; }
       <p class="cs-flavor__description">Whole cherry suspended in deep ruby liquid, sealed in milk chocolate. The praline that makes a sound.</p>
     </div>
     <div class="cs-flavor__media">
-      <img src="D:\davidova-site\assets\img_EGO/Macro_4.png" alt="Cherry Macro" 
-           style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/Macro_4.png" alt="Cherry Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -756,8 +819,8 @@ img, video { max-width: 100%; display: block; }
 <section class="cs-module cs-module--almond">
   <div class="cs-flavor cs-flavor--horizontal">
     <div class="cs-flavor__media">
-      <img src="D:\davidova-site\assets\img_EGO/Macro_5.png" alt="Almond Macro" 
-           style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/Macro_5.png" alt="Almond Macro" 
+           style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
     </div>
     <div class="cs-flavor__copy">
       <div class="cs-flavor__label">— 05 / Almond Passion</div>
@@ -771,8 +834,8 @@ img, video { max-width: 100%; display: block; }
 <!-- 21 LIFESTYLE PISTACHIO — BEACH BAG -->
 <section class="cs-lifestyle" style="background: var(--ego-pistachio);">
   <div class="cs-lifestyle__media">
-       <img src="D:\davidova-site\assets\img_EGO/pist.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+       <img src="../assets/img_EGO/pist.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
     <div class="cs-lifestyle__caption" style="color: var(--ink);">
       <div>06 / Holiday in your pocket</div>
@@ -784,8 +847,8 @@ img, video { max-width: 100%; display: block; }
 <!-- 22 LIFESTYLE PLUM — TWILIGHT WITH FRUIT -->
 <section class="cs-lifestyle" style="background: var(--ego-plum);">
   <div class="cs-lifestyle__media">
-       <img src="D:\davidova-site\assets\img_EGO/plum.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+       <img src="../assets/img_EGO/plum.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
     <div class="cs-lifestyle__caption" style="color: var(--bone);">
       <div>07 / Rip-it-open o'clock</div>
@@ -797,8 +860,8 @@ img, video { max-width: 100%; display: block; }
 <!-- 23 LIFESTYLE CHERRY — NET BAG OF CHERRIES -->
 <section class="cs-lifestyle" style="background: var(--ego-cherry);">
   <div class="cs-lifestyle__media">
-      <img src="D:\davidova-site\assets\img_EGO/cherry.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/cherry.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
     <div class="cs-lifestyle__caption" style="color: var(--bone);">
       <div>08 / Caught red-handed</div>
@@ -810,8 +873,8 @@ img, video { max-width: 100%; display: block; }
 <!-- 24 LIFESTYLE ALMOND — CREAM NET WITH ALMONDS -->
 <section class="cs-lifestyle" style="background: var(--ego-almond);">
   <div class="cs-lifestyle__media">
-       <img src="D:\davidova-site\assets\img_EGO/almond.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+       <img src="../assets/img_EGO/almond.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
     <div class="cs-lifestyle__caption" style="color: var(--ink);">
       <div>09 / Light enough to float</div>
@@ -823,8 +886,8 @@ img, video { max-width: 100%; display: block; }
 <!-- 25 LIFESTYLE HAZELNUT — BASKET WITH FOREST FRUIT -->
 <section class="cs-lifestyle" style="background: var(--ego-hazelnut);">
   <div class="cs-lifestyle__media">
-      <img src="D:\davidova-site\assets\img_EGO/hz.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+      <img src="../assets/img_EGO/hz.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   </div>
     <div class="cs-lifestyle__caption" style="color: var(--bone);">
       <div>10 / Found it on the way home</div>
@@ -842,28 +905,28 @@ img, video { max-width: 100%; display: block; }
   <div class="cs-grid-4">
     <div>
       <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_01">
-        <img src="D:\davidova-site\assets\img_EGO/MODEL_01.png" alt="Wireframe" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="../assets/img_EGO/MODEL_01.png" alt="Wireframe" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.style.display='none'">
       </div>
       <div class="cs-caption">01 — Wireframe · clean quad topology</div>
     </div>
     
     <div>
       <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_02">
-        <img src="D:\davidova-site\assets\img_EGO/MODEL_02.png" alt="Topology" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="../assets/img_EGO/MODEL_02.png" alt="Topology" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.style.display='none'">
       </div>
       <div class="cs-caption">02 — Topology · Vobro EGO doypack</div>
     </div>
     
     <div>
       <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_04">
-        <img src="D:\davidova-site\assets\img_EGO/MODEL_04.png" alt="UV layout" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="../assets/img_EGO/MODEL_04.png" alt="UV layout" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.style.display='none'">
       </div>
       <div class="cs-caption">03 — Render · viewport / render</div>
     </div>
     
     <div>
       <div class="cs-slot cs-slot--square" data-slot-id="⬚ MODEL_03">
-        <img src="D:\davidova-site\assets\img_EGO/MODEL_03.png" alt="Render" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="../assets/img_EGO/MODEL_03.png" alt="Render" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.style.display='none'">
       </div>
       <div class="cs-caption">04 — UV layout · 4K PBR maps</div>
     </div>
@@ -876,32 +939,32 @@ img, video { max-width: 100%; display: block; }
     <span class="cs-module-header__title">— Editorial</span>
     <span class="cs-module-header__meta">Magazine spread mockup</span>
   </div>
-  <img src="D:\davidova-site\assets\img_EGO/EDITORIAL.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <img src="../assets/img_EGO/EDITORIAL.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   <div class="cs-caption">EDITORIAL MAGAZINE SPREAD</div>
 </div>
 </section>
 
 <!-- 31 OOH 01 -->
 <section class="cs-module cs-module--bleed">
-<img src="D:\davidova-site\assets\img_EGO/OOH 01.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+<img src="../assets/img_EGO/OOH 01.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   <div class="cs-caption">OOH BILLBOARD — WARSAW BUILDING FACADE</div>
   </div>
 </section>
 
 <!-- 32 OOH 02 -->
 <section class="cs-module cs-module--bleed">
-  <img src="D:\davidova-site\assets\img_EGO/OOH 02.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <img src="../assets/img_EGO/OOH 02.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   <div class="cs-caption">OOH BILLBOARD — WARSAW METRO</div>
   </div>
 </section>
 
 <!-- 33 WEB HERO -->
 <section class="cs-module cs-module--bleed">
-  <img src="D:\davidova-site\assets\img_EGO/PACKAGING SYSTEM_wide.png" alt="Hero Full Bleed" 
-         style="width:100%; height:auto; display:block; object-fit:cover;">
+  <img src="../assets/img_EGO/PACKAGING SYSTEM_wide.png" alt="Hero Full Bleed" 
+         style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   <div class="cs-caption">WEB HERO BANNER 21:9</div>
   </div>
 </section>

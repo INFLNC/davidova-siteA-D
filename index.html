@@ -131,10 +131,10 @@ img, video { max-width: 100%; display: block; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
   padding: 22px var(--gutter);
-  background: rgba(10, 10, 10, 0.78);
+  background: rgba(10, 10, 10, 0.38);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   opacity: 0; transition: opacity 0.6s var(--ease-out-expo) 0.4s;
 }
 .nav.visible { opacity: 1; }
@@ -161,7 +161,20 @@ img, video { max-width: 100%; display: block; }
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
   transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease);
 }
+.nav__link:hover { color: var(--accent); }
 .nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.wordmark:hover { color: var(--accent); }
+.wordmark-collapse:hover { color: var(--accent); }
+
+.studio-intro__cta:hover { gap: 1rem; color: var(--accent); }
+
+.see-all__link:hover { color: var(--accent); }
+.see-all__link:hover::after { transform: scaleX(1); }
+
+.contact__email:hover { color: var(--accent); }
+
+footer a:hover { color: var(--accent); }
 
 .scroll-progress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
@@ -867,7 +880,7 @@ img, video { max-width: 100%; display: block; }
 <!-- PRELOADER -->
 <div class="preloader" id="preloader">
   <div class="preloader__wordmark" id="preloader-wordmark">
-    <span class="preloader__char preloader__char--keep">A</span><span class="preloader__char preloader__char--fade">L</span><span class="preloader__char preloader__char--fade">E</span><span class="preloader__char preloader__char--fade">X</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">N</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">R</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__dash-line"></span><span class="preloader__char preloader__char--keep">D</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">I</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">O</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">A</span>
+    <span class="preloader__char preloader__char--keep">A</span><span class="preloader__char preloader__char--fade">L</span><span class="preloader__char preloader__char--fade">E</span><span class="preloader__char preloader__char--fade">X</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">N</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">R</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__dash-line"></span><span class="preloader__char preloader__char--keep">D</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">I</span><span class="preloader__char preloader__char--fade">D</span><span class="preloader__char preloader__char--fade">O</span><span class="preloader__char preloader__char--fade">V</span><span class="preloader__char preloader__char--fade">A</span><span class="preloader__char preloader__char--fade" style="color:var(--accent)">.</span>
   </div>
   <div class="preloader__count" id="count">000</div>
 </div>

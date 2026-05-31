@@ -413,20 +413,27 @@ img, video { max-width: 100%; display: block; }
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(280px, 35vw, 500px);
-  aspect-ratio: 4/5;
+  max-width: clamp(220px, 28vw, 400px);
+  max-height: 70vh;
   transform: translate(-50%, -50%) scale(0.9);
   opacity: 0;
   pointer-events: none;
   z-index: 3;
   transition: opacity 0.4s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 20px 40px rgba(0,0,0,0.5),
+    0 40px 80px rgba(0,0,0,0.4),
+    0 60px 120px rgba(0,0,0,0.3);
 }
 
 .project__preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .project.is-thumb-hover .project__preview {
@@ -1025,7 +1032,7 @@ img, video { max-width: 100%; display: block; }
 
   <!-- PROJECT 03 — GUERLAIN LUMEN -->
   <article class="project" data-name="Guerlain — Serum" data-href="work/guerlain.html">
-    <div class="project__collapsed-bar">Guerlain — Lumen Serum</div>
+    <div class="project__collapsed-bar">Guerlain — Serum</div>
 
     <a href="work/guerlain.html" class="project__hero">
       <img
@@ -1077,8 +1084,8 @@ img, video { max-width: 100%; display: block; }
   </article>
 
   <!-- PROJECT 04 — PETRO -->
-  <article class="project" data-name="Petro — Restaurant" data-href="work/petro.html">
-    <div class="project__collapsed-bar">Petro — Restaurant</div>
+  <article class="project" data-name="Petro — Wine Bar Restaurant" data-href="work/petro.html">
+    <div class="project__collapsed-bar">Petro — Wine Bar Restaurant</div>
 
     <a href="work/petro.html" class="project__hero">
       <img

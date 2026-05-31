@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
 <style>
@@ -70,10 +70,10 @@ em { font-style: normal; color: var(--accent); }
   z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
   padding: 22px var(--gutter);
-  background: rgba(10, 10, 10, 0.78);
+  background: rgba(10, 10, 10, 0.38);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .nav__logo {
   font-family: var(--font-display);
@@ -103,7 +103,20 @@ em { font-style: normal; color: var(--accent); }
   transform: scaleX(0); transform-origin: right;
   transition: transform 0.4s var(--ease);
 }
+.nav__link:hover { color: var(--accent); }
 .nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.wordmark:hover { color: var(--accent); }
+.wordmark-collapse:hover { color: var(--accent); }
+
+.studio-intro__cta:hover { gap: 1rem; color: var(--accent); }
+
+.see-all__link:hover { color: var(--accent); }
+.see-all__link:hover::after { transform: scaleX(1); }
+
+.contact__email:hover { color: var(--accent); }
+
+footer a:hover { color: var(--accent); }
 
 /* ===== HERO ===== */
 .cs-hero {
@@ -220,14 +233,19 @@ em { font-style: normal; color: var(--accent); }
   font-weight: 500;
 }
 .cs-intro__wordmark {
-  font-family: var(--font-display);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
   font-size: clamp(5rem, 14vw, 14rem);
   line-height: 0.85;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   display: block;
   margin-bottom: 2rem;
+  color: var(--petro-wine);
 }
-.cs-intro__wordmark em { color: var(--accent); font-style: italic; }
+.cs-intro__wordmark em {
+  color: var(--petro-wine);
+  font-style: italic;
+}
 .cs-intro__label {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -415,13 +433,18 @@ em { font-style: normal; color: var(--accent); }
   align-items: center;
 }
 .cs-anatomy__wordmark {
-  font-family: var(--font-display);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
   font-size: clamp(6rem, 18vw, 18rem);
   line-height: 0.85;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   text-align: center;
+  color: var(--petro-wine);
 }
-.cs-anatomy__wordmark em { color: var(--accent); font-style: italic; }
+.cs-anatomy__wordmark em {
+  color: var(--petro-wine);
+  font-style: italic;
+}
 .cs-anatomy__notes {
   display: flex; flex-direction: column; gap: 1.5rem;
 }
@@ -753,7 +776,8 @@ em { font-style: normal; color: var(--accent); }
     <span class="cs-module-header__meta">Custom display serif · one detail · no extras</span>
   </div>
   <div class="cs-anatomy">
-    <div class="cs-anatomy__wordmark">PET<em style="font-style:italic;">R</em>O</div>
+    <div>
+      <span class="cs-intro__wordmark">PET<em>R</em>O</span>
     <div class="cs-anatomy__notes">
       <div class="cs-anatomy__note"><strong>01 / Display weight</strong>Heavy 900-weight custom serif. Stable, confident, unfussy.</div>
       <div class="cs-anatomy__note"><strong>02 / The R curl</strong>Single decorative element — the extended hairline curl on the leg of R. The only flourish in the wordmark.</div>

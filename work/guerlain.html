@@ -109,7 +109,20 @@ em { font-style: normal; color: var(--accent); }
   transform: scaleX(0); transform-origin: right;
   transition: transform 0.4s var(--ease);
 }
+.nav__link:hover { color: var(--accent); }
 .nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.wordmark:hover { color: var(--accent); }
+.wordmark-collapse:hover { color: var(--accent); }
+
+.studio-intro__cta:hover { gap: 1rem; color: var(--accent); }
+
+.see-all__link:hover { color: var(--accent); }
+.see-all__link:hover::after { transform: scaleX(1); }
+
+.contact__email:hover { color: var(--accent); }
+
+footer a:hover { color: var(--accent); }
 
 /* ===== HERO ===== */
 .cs-hero {
@@ -874,6 +887,10 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 09 · HERO FULL BLEED
      ============================================================ -->
 <section class="cs-module cs-module--bleed">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Render/Final visualisation</span>
+    <span class="cs-module-header__meta">Hero Full Bleed · final render</span>
+  </div>
     <img src="../assets/img_Guerlian/Hero Full Bleed.png" alt="Hero Full Bleed" 
          style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
   <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">Hero Full Bleed</div>
@@ -883,6 +900,9 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 10 · 45° PREMIUM SHOT
      ============================================================ -->
 <section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— 45° PREMIUM SHOT</span>
+    </div>
   <div style="max-width: 80%; margin: 0 auto;">
     <img src="../assets/img_Guerlian/45° Premium Shot.png" alt="45° Premium Shot" 
          style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
@@ -895,6 +915,9 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 11 · FRONT PACK SHOT
      ============================================================ -->
 <section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— FRONT PACK SHOT</span>
+    </div>
   <div style="max-width: 60%; margin: 0 auto;">
     <img src="../assets/img_Guerlian/Front Pack Shot.png" alt="Front pack" 
          style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
@@ -906,6 +929,10 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 12 · MACRO DETAIL SERIES
      ============================================================ -->
 <section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— MACRO DETAIL SERIES</span>
+    <span class="cs-module-header__meta">Macro shots</span>
+  </div>
   <div class="cs-strip-3">
 <div>
     <img src="../assets/img_Guerlian/Macro_1.png" alt="Golden Liquid & Sparkles (interior focus)" 
@@ -928,6 +955,9 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 13 · LABEL & TYPE DETAIL
      ============================================================ -->
 <section class="cs-module cs-module--bone">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— LABEL & TYPE DETAIL</span>
+    </div>
   <div>
     <img src="../assets/img_Guerlian/Label & Type Detail.png" alt="Label & Type Detail (Wide)" 
          style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
@@ -939,6 +969,10 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 14 · MATERIAL CLOSE-UPS
      ============================================================ -->
 <section class="cs-module cs-module--paper">
+  div class="cs-module-header">
+    <span class="cs-module-header__title">— MATERIAL CLOSE-UPS</span>
+    <span class="cs-module-header__meta">Work with materials</span>
+  </div>
   <div class="cs-strip-3">
 <div>
     <img src="../assets/img_Guerlian/Mat_1.png" alt="Gradient Glass & Liquid Interior" 
@@ -961,6 +995,9 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 18 · ADVERTISING FRAME
      ============================================================ -->
 <section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— ADVERTISING FRAME</span>
+    </div>
   <div>
     <img src="../assets/img_Guerlian/Paris Building Facade.png" alt="Paris Building Facade" 
          style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
@@ -972,6 +1009,9 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
      MODULE 19 · LIFESTYLE CONTEXT
      ============================================================ -->
 <section class="cs-module cs-module--ink">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— LIFESTYLE CONTEXT</span>
+    </div>
    <div>
     <img src="../assets/img_Guerlian/Paris Metro Station.png" alt="Paris Metro Station" 
          style="width:100%; height:auto; display:block; object-fit:cover;" onerror="this.style.display='none'">
@@ -997,22 +1037,6 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 25 · DESIGN SYSTEM PAGE (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Design system</span>
-    <span class="cs-module-header__meta">Color · type · material · principle</span>
-  </div>
-
-  <div class="cs-grid-2">
-    <div class="cs-slot" data-slot-id="✎ SYS_01_COLORS" style="aspect-ratio: 4/3;">COLOR PALETTE · 5-6 SWATCHES</div>
-    <div class="cs-slot" data-slot-id="✎ SYS_02_TYPE" style="aspect-ratio: 4/3;">TYPE SYSTEM · DISPLAY / BODY / MONO</div>
-    <div class="cs-slot" data-slot-id="✎ SYS_03_MATERIALS" style="aspect-ratio: 4/3;">MATERIAL LIBRARY · 4-6 SPHERES</div>
-    <div class="cs-slot" data-slot-id="✎ SYS_04_RULES" style="aspect-ratio: 4/3;">COMPOSITION RULES · 3-4 PRINCIPLES</div>
-  </div>
-</section>
 
 <!-- ============================================================
      MODULE 26 · TECHNICAL SPECS PANEL
@@ -1024,76 +1048,35 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
   </div>
 
   <dl class="cs-specs">
-    <div><dt>Software</dt><dd>Blender [VERSION] · Cycles</dd></div>
-    <div><dt>Resolution</dt><dd>[W] × [H] px</dd></div>
-    <div><dt>Samples</dt><dd>[N] per pixel · OptiX denoising</dd></div>
-    <div><dt>Polycount</dt><dd>Hero asset: [N] · Scene: [N]</dd></div>
-    <div><dt>Textures</dt><dd>4K PBR maps · custom normals</dd></div>
-    <div><dt>Render time</dt><dd>[N] minutes per frame on [GPU]</dd></div>
-    <div><dt>Color pipeline</dt><dd>ACES · Filmic Log</dd></div>
-    <div><dt>Post</dt><dd>Photoshop · grading · atmospheric pass</dd></div>
-    <div><dt>Hours</dt><dd>[N] from concept to delivery</dd></div>
+      <div><dt>Software</dt><dd>Blender 4.2 · Cycles</dd></div>
+    <div><dt>Resolution</dt><dd>3840 × 2160 px</dd></div>
+    <div><dt>Samples</dt><dd>4096 per pixel · OptiX denoising</dd></div>
+    <div><dt>Polycount</dt><dd>Hero asset: 21300 · Scene: 121000</dd></div>
+    <div><dt>Textures</dt><dd>4K PBR maps · custom normals on label & cap</dd></div>
+    <div><dt>Render time</dt><dd>18 minutes per frame on NVIDIA RTX 4090</dd></div>
+    <div><dt>Color pipeline</dt><dd>ACES · Filmic Log Encoding</dd></div>
+    <div><dt>Post</dt><dd>Photoshop · color grading · atmospheric pass</dd></div>
+    <div><dt>Hours</dt><dd>84 from concept to delivery</dd></div>
   </dl>
-</section>
-
-<!-- ============================================================
-     MODULE 27 · BEFORE / AFTER (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Iteration</span>
-    <span class="cs-module-header__meta">Original vs refined</span>
-  </div>
-
-  <div class="cs-grid-2">
-    <div><div class="cs-slot cs-slot--render" data-slot-id="▣ BEFORE_01">ORIGINAL</div><div class="cs-caption">Before</div></div>
-    <div><div class="cs-slot cs-slot--render" data-slot-id="▣ AFTER_01">REFINED</div><div class="cs-caption">After</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 28 · SOCIAL FRAMES (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Social</span>
-    <span class="cs-module-header__meta">Instagram · stories · carousel</span>
-  </div>
-
-  <div class="cs-grid-3">
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ SOCIAL_01">SQUARE 1:1</div><div class="cs-caption">Feed post</div></div>
-    <div><div class="cs-slot cs-slot--portrait" data-slot-id="▣ SOCIAL_02">PORTRAIT 4:5</div><div class="cs-caption">Feed portrait</div></div>
-    <div><div class="cs-slot" data-slot-id="▣ SOCIAL_03" style="aspect-ratio: 9/16;">STORY 9:16</div><div class="cs-caption">Story</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 29 · WEB HERO BANNER (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bleed">
-  <div class="cs-slot cs-slot--strip" data-slot-id="▣ WEB_HERO_01">
-    WEB HERO BANNER · 21:9 ULTRA-WIDE
-  </div>
-  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">Web banner application</div>
 </section>
 
 <!-- ============================================================
      MODULE 30 · CLOSER & CREDITS
      ============================================================ -->
 <section class="cs-module cs-module--ink">
-  <p class="cs-closer__statement reveal">"[ONE FINAL POETIC LINE — SAME TONE AS THE CONCEPT STATEMENT]"</p>
+  <p class="cs-closer__statement reveal">""A jewel, not a jar."</p>
 
   <dl class="cs-closer__credits">
     <div><dt>Studio</dt><dd>Davidova.Studio</dd></div>
     <div><dt>Art direction</dt><dd>Alexandra Davidova</dd></div>
     <div><dt>CGI</dt><dd>Alexandra Davidova</dd></div>
-    <div><dt>Year</dt><dd>[YEAR]</dd></div>
+    <div><dt>Year</dt><dd>2025</dd></div>
     <div><dt>Location</dt><dd>Warsaw · Worldwide</dd></div>
-    <div><dt>Software</dt><dd>[SOFTWARE]</dd></div>
+    <div><dt>Software</dt><dd> Blender 4.2 · Cycles</dd></div>
   </dl>
 
   <div class="cs-closer__nav">
-    <a href="/work/[NEXT-PROJECT-SLUG]" class="cs-closer__nav-link">Next project →</a>
+    <a href="/work/petro" class="cs-closer__nav-link">Next project →</a>
     <a href="mailto:studio@davidova.studio" class="cs-closer__nav-link">studio@davidova.studio</a>
   </div>
 </section>

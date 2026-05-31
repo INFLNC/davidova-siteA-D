@@ -47,13 +47,30 @@
   .filters::-webkit-scrollbar { display: none; }
   .filters button { flex: 0 0 auto; white-space: nowrap; }
 
-  /* --- PROJECT GRID: одна колонка --- */
+  /* --- PROJECT GRID: одна колонка, hero на всю ширину --- */
   .grid {
-    padding: 24px 1.25rem 60px;
+    padding: 24px 0 60px;
     grid-template-columns: 1fr;
     gap: 44px;
   }
-  .card-tile { aspect-ratio: 4 / 3; }
+  .card { padding: 0 !important; }
+  .card-tile {
+    aspect-ratio: 16 / 9;
+    width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+  }
+  .card-tile img,
+  .card-tile video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card-name, .card-meta, .tag {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
   .card-name { font-size: 24px; }
   .card-tile-meta { font-size: 9px; top: 10px; left: 10px; right: 10px; }
   .tag { font-size: 10px; padding: 4px 8px; }
@@ -123,7 +140,7 @@
   }
 
   /* Сетки изображений */
-  .cs-grid-3x3 { grid-template-columns: 1fr 1fr !important; }
+  .cs-grid-3x3 { grid-template-columns: repeat(3, 1fr) !important; gap: 0.5rem !important; }
   .cs-grid-2, .cs-grid-3, .cs-grid-4,
   .cs-strip-3, .cs-strip-4,
   .packaging__sequence,
@@ -173,20 +190,35 @@
   .studio-intro__photo { position: static !important; transform: none !important; width: 70vw !important; left: auto !important; }
   .studio-intro__content { position: static !important; transform: none !important; opacity: 1 !important; max-width: 100% !important; left: auto !important; }
 
-  /* Project stream (index sticky stack) — расклеиваем в обычный поток */
+  /* Project stream (index simple list) — корректировки для мобилки */
   .project-wrap { height: auto !important; }
-  .project { position: static !important; height: auto !important; min-height: 70vh !important; }
-  .project.is-collapsed .project__inner { opacity: 1 !important; }
-  .project__collapsed-bar { display: none !important; }
+  .project { position: static !important; height: auto !important; min-height: 0 !important; }
+  .project__inner { padding: 1rem 1.25rem 2rem !important; gap: 1rem !important; }
+  .project__title { font-size: clamp(1.75rem, 8vw, 2.5rem) !important; }
+  .project__collapsed-bar,
+  .project__preview,
+  .project__thumbs,
+  .project__bottom { display: none !important; }
+
+  /* Wordmark на мобиле — поменьше, слева, не пересекается с меню */
+  .wordmark, .wordmark-collapse {
+    font-size: 0.85rem !important;
+    top: 1rem !important;
+    left: 1.25rem !important;
+  }
+  .wordmark__dash, .wordmark-collapse__dash {
+    width: 1rem !important;
+    margin: 0 0.4rem !important;
+  }
 }
 
 /* ====================== ТЕЛЕФОН (≤480px) ====================== */
 @media (max-width: 480px) {
   .page-intro h1 { font-size: 18vw; }
   .about-hero__heading { font-size: 15vw; }
-  .card-tile { aspect-ratio: 1 / 1; }
+  .card-tile { aspect-ratio: 16 / 9; }
 
-  .cs-grid-3x3,
+  .cs-grid-3x3 { grid-template-columns: repeat(3, 1fr) !important; gap: 0.4rem !important; }
   .cs-colors, .color-system { grid-template-columns: 1fr !important; }
   .cs-icons { grid-template-columns: repeat(2, 1fr) !important; }
   .cs-closer__credits, .credits__grid,

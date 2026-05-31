@@ -3,23 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>[PROJECT TITLE] — Davidova.Studio</title>
-<meta name="description" content="[ONE-SENTENCE PROJECT DESCRIPTION]" />
+<title>WOW Pianka — Davidova.Studio</title>
+<meta name="description" content="Three flavors spin. One wins. CGI visualization and packaging campaign for Vobro's marshmallow jelly chocolate." />
 
-<!-- ============================================================
-     TYPOGRAPHY — same stack as davidova.studio main site
-     Replace with licensed Pangram Pangram fonts in production.
-     ============================================================ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
-
 <style>
-
-/* =========================================================
-   EGO — Davidova.Studio system
-   ========================================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
@@ -32,17 +24,16 @@ html { scroll-behavior: smooth; }
   --tag-bg: #1a1816;
   --tag-fg: #c9c6bf;
   --accent: #ff2e16;
-
-  /* EGO brand flavor colours — content tokens, not chrome */
-  --ego-pistachio: #1F5C2E;
-  --ego-plum:      #4B1F5C;
-  --ego-cherry:    #6B1228;
-  --ego-almond:    #E8DDC8;
-  --ego-hazelnut:  #3A2418;
-  --ego-gold:      #C9A84C;
-
   --ink: #0a0a0a;
   --bone: #e8e6e1;
+
+  /* WOW brand palette */
+  --wow-orange: #F5920A;
+  --wow-lemon: #C8D620;
+  --wow-cherry: #D91A8C;
+  --wow-choco: #4A2511;
+  --wow-yellow: #FFD500;
+  --wow-hot: #FF3B1D;
 
   --font-display: 'Anton', sans-serif;
   --font-body: 'Inter Tight', system-ui, sans-serif;
@@ -55,1065 +46,553 @@ html { scroll-behavior: smooth; }
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-weight: 400;
+  font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; height: auto; }
-
 em { font-style: normal; color: var(--accent); }
 
 /* ===== NAV ===== */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
   padding: 22px var(--gutter);
-  background: rgba(10, 10, 10, 0.78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  background: rgba(10, 10, 10, 0.38);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .nav__logo {
-  font-family: var(--font-display);
-  font-size: 22px;
-  letter-spacing: -0.005em;
+  font-family: var(--font-display); font-size: 22px; letter-spacing: -0.005em;
   display: inline-flex; align-items: center;
 }
 .nav__logo::after { content: "."; color: var(--accent); }
-.nav__logo-line {
-  display: inline-block;
-  width: 1.2rem; height: 1px;
-  background: currentColor;
-  margin: 0 6px;
-}
-.nav__menu {
-  display: flex; gap: 32px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.nav__link {
-  position: relative;
-  padding-bottom: 4px;
-}
+.nav__logo-line { display: inline-block; width: 1.2rem; height: 1px; background: currentColor; margin: 0 6px; }
+.nav__menu { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
+.nav__link { position: relative; padding-bottom: 4px; transition: color 0.3s var(--ease); }
 .nav__link::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0;
   height: 1px; background: currentColor;
-  transform: scaleX(0); transform-origin: right;
-  transition: transform 0.4s var(--ease);
+  transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease);
 }
+.nav__link:hover { color: var(--accent); }
 .nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
 
 /* ===== HERO ===== */
 .cs-hero {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  background: var(--bg-alt);
-  overflow: hidden;
+  position: relative; width: 100%; min-height: 100vh;
+  background: var(--wow-orange); overflow: hidden;
 }
-.cs-hero > img {
-  width: 100%;
-  min-height: 100vh;
-  object-fit: cover;
-  display: block;
-}
+.cs-hero > img { width: 100%; min-height: 100vh; object-fit: cover; display: block; }
 .cs-hero__meta {
-  position: absolute;
-  bottom: var(--gutter);
-  right: var(--gutter);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--fg);
-  text-align: right;
-  z-index: 5;
-  mix-blend-mode: difference;
-  line-height: 1.6;
+  position: absolute; bottom: var(--gutter); right: var(--gutter);
+  font-family: var(--font-mono); font-size: 12px; color: var(--fg);
+  text-align: right; z-index: 5; mix-blend-mode: difference; line-height: 1.6;
 }
 
 /* ===== MODULE ===== */
 .cs-module {
-  padding: var(--section) var(--gutter);
-  position: relative;
+  padding: var(--section) var(--gutter); position: relative;
   border-bottom: 1px solid var(--line);
 }
 .cs-module:last-of-type { border-bottom: none; }
+.cs-module--dark { background: var(--bg); }
+.cs-module--alt { background: var(--bg-alt); }
+.cs-module--bleed { padding: 0; background: var(--bg); }
+.cs-module--bleed > img { width: 100%; height: auto; display: block; }
+.cs-module--bleed .cs-caption { padding: 12px var(--gutter); }
 
-/* All original EGO module backgrounds → studio black */
-.cs-module--bone,
-.cs-module--paper,
-.cs-module--graphite,
-.cs-module--almond { background: var(--bg); }
+/* Brand-coloured modules */
+.cs-module--orange { background: var(--wow-orange); color: var(--ink); }
+.cs-module--orange .cs-module-header { border-bottom-color: rgba(10,10,10,0.15); }
+.cs-module--orange .cs-module-header__title { color: var(--ink); }
+.cs-module--orange .cs-module-header__meta { color: rgba(10,10,10,0.5); }
+.cs-module--orange .cs-caption { color: rgba(10,10,10,0.5); }
+.cs-module--orange .cs-flavor__label { color: var(--ink); }
 
-/* Concept block — slightly darker */
-.cs-module--ink { background: var(--bg-alt); }
+.cs-module--lemon { background: var(--wow-lemon); color: var(--ink); }
+.cs-module--lemon .cs-module-header { border-bottom-color: rgba(10,10,10,0.15); }
+.cs-module--lemon .cs-module-header__title { color: var(--ink); }
+.cs-module--lemon .cs-module-header__meta { color: rgba(10,10,10,0.5); }
+.cs-module--lemon .cs-caption { color: rgba(10,10,10,0.5); }
 
-/* Flavor modules — accent border for "world" feel without overwhelming colour */
-.cs-module--hazelnut { background: var(--bg); border-left: 4px solid var(--ego-hazelnut); }
-.cs-module--plum     { background: var(--bg); border-left: 4px solid var(--ego-plum); }
-.cs-module--pistachio{ background: var(--bg); border-left: 4px solid var(--ego-pistachio); }
-.cs-module--cherry   { background: var(--bg); border-left: 4px solid var(--ego-cherry); }
-
-/* Bleed = full-width image, no padding */
-.cs-module--bleed {
-  padding: 0;
-  background: var(--bg);
-}
-.cs-module--bleed > img,
-.cs-module--bleed img {
-  width: 100%; height: auto; display: block;
-}
-.cs-module--bleed .cs-caption {
-  padding: 12px var(--gutter);
-}
+.cs-module--cherry { background: var(--wow-cherry); color: var(--fg); }
+.cs-module--cherry .cs-module-header { border-bottom-color: rgba(255,255,255,0.15); }
+.cs-module--cherry .cs-module-header__title { color: var(--fg); }
+.cs-module--cherry .cs-module-header__meta { color: rgba(255,255,255,0.5); }
+.cs-module--cherry .cs-caption { color: rgba(255,255,255,0.5); }
 
 /* ===== MODULE HEADER ===== */
 .cs-module-header {
-  max-width: var(--max-w);
-  margin: 0 auto 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--line);
+  max-width: var(--max-w); margin: 0 auto 3rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 1rem;
+  padding-bottom: 1.5rem; border-bottom: 1px solid var(--line);
 }
-.cs-module-header__title {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-}
-.cs-module-header__meta {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-}
+.cs-module-header__title { font-family: var(--font-mono); font-size: 12px; color: var(--accent); letter-spacing: 0.02em; }
+.cs-module-header__meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
 
 /* ===== INTRO ===== */
 .cs-intro {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 4rem;
-  align-items: start;
+  max-width: var(--max-w); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start;
 }
 .cs-intro__metadata {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 1.25rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--line);
 }
-.cs-intro__metadata > div {
-  display: flex; flex-direction: column; gap: 4px;
-}
-.cs-intro__metadata dt {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-}
-.cs-intro__metadata dd {
-  font-size: 14px;
-  font-weight: 500;
-}
-.cs-intro__wordmark {
-  font-family: var(--font-display);
-  font-size: clamp(5rem, 14vw, 14rem);
-  line-height: 0.85;
-  letter-spacing: -0.025em;
-  display: block;
-  margin-bottom: 2rem;
-}
-.cs-intro__wordmark em { color: var(--accent); font-style: italic; }
-.cs-intro__label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-}
+.cs-intro__metadata > div { display: flex; flex-direction: column; gap: 4px; }
+.cs-intro__metadata dt { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.cs-intro__metadata dd { font-size: 14px; font-weight: 500; }
+.cs-intro__label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; }
 .cs-intro__headline {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.5vw, 3rem);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  margin-bottom: 2rem;
+  line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 2rem;
 }
 .cs-intro__headline em { color: var(--accent); font-style: normal; }
-.cs-intro__body {
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--tag-fg);
-  max-width: 60ch;
-}
-@media (max-width: 900px) {
-  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
-  .cs-intro__wordmark { font-size: clamp(4rem, 18vw, 8rem); }
-}
+.cs-intro__body { font-size: 17px; line-height: 1.6; color: var(--tag-fg); max-width: 60ch; }
+@media (max-width: 900px) { .cs-intro { grid-template-columns: 1fr; gap: 2rem; } }
 
 /* ===== CONCEPT ===== */
 .cs-concept {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  align-items: flex-start;
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start;
 }
-.cs-concept__label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent);
-}
+.cs-concept__label { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
 .cs-concept__headline {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 7vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  max-width: 18ch;
+  line-height: 0.95; letter-spacing: -0.02em; max-width: 18ch;
 }
 .cs-concept__headline em { color: var(--accent); font-style: normal; }
-.cs-concept__body {
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--tag-fg);
-  max-width: 60ch;
-  margin-top: 1rem;
+.cs-concept__body { font-size: 17px; line-height: 1.6; color: var(--tag-fg); max-width: 60ch; margin-top: 1rem; }
+
+/* ===== STORY ===== */
+.cs-story {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start;
 }
+.cs-story__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05; letter-spacing: -0.01em;
+}
+.cs-story__body {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  font-size: 17px; line-height: 1.65; color: var(--tag-fg);
+}
+@media (max-width: 900px) { .cs-story { grid-template-columns: 1fr; gap: 2rem; } }
 
 /* ===== GRIDS ===== */
-.cs-grid-3x3 {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-.cs-grid-3x3 > div { display: flex; flex-direction: column; }
-.cs-grid-3x3 > div > img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-.cs-grid-2 {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-.cs-grid-2 > div { display: flex; flex-direction: column; }
-.cs-grid-2 > div > img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-.cs-grid-3 {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.cs-grid-3 > div { display: flex; flex-direction: column; }
-.cs-grid-3 > div > img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-.cs-grid-4 {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-.cs-grid-4 > div { display: flex; flex-direction: column; }
+.cs-grid-2 { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.cs-grid-3 { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.cs-grid-4 { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.cs-grid-2 > div, .cs-grid-3 > div, .cs-grid-4 > div { display: flex; flex-direction: column; }
 @media (max-width: 700px) {
-  .cs-grid-3x3 { grid-template-columns: 1fr 1fr; }
   .cs-grid-2, .cs-grid-3 { grid-template-columns: 1fr 1fr; gap: 1rem; }
   .cs-grid-4 { grid-template-columns: 1fr 1fr; }
 }
 
-.cs-caption {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 12px;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-}
+.cs-caption { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.5; letter-spacing: 0.02em; }
 
-/* ===== SLOT placeholder ===== */
-.cs-slot {
-  position: relative;
-  width: 100%;
-  background: var(--bg-alt);
-  border: 1px dashed var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  padding: 2rem;
-  text-align: center;
-  overflow: hidden;
-}
-.cs-slot--square { aspect-ratio: 1 / 1; }
-.cs-slot--render { aspect-ratio: 16 / 9; }
-.cs-slot[data-slot-id]::before {
-  content: attr(data-slot-id);
-  position: absolute;
-  top: 12px; left: 12px;
-  font-size: 10px;
-  color: var(--accent);
-  opacity: 0.7;
-}
-.cs-slot > img, .cs-slot > video {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-}
+/* ===== SOLO ===== */
+.cs-solo { max-width: var(--max-w); margin: 0 auto; }
+.cs-solo > img, .cs-solo > video { width: 100%; height: auto; display: block; }
 
-/* ===== FLAVOR ===== */
-.cs-flavor {
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
+/* ===== FLAVOR HORIZONTAL ===== */
+.cs-flavor { max-width: var(--max-w); margin: 0 auto; }
 .cs-flavor--horizontal {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
 }
 .cs-flavor--reverse .cs-flavor__media { order: 2; }
-.cs-flavor__media img {
-  width: 100%; height: auto;
-}
-.cs-flavor__copy {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-.cs-flavor__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-}
+.cs-flavor__media img { width: 100%; height: auto; }
+.cs-flavor__copy { display: flex; flex-direction: column; gap: 1.25rem; }
+.cs-flavor__label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.02em; }
 .cs-flavor__name {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1;
-  letter-spacing: -0.015em;
-  color: var(--fg);
+  line-height: 1; letter-spacing: -0.015em;
 }
 .cs-flavor__tagline {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.5vw, 2rem);
-  line-height: 1.1;
-  letter-spacing: -0.005em;
-  color: var(--accent);
+  line-height: 1.1; letter-spacing: -0.005em; color: var(--accent);
 }
-.cs-flavor__description {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--tag-fg);
-  max-width: 42ch;
-}
+.cs-flavor__description { font-size: 16px; line-height: 1.6; color: var(--tag-fg); max-width: 42ch; }
 @media (max-width: 900px) {
   .cs-flavor--horizontal { grid-template-columns: 1fr; gap: 2rem; }
   .cs-flavor--reverse .cs-flavor__media { order: 0; }
 }
 
-/* ===== LIFESTYLE — original flavor backgrounds kept as content ===== */
+/* ===== LIFESTYLE ===== */
 .cs-lifestyle {
-  position: relative;
-  width: 100%;
-  min-height: 60vh;
-  padding: 0;
+  position: relative; width: 100%; min-height: 60vh; padding: 0;
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-.cs-lifestyle__media {
-  position: relative;
-  width: 100%;
-}
-.cs-lifestyle__media img {
-  width: 100%; height: auto; display: block;
-}
+.cs-lifestyle__media { position: relative; width: 100%; }
+.cs-lifestyle__media img { width: 100%; height: auto; display: block; }
 .cs-lifestyle__caption {
-  position: absolute;
-  bottom: var(--gutter);
-  left: var(--gutter);
-  right: var(--gutter);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  z-index: 3;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  letter-spacing: 0.02em;
-  mix-blend-mode: difference;
-  color: var(--fg);
+  position: absolute; bottom: var(--gutter); left: var(--gutter); right: var(--gutter);
+  font-family: var(--font-mono); font-size: 12px; z-index: 3;
+  display: flex; justify-content: space-between; gap: 1rem;
+  letter-spacing: 0.02em; mix-blend-mode: difference; color: var(--fg);
+}
+
+/* ===== MOTION VIDEO CELLS ===== */
+.cs-motion-cell {
+  position: relative; overflow: hidden; border: 1px solid var(--line);
+}
+.cs-motion-cell video {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
 }
 
 /* ===== SPECS ===== */
-.cs-specs {
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
-.cs-specs table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.cs-specs tr {
-  border-bottom: 1px solid var(--line);
-}
+.cs-specs { max-width: var(--max-w); margin: 0 auto; }
+.cs-specs table { width: 100%; border-collapse: collapse; }
+.cs-specs tr { border-bottom: 1px solid var(--line); }
 .cs-specs tr:first-child { border-top: 1px solid var(--line); }
-.cs-specs td {
-  padding: 18px 0;
-  font-size: 14px;
-  vertical-align: top;
-}
-.cs-specs__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  width: 220px;
-}
+.cs-specs td { padding: 18px 0; font-size: 14px; vertical-align: top; }
+.cs-specs__label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; width: 220px; }
 .cs-specs__value { font-weight: 500; }
-@media (max-width: 700px) {
-  .cs-specs__label { width: 140px; }
-}
+@media (max-width: 700px) { .cs-specs__label { width: 140px; } }
 
 /* ===== CLOSER ===== */
 .cs-closer__statement {
   font-family: var(--font-display);
   font-size: clamp(2rem, 6vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  text-align: center;
-  max-width: 22ch;
-  margin: 0 auto 4rem;
+  line-height: 1; letter-spacing: -0.02em;
+  text-align: center; max-width: 22ch; margin: 0 auto 4rem;
 }
 .cs-closer__statement em { color: var(--accent); font-style: normal; }
 .cs-closer__credits {
-  max-width: var(--max-w);
-  margin: 0 auto 4rem;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1.5rem;
-  padding: 2rem 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  max-width: var(--max-w); margin: 0 auto 4rem;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem;
+  padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
 }
-.cs-closer__credits > div {
-  display: flex; flex-direction: column; gap: 4px;
-}
-.cs-closer__credits dt {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-}
-.cs-closer__credits dd {
-  font-size: 14px;
-  font-weight: 500;
-}
+.cs-closer__credits > div { display: flex; flex-direction: column; gap: 4px; }
+.cs-closer__credits dt { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.cs-closer__credits dd { font-size: 14px; font-weight: 500; }
 .cs-closer__nav {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  flex-wrap: wrap;
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
 }
 .cs-closer__nav-link {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2.5rem);
-  line-height: 1;
-  letter-spacing: -0.005em;
-  position: relative;
-  padding-bottom: 4px;
-  display: inline-block;
+  line-height: 1; letter-spacing: -0.005em;
+  position: relative; padding-bottom: 4px; display: inline-block;
   transition: color 0.3s var(--ease);
 }
 .cs-closer__nav-link::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0;
   height: 2px; background: currentColor;
-  transform: scaleX(0); transform-origin: right;
-  transition: transform 0.4s var(--ease);
+  transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease);
 }
 .cs-closer__nav-link:hover { color: var(--accent); }
 .cs-closer__nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
-
 @media (max-width: 900px) {
   .cs-closer__credits { grid-template-columns: 1fr 1fr; }
   .cs-closer__nav { flex-direction: column; gap: 1rem; }
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 0; transform: translateY(20px);
   transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 700px) {
   .nav { padding: 16px var(--gutter); }
   .nav__menu { gap: 16px; font-size: 12px; }
 }
-
-/* ===== Дополнительные классы для guerlain / replica / wow ===== */
-.cs-hero__media { position: relative; width: 100%; }
-.cs-hero__media img, .cs-hero__media video {
-  width: 100%; min-height: 100vh; object-fit: cover; display: block;
-}
-
-/* Slot варианты */
-.cs-slot--portrait { aspect-ratio: 4 / 5; }
-.cs-slot--strip { aspect-ratio: 21 / 9; }
-
-/* Strip-сетки (горизонтальные ряды кадров) */
-.cs-strip-3 {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-.cs-strip-4 {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-.cs-strip-3 > *, .cs-strip-4 > * { display: flex; flex-direction: column; }
-.cs-strip-3 img, .cs-strip-4 img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
-@media (max-width: 700px) {
-  .cs-strip-3, .cs-strip-4 { grid-template-columns: 1fr 1fr; }
-}
-
-/* Shader/render label-строки (технические подписи в стиле basement) */
-.cs-shader-row {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.cs-shader-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--tag-fg);
-  background: var(--tag-bg);
-  padding: 6px 10px;
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- ============================================================
-     NAV — same as main site
-     ============================================================ -->
 <nav class="nav">
   <a href="../index.html" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
   <div class="nav__menu">
-    <a href="../work.html" class="nav__link">Work</a>
-    <a href="../about.html" class="nav__link">About</a>
-    <a href="/contact" class="nav__link">Contact</a>
+    <a href="../work.html" class="nav__link">Showcase</a>
+    <a href="../about.html" class="nav__link">Studio</a>
+    <a href="../index.html#contact" class="nav__link">Contact</a>
   </div>
 </nav>
 
-<!-- ============================================================
-     MODULE 01 · HERO COVER
-     SLOT: HERO_01_landscape.jpg (full bleed background)
-     ============================================================ -->
+<!-- 01 HERO — KID WITH PRODUCT -->
 <section class="cs-hero">
-  <!-- REPLACE THIS SLOT WITH:
-       <img class="cs-hero__media" src="../assets/img_WOW/HERO_01_landscape.jpg" alt="[ALT TEXT]" onerror="this.style.display='none'"> -->
-  <div class="cs-slot" data-slot-id="▣ HERO_01">
-    HERO COVER · 16:9 · 2560×1440
-  </div>
-
+  <img src="../assets/img_Wow/kid.png" alt="WOW Pianka — kid with product" onerror="this.style.display='none'">
   <div class="cs-hero__meta">
-    <div>[CLIENT] — [PROJECT TITLE]</div>
-    <div>[YEAR] · Warsaw</div>
+    <div>VOBRO — WOW PIANKA</div>
+    <div>2025 · Three flavors spin. One wins.</div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 02 · PROJECT INTRO
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
+<!-- 02 PROJECT INTRO -->
+<section class="cs-module cs-module--dark">
   <div class="cs-intro">
     <dl class="cs-intro__metadata">
-      <div><dt>Client</dt><dd>[CLIENT NAME]</dd></div>
-      <div><dt>Year</dt><dd>[YEAR]</dd></div>
-      <div><dt>Category</dt><dd>[CATEGORY]</dd></div>
-      <div><dt>Role</dt><dd>[ROLE]</dd></div>
-      <div><dt>Software</dt><dd>[SOFTWARE]</dd></div>
+      <div><dt>Client</dt><dd>Vobro</dd></div>
+      <div><dt>Year</dt><dd>2025</dd></div>
+      <div><dt>Category</dt><dd>CGI · Packaging · Campaign</dd></div>
+      <div><dt>Role</dt><dd>CGI Art Direction · Visualization · Motion</dd></div>
+      <div><dt>Software</dt><dd>Blender 4.2 · Cycles · After Effects · Photoshop</dd></div>
     </dl>
-
     <div>
       <div class="cs-intro__label">— Project</div>
       <h1 class="cs-intro__headline reveal">
-        [ONE-SENTENCE POSITIONING. <em>Italic for the evocative part,</em> roman for the factual.]
+        <em>Three flavors spin. One wins.</em> Full CGI campaign for Vobro's marshmallow-jelly chocolate — from pack to playground, from shelf to slot machine.
       </h1>
       <p class="cs-intro__body reveal">
-        [TWO TO FOUR SENTENCES OF INTRO PROSE. What is this project. What was the brief. What was the creative ambition. No technical details — those come later.]
+        WOW Pianka is Vobro's play on the children's confectionery market — a marshmallow with jelly in chocolate, sold in three flavors: orange, lemon, cherry. The brief: make something loud enough to stop a child mid-aisle. The answer: a visual system built around casino energy, color explosions, and a cross-section so satisfying it sells itself. Every frame is a slot machine pull — three reels spinning, every result a jackpot.
       </p>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 03 · CONCEPT STATEMENT
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
+<!-- 03 CONCEPT -->
+<section class="cs-module cs-module--alt">
   <div class="cs-concept reveal">
     <div class="cs-concept__label">— Concept</div>
-    <h2 class="cs-concept__headline">"[3-7 EVOCATIVE WORDS]"</h2>
-    <p class="cs-concept__body">[TWO TO THREE SENTENCES EXPLAINING THE METAPHOR OR INSIGHT THAT DROVE THE VISUAL DIRECTION. TALK ABOUT THE IDEA, NEVER THE TECHNIQUE.]</p>
+    <h2 class="cs-concept__headline">"Pull the lever. <em>Every flavor wins.</em>"</h2>
+    <p class="cs-concept__body">The strategy borrows from slot machines and arcade games — bright, fast, rewarding. Each flavor is a color reel: orange pops, lemon glows, cherry pulses. The cross-section macro is the jackpot moment — chocolate shell cracking open to reveal layers of marshmallow and fruit jelly. WOW doesn't whisper. It shouts from the shelf.</p>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 04 · REFERENCE BOARD
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— References</span>
-    <span class="cs-module-header__meta">Mood / direction / tone</span>
-  </div>
+<!-- 04 PRODUCT GRID — full bleed -->
+<section class="cs-module cs-module--bleed">
+  <img src="../assets/img_Wow/1.1.png" alt="WOW product grid — all flavors" onerror="this.style.display='none'">
+  <div class="cs-caption">— Product grid · three flavors · four colorways</div>
+</section>
 
-  <div class="cs-grid-3x3">
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_01">REFERENCE 01</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_02">REFERENCE 02</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_03">REFERENCE 03</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_04">REFERENCE 04</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_05">REFERENCE 05</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_06">REFERENCE 06</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_07">REFERENCE 07</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_08">REFERENCE 08</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ REF_09">REFERENCE 09</div><div class="cs-caption">[SOURCE] · [WHAT YOU TOOK]</div></div>
+<!-- 05 PACKAGING SYSTEM -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Packaging</span>
+    <span class="cs-module-header__meta">Doypack · display box · flowpack singles</span>
+  </div>
+  <div class="cs-solo">
+    <img src="../assets/img_Wow/packaging.png" alt="WOW full packaging lineup" onerror="this.style.display='none'">
+    <div class="cs-caption">Full product lineup · doypack 210 g · doypack 330 g · flowpack singles</div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 05 · CONCEPT SKETCHES
-     ============================================================ -->
-<section class="cs-module cs-module--paper">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Composition studies</span>
-    <span class="cs-module-header__meta">Pre-vis / framing / lighting plan</span>
-  </div>
-
-  <div class="cs-strip-3">
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ SKETCH_01">SKETCH 01 · HERO FRAMING</div><div class="cs-caption">01 — Hero framing · key light direction</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ SKETCH_02">SKETCH 02 · MACRO DETAIL</div><div class="cs-caption">02 — Macro detail composition</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="✎ SKETCH_03">SKETCH 03 · LIGHTING PLAN</div><div class="cs-caption">03 — Top-down lighting plan</div></div>
+<!-- 06 FLAVOR 01 — ORANGE -->
+<section class="cs-module cs-module--orange">
+  <div class="cs-flavor cs-flavor--horizontal">
+    <div class="cs-flavor__media">
+      <img src="../assets/img_Wow/logo_orange.png" alt="WOW Orange — logo with macro" onerror="this.style.display='none'">
+    </div>
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label" style="color:var(--ink);">— 01 / Orange</div>
+      <h3 class="cs-flavor__name" style="color:var(--ink);">The Jackpot</h3>
+      <p class="cs-flavor__tagline" style="color:var(--wow-choco);">"Peel it, crack it, win."</p>
+      <p class="cs-flavor__description" style="color:rgba(10,10,10,0.75);">Chocolate shell, marshmallow layer, orange jelly center. The flagship flavor — the one that lands face-up on every spin.</p>
+    </div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 06 · MODELING BREAKDOWN
-     ============================================================ -->
-<section class="cs-module cs-module--graphite">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Modeling</span>
-    <span class="cs-module-header__meta">[N] polygons · clean quad topology</span>
+<!-- 07 FLAVOR 02 — LEMON -->
+<section class="cs-module cs-module--lemon">
+  <div class="cs-flavor cs-flavor--horizontal cs-flavor--reverse">
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label" style="color:var(--ink);">— 02 / Lemon</div>
+      <h3 class="cs-flavor__name" style="color:var(--ink);">The Wild Card</h3>
+      <p class="cs-flavor__tagline" style="color:var(--wow-choco);">"Sour hit, sweet finish."</p>
+      <p class="cs-flavor__description" style="color:rgba(10,10,10,0.75);">Milk chocolate coat, pillow-soft marshmallow, bright lemon jelly that bites back. The surprise reel.</p>
+    </div>
+    <div class="cs-flavor__media">
+      <img src="../assets/img_Wow/logo_cytryna1.png" alt="WOW Lemon — logo" onerror="this.style.display='none'">
+    </div>
   </div>
+</section>
 
+<!-- 08 FLAVOR 03 — CHERRY -->
+<section class="cs-module cs-module--cherry">
+  <div class="cs-flavor cs-flavor--horizontal">
+    <div class="cs-flavor__media">
+      <img src="../assets/img_Wow/logo_wisnia1.png" alt="WOW Cherry — logo" onerror="this.style.display='none'">
+    </div>
+    <div class="cs-flavor__copy">
+      <div class="cs-flavor__label" style="color:var(--fg);">— 03 / Cherry</div>
+      <h3 class="cs-flavor__name">The Dark Horse</h3>
+      <p class="cs-flavor__tagline" style="color:var(--wow-yellow);">"Deep pink. No warning."</p>
+      <p class="cs-flavor__description" style="color:rgba(255,255,255,0.7);">Chocolate, marshmallow, cherry jelly — the flavor that pulls you back for one more.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 CROSS-SECTION MACROS -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— The Cross-Section</span>
+    <span class="cs-module-header__meta">The jackpot moment · chocolate / marshmallow / jelly</span>
+  </div>
   <div class="cs-grid-2">
-    <div><div class="cs-slot" data-slot-id="⬚ MODEL_01">01 / WIREFRAME · POLYCOUNT [N]</div></div>
-    <div><div class="cs-slot" data-slot-id="⬚ MODEL_02">02 / TOPOLOGY · QUADS ONLY</div></div>
-    <div><div class="cs-slot" data-slot-id="⬚ MODEL_03">03 / SUBDIVISION · LEVELS [N]</div></div>
-    <div><div class="cs-slot" data-slot-id="⬚ MODEL_04">04 / UV LAYOUT · 4K MAP</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 07 · SHADER BREAKDOWN
-     ============================================================ -->
-<section class="cs-module cs-module--graphite">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Shading</span>
-    <span class="cs-module-header__meta">Four core materials · physically based</span>
-  </div>
-
-  <div class="cs-shader-row">
-    <div class="cs-slot" data-slot-id="⬚ SHADER_01_NODES">01 / GLASS · NODE GRAPH</div>
-    <div class="cs-slot" data-slot-id="⬚ SHADER_01_PREVIEW">PREVIEW · IOR 1.52 · DISPERSION</div>
-  </div>
-  <div class="cs-shader-row">
-    <div class="cs-slot" data-slot-id="⬚ SHADER_02_NODES">02 / LIQUID · NODE GRAPH</div>
-    <div class="cs-slot" data-slot-id="⬚ SHADER_02_PREVIEW">PREVIEW · VOLUME ABSORPTION</div>
-  </div>
-  <div class="cs-shader-row">
-    <div class="cs-slot" data-slot-id="⬚ SHADER_03_NODES">03 / LABEL · NODE GRAPH</div>
-    <div class="cs-slot" data-slot-id="⬚ SHADER_03_PREVIEW">PREVIEW · MATTE PAPER · LETTERPRESS</div>
-  </div>
-  <div class="cs-shader-row">
-    <div class="cs-slot" data-slot-id="⬚ SHADER_04_NODES">04 / METAL · NODE GRAPH</div>
-    <div class="cs-slot" data-slot-id="⬚ SHADER_04_PREVIEW">PREVIEW · ANISOTROPIC BRUSHED</div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 08 · LIGHTING DIAGRAM
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Lighting</span>
-    <span class="cs-module-header__meta">Three-point setup · single key, controlled fill</span>
-  </div>
-
-  <div class="cs-slot cs-slot--strip" data-slot-id="✎ LIGHTING_01_DIAGRAM" style="margin-bottom: 12px;">
-    LIGHTING DIAGRAM · ISOMETRIC TOP-DOWN PLAN
-  </div>
-  <div class="cs-slot cs-slot--strip" data-slot-id="⬚ LIGHTING_02_VIEWPORT">
-    BLENDER VIEWPORT · LIGHT POSITIONS VISIBLE
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 09 · HERO FULL BLEED
-     ============================================================ -->
-<section class="cs-module cs-module--bleed">
-  <div class="cs-slot cs-slot--render" data-slot-id="▣ FINAL_01_HERO_FULLBLEED">
-    HERO FULL BLEED · 16:9 · 3840×2160
-  </div>
-  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">01 — Hero</div>
-</section>
-
-<!-- ============================================================
-     MODULE 10 · 45° PREMIUM SHOT
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div style="max-width: 80%; margin: 0 auto;">
-    <div class="cs-slot cs-slot--portrait" data-slot-id="▣ FINAL_02_45DEG">
-      45° PREMIUM SHOT · 4:5 PORTRAIT
+    <div>
+      <img src="../assets/img_Wow/przekroj_cherry.png" alt="Cherry cross-section macro" onerror="this.style.display='none'">
+      <div class="cs-caption">Cherry · deep pink jelly core visible through the break</div>
     </div>
-    <div class="cs-caption">02 — Three-quarter view</div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 11 · FRONT PACK SHOT
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div style="max-width: 60%; margin: 0 auto;">
-    <div class="cs-slot cs-slot--portrait" data-slot-id="▣ FINAL_03_FRONT_PACK">
-      FRONT PACK SHOT · 4:5 PORTRAIT
+    <div>
+      <img src="../assets/img_Wow/przekroj_cytryna.png" alt="Lemon cross-section macro" onerror="this.style.display='none'">
+      <div class="cs-caption">Lemon · bright citrus jelly layer between marshmallow and chocolate</div>
     </div>
-    <div class="cs-caption">03 — Front pack</div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 12 · MACRO DETAIL SERIES
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Detail</span>
-    <span class="cs-module-header__meta">Macro · material confidence</span>
-  </div>
-
-  <div class="cs-grid-3">
-    <div class="cs-slot cs-slot--square" data-slot-id="▣ MACRO_01">CAP / METAL</div>
-    <div class="cs-slot cs-slot--square" data-slot-id="▣ MACRO_02">LIQUID / REFRACTION</div>
-    <div class="cs-slot cs-slot--square" data-slot-id="▣ MACRO_03">BASE / SHADOW</div>
-  </div>
-  <div class="cs-caption">04 — 06 / Macro detail series</div>
-</section>
-
-<!-- ============================================================
-     MODULE 13 · LABEL & TYPE DETAIL
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div style="max-width: 70%; margin: 0 auto;">
-    <div class="cs-slot cs-slot--render" data-slot-id="▣ FINAL_04_LABEL">
-      LABEL · TYPOGRAPHY · TIGHT CROP
-    </div>
-    <div class="cs-caption">07 — Label · typography</div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 14 · MATERIAL CLOSE-UPS
-     ============================================================ -->
-<section class="cs-module cs-module--paper">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Materials</span>
-    <span class="cs-module-header__meta">Glass · liquid · paper</span>
-  </div>
-
-  <div class="cs-grid-3">
-    <div><div class="cs-slot cs-slot--portrait" data-slot-id="▣ MATERIAL_01">GLASS</div><div class="cs-caption">01 — Glass · refraction</div></div>
-    <div><div class="cs-slot cs-slot--portrait" data-slot-id="▣ MATERIAL_02">LIQUID</div><div class="cs-caption">02 — Liquid · viscosity</div></div>
-    <div><div class="cs-slot cs-slot--portrait" data-slot-id="▣ MATERIAL_03">PAPER</div><div class="cs-caption">03 — Paper · texture</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 15 · COMP & POST BREAKDOWN
-     ============================================================ -->
-<section class="cs-module cs-module--graphite">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Post-processing pipeline</span>
-    <span class="cs-module-header__meta">Raw to final · four stages</span>
-  </div>
-
-  <div class="cs-strip-4">
-    <div><div class="cs-slot" data-slot-id="▣ COMP_01">RAW CYCLES</div><div class="cs-caption">01 — Raw · 4096 samples</div></div>
-    <div><div class="cs-slot" data-slot-id="▣ COMP_02">COLOR GRADE</div><div class="cs-caption">02 — ACES · Filmic</div></div>
-    <div><div class="cs-slot" data-slot-id="▣ COMP_03">ATMOSPHERE</div><div class="cs-caption">03 — Atmospheric pass</div></div>
-    <div><div class="cs-slot" data-slot-id="▣ COMP_04">FINAL</div><div class="cs-caption">04 — Grain · bloom · vignette</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 16 · FRAMING ANALYSIS
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Composition</span>
-    <span class="cs-module-header__meta">Framing analysis with grid overlay</span>
-  </div>
-
-  <div class="cs-grid-2">
-    <div class="cs-slot cs-slot--render" data-slot-id="▣ FRAMING_01_GRID">HERO + GRID OVERLAY</div>
-    <div class="cs-slot cs-slot--render" data-slot-id="▣ FRAMING_02_CLEAN">HERO · CLEAN</div>
-  </div>
-  <p style="text-align: center; max-width: 60ch; margin: 2rem auto 0; color: var(--mid); font-size: 14px;">
-    Composition follows [rule of thirds / golden ratio / centered symmetry] with primary focal point at [position]. Secondary visual weight balanced by negative space in the [direction].
-  </p>
-</section>
-
-<!-- ============================================================
-     MODULE 17 · EDITORIAL SPREAD
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Editorial</span>
-    <span class="cs-module-header__meta">Magazine spread · application mockup</span>
-  </div>
-
-  <div class="cs-slot cs-slot--render" data-slot-id="▣ APP_01_EDITORIAL">
-    EDITORIAL SPREAD MOCKUP · DOUBLE-PAGE
-  </div>
-  <div class="cs-caption">11 — Editorial application</div>
-</section>
-
-<!-- ============================================================
-     MODULE 18 · ADVERTISING FRAME
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Campaign</span>
-    <span class="cs-module-header__meta">Out-of-home · print · digital</span>
-  </div>
-
-  <div class="cs-slot cs-slot--render" data-slot-id="▣ APP_02_AD">
-    ADVERTISING MOCKUP · BILLBOARD OR PRINT
-  </div>
-  <div class="cs-caption">12 — Campaign application</div>
-</section>
-
-<!-- ============================================================
-     MODULE 19 · LIFESTYLE CONTEXT
-     ============================================================ -->
+<!-- 10 COMBO MACRO — full bleed -->
 <section class="cs-module cs-module--bleed">
-  <div class="cs-slot cs-slot--render" data-slot-id="▣ APP_03_LIFESTYLE">
-    LIFESTYLE / IN-CONTEXT · FULL BLEED
-  </div>
-  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">13 — In context</div>
+  <img src="../assets/img_Wow/combo.png" alt="WOW combo cross-section" onerror="this.style.display='none'">
+  <div class="cs-caption">— Macro combo · chocolate shell fracture · three visible layers</div>
 </section>
 
-<!-- ============================================================
-     MODULE 20 · DARK LUXURY VARIANT (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
-  <div style="max-width: 70%; margin: 0 auto;">
-    <div class="cs-slot cs-slot--portrait" data-slot-id="▣ VARIANT_01_DARK">DARK VARIANT</div>
-    <div class="cs-caption">14 — Dark variant</div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 21 · LIGHT PREMIUM VARIANT (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div style="max-width: 70%; margin: 0 auto;">
-    <div class="cs-slot cs-slot--portrait" data-slot-id="▣ VARIANT_02_LIGHT">LIGHT VARIANT</div>
-    <div class="cs-caption">15 — Light variant</div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 22 · FAMILY COMPOSITION (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--paper">
+<!-- 11 INGREDIENT TEXTURE -->
+<section class="cs-module cs-module--alt">
   <div class="cs-module-header">
-    <span class="cs-module-header__title">— Product family</span>
-    <span class="cs-module-header__meta">Range · variants together</span>
+    <span class="cs-module-header__title">— Ingredient</span>
+    <span class="cs-module-header__meta">Marshmallow foam · macro detail</span>
   </div>
-  <div class="cs-slot cs-slot--render" data-slot-id="▣ APP_04_FAMILY">FAMILY COMPOSITION</div>
-  <div class="cs-caption">16 — Product family</div>
+  <div class="cs-solo">
+    <img src="../assets/img_Wow/ingredients.png" alt="Marshmallow foam texture" onerror="this.style.display='none'">
+    <div class="cs-caption">Marshmallow foam structure · aerated texture · CGI macro at 400%</div>
+  </div>
 </section>
 
-<!-- ============================================================
-     MODULE 23 · SHELF IMPACT (optional)
-     ============================================================ -->
+<!-- 12 LIFESTYLE — KID WITH BACKPACK -->
+<section class="cs-lifestyle" style="background: var(--wow-orange);">
+  <div class="cs-lifestyle__media">
+    <img src="../assets/img_Wow/kid1.png" alt="Kid with WOW product" onerror="this.style.display='none'">
+  </div>
+  <div class="cs-lifestyle__caption" style="color: var(--ink);">
+    <div>01 / School-run ready</div>
+    <div>WOW Pianka · Lifestyle</div>
+  </div>
+</section>
+
+<!-- 13 DISPLAY BOX — KIDS CAMPAIGN -->
+<section class="cs-lifestyle" style="background: #00A86B;">
+  <div class="cs-lifestyle__media">
+    <img src="../assets/img_Wow/kids_displaybox.png" alt="Kids reaching for WOW display box" onerror="this.style.display='none'">
+  </div>
+  <div class="cs-lifestyle__caption">
+    <div>02 / Hands in the box</div>
+    <div>WOW Pianka · Point of sale</div>
+  </div>
+</section>
+
+<!-- 14 PRODUCT GRID VARIANT -->
 <section class="cs-module cs-module--bleed">
-  <div class="cs-slot cs-slot--render" data-slot-id="▣ APP_05_SHELF">
-    SHELF IMPACT · RETAIL CONTEXT
-  </div>
-  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">17 — Shelf impact</div>
+  <img src="../assets/img_Wow/1.2.png" alt="WOW product grid variant" onerror="this.style.display='none'">
+  <div class="cs-caption">— Alternate product grid · color pairing variants</div>
 </section>
 
-<!-- ============================================================
-     MODULE 24 · MOTION FRAMES (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
+<!-- 15 MOTION — 4 MINI ANIMATIONS -->
+<section class="cs-module cs-module--dark">
   <div class="cs-module-header">
     <span class="cs-module-header__title">— Motion</span>
-    <span class="cs-module-header__meta">Sequence concept · 4-second loop</span>
+    <span class="cs-module-header__meta">Four loops · product reveal · slot-reel energy</span>
   </div>
-
   <div class="cs-grid-4">
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_01">APPROACH</div><div class="cs-caption">01 — Approach</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_02">ROTATION</div><div class="cs-caption">02 — Rotation</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_03">DETAIL</div><div class="cs-caption">03 — Detail</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_04">HOLD</div><div class="cs-caption">04 — Hold</div></div>
+    <div>
+      <div class="cs-motion-cell">
+        <video autoplay muted loop playsinline>
+          <source src="../assets/img_Wow/MP4/1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="cs-caption">01 — Approach · unwrap tease</div>
+    </div>
+    <div>
+      <div class="cs-motion-cell">
+        <video autoplay muted loop playsinline>
+          <source src="../assets/img_Wow/MP4/2.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="cs-caption">02 — Spin · flavor reel</div>
+    </div>
+    <div>
+      <div class="cs-motion-cell">
+        <video autoplay muted loop playsinline>
+          <source src="../assets/img_Wow/MP4/3.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="cs-caption">03 — Break · cross-section reveal</div>
+    </div>
+    <div>
+      <div class="cs-motion-cell">
+        <video autoplay muted loop playsinline>
+          <source src="../assets/img_Wow/MP4/4.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="cs-caption">04 — Hold · hero lock</div>
+    </div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 25 · DESIGN SYSTEM PAGE (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
+<!-- 16 DIE-CUTS / TECHNICAL -->
+<section class="cs-module cs-module--alt">
   <div class="cs-module-header">
-    <span class="cs-module-header__title">— Design system</span>
-    <span class="cs-module-header__meta">Color · type · material · principle</span>
+    <span class="cs-module-header__title">— Die-Cuts</span>
+    <span class="cs-module-header__meta">Print-ready · packaging construction</span>
   </div>
-
-  <div class="cs-grid-2">
-    <div class="cs-slot" data-slot-id="✎ SYS_01_COLORS" style="aspect-ratio: 4/3;">COLOR PALETTE · 5-6 SWATCHES</div>
-    <div class="cs-slot" data-slot-id="✎ SYS_02_TYPE" style="aspect-ratio: 4/3;">TYPE SYSTEM · DISPLAY / BODY / MONO</div>
-    <div class="cs-slot" data-slot-id="✎ SYS_03_MATERIALS" style="aspect-ratio: 4/3;">MATERIAL LIBRARY · 4-6 SPHERES</div>
-    <div class="cs-slot" data-slot-id="✎ SYS_04_RULES" style="aspect-ratio: 4/3;">COMPOSITION RULES · 3-4 PRINCIPLES</div>
+  <div class="cs-solo">
+    <img src="../assets/img_Wow/wykrojniki.png" alt="WOW packaging die-cuts" onerror="this.style.display='none'">
+    <div class="cs-caption">Die-cut layouts · doypack + display box · print-ready technical</div>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 26 · TECHNICAL SPECS PANEL
-     ============================================================ -->
-<section class="cs-module cs-module--graphite">
+<!-- 17 PULL QUOTE -->
+<section class="cs-module cs-module--dark" style="border-left: 4px solid var(--wow-orange);">
+  <div class="cs-concept reveal">
+    <div class="cs-concept__label">— Approach</div>
+    <h2 class="cs-concept__headline">"Slot machine logic: every pull is a <em>win.</em>"</h2>
+    <p class="cs-concept__body">The visual system borrows from arcade culture — saturated colors, fast cuts, reward loops. Every frame is designed to trigger the same dopamine hit as cracking open the chocolate itself. Loud, bright, unapologetic.</p>
+  </div>
+</section>
+
+<!-- 18 TECHNICAL SPECS -->
+<section class="cs-module cs-module--alt">
   <div class="cs-module-header">
     <span class="cs-module-header__title">— Technical</span>
     <span class="cs-module-header__meta">Project specifications</span>
   </div>
-
-  <dl class="cs-specs">
-    <div><dt>Software</dt><dd>Blender [VERSION] · Cycles</dd></div>
-    <div><dt>Resolution</dt><dd>[W] × [H] px</dd></div>
-    <div><dt>Samples</dt><dd>[N] per pixel · OptiX denoising</dd></div>
-    <div><dt>Polycount</dt><dd>Hero asset: [N] · Scene: [N]</dd></div>
-    <div><dt>Textures</dt><dd>4K PBR maps · custom normals</dd></div>
-    <div><dt>Render time</dt><dd>[N] minutes per frame on [GPU]</dd></div>
-    <div><dt>Color pipeline</dt><dd>ACES · Filmic Log</dd></div>
-    <div><dt>Post</dt><dd>Photoshop · grading · atmospheric pass</dd></div>
-    <div><dt>Hours</dt><dd>[N] from concept to delivery</dd></div>
-  </dl>
-</section>
-
-<!-- ============================================================
-     MODULE 27 · BEFORE / AFTER (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bone">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Iteration</span>
-    <span class="cs-module-header__meta">Original vs refined</span>
-  </div>
-
-  <div class="cs-grid-2">
-    <div><div class="cs-slot cs-slot--render" data-slot-id="▣ BEFORE_01">ORIGINAL</div><div class="cs-caption">Before</div></div>
-    <div><div class="cs-slot cs-slot--render" data-slot-id="▣ AFTER_01">REFINED</div><div class="cs-caption">After</div></div>
+  <div class="cs-specs">
+    <table>
+      <tbody>
+        <tr><td class="cs-specs__label">SOFTWARE</td><td class="cs-specs__value">Blender 4.2 · Cycles · After Effects · Photoshop</td></tr>
+        <tr><td class="cs-specs__label">RESOLUTION</td><td class="cs-specs__value">3840 × 2160 px (stills) · 1080 × 1080 px (loops)</td></tr>
+        <tr><td class="cs-specs__label">SAMPLES</td><td class="cs-specs__value">4096 per pixel · OptiX denoising</td></tr>
+        <tr><td class="cs-specs__label">MATERIALS</td><td class="cs-specs__value">Chocolate gloss · marshmallow subsurface · jelly translucency</td></tr>
+        <tr><td class="cs-specs__label">TEXTURES</td><td class="cs-specs__value">4K PBR · custom foam normals · jelly caustics</td></tr>
+        <tr><td class="cs-specs__label">MOTION</td><td class="cs-specs__value">4 loops × 3 seconds · 30 fps · H.264 + GIF</td></tr>
+        <tr><td class="cs-specs__label">RENDER TIME</td><td class="cs-specs__value">14 minutes per still · 8 hours per loop on RTX 4090</td></tr>
+        <tr><td class="cs-specs__label">COLOR PIPELINE</td><td class="cs-specs__value">ACES · Filmic Log Encoding</td></tr>
+        <tr><td class="cs-specs__label">DELIVERABLES</td><td class="cs-specs__value">3 flavor heroes · 2 macros · 4 motion loops · packaging set · lifestyle</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<!-- ============================================================
-     MODULE 28 · SOCIAL FRAMES (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Social</span>
-    <span class="cs-module-header__meta">Instagram · stories · carousel</span>
-  </div>
-
-  <div class="cs-grid-3">
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ SOCIAL_01">SQUARE 1:1</div><div class="cs-caption">Feed post</div></div>
-    <div><div class="cs-slot cs-slot--portrait" data-slot-id="▣ SOCIAL_02">PORTRAIT 4:5</div><div class="cs-caption">Feed portrait</div></div>
-    <div><div class="cs-slot" data-slot-id="▣ SOCIAL_03" style="aspect-ratio: 9/16;">STORY 9:16</div><div class="cs-caption">Story</div></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULE 29 · WEB HERO BANNER (optional)
-     ============================================================ -->
-<section class="cs-module cs-module--bleed">
-  <div class="cs-slot cs-slot--strip" data-slot-id="▣ WEB_HERO_01">
-    WEB HERO BANNER · 21:9 ULTRA-WIDE
-  </div>
-  <div class="cs-caption" style="padding: 1rem 0; background: var(--ink); color: var(--mid);">Web banner application</div>
-</section>
-
-<!-- ============================================================
-     MODULE 30 · CLOSER & CREDITS
-     ============================================================ -->
-<section class="cs-module cs-module--ink">
-  <p class="cs-closer__statement reveal">"[ONE FINAL POETIC LINE — SAME TONE AS THE CONCEPT STATEMENT]"</p>
-
+<!-- 19 CLOSER -->
+<section class="cs-module cs-module--dark">
+  <p class="cs-closer__statement reveal">"Three reels. <em>Every spin wins.</em>"</p>
   <dl class="cs-closer__credits">
     <div><dt>Studio</dt><dd>Davidova.Studio</dd></div>
-    <div><dt>Art direction</dt><dd>Alexandra Davidova</dd></div>
-    <div><dt>CGI</dt><dd>Alexandra Davidova</dd></div>
-    <div><dt>Year</dt><dd>[YEAR]</dd></div>
+    <div><dt>Art Direction</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>CGI · Motion</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Client</dt><dd>Vobro</dd></div>
+    <div><dt>Year</dt><dd>2025</dd></div>
     <div><dt>Location</dt><dd>Warsaw · Worldwide</dd></div>
-    <div><dt>Software</dt><dd>[SOFTWARE]</dd></div>
   </dl>
-
   <div class="cs-closer__nav">
-    <a href="/work/[NEXT-PROJECT-SLUG]" class="cs-closer__nav-link">Next project →</a>
+    <a href="ego.html" class="cs-closer__nav-link">Next project →</a>
     <a href="mailto:studio@davidova.studio" class="cs-closer__nav-link">studio@davidova.studio</a>
   </div>
 </section>
 
-<!-- ============================================================
-     SCROLL REVEAL SCRIPT
-     ============================================================ -->
 <script>
 (function() {
   const els = document.querySelectorAll('.reveal');

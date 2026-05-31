@@ -4,122 +4,521 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gryzzzli Bears — Davidova.Studio</title>
-<meta name="description" content="Chocolate teddies for breakfast tables. CGI visualization and presentation by Alexandra Davidova for Vobro." />
+<meta name="description" content="Chocolate teddies for breakfast tables. CGI visualization, packaging presentation and lifestyle campaign by Alexandra Davidova for Vobro." />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/project.css">
+
 <link rel="stylesheet" href="../mobile.css" media="(max-width: 880px)">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg-alt: #14120f;
+  --fg: #e8e6e1;
+  --muted: #6e6c66;
+  --line: #1f1d1a;
+  --tag-bg: #1a1816;
+  --tag-fg: #c9c6bf;
+  --accent: #ff2e16;
+  --ink: #0a0a0a;
+  --bone: #e8e6e1;
+
+  /* Gryzzzli brand tokens — content, not chrome */
+  --gryz-sky: #6CBCEB;
+  --gryz-milk: #F5F0E8;
+  --gryz-choco: #5C3A1E;
+  --gryz-gold: #D4A843;
+  --gryz-berry: #D13B4C;
+  --gryz-blue-deep: #2E7BBF;
+
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --gutter: clamp(1.25rem, 2vw, 2.25rem);
+  --section: clamp(4rem, 10vw, 8rem);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --max-w: 1440px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; height: auto; }
+em { font-style: normal; color: var(--accent); }
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px var(--gutter);
+  background: rgba(10, 10, 10, 0.38);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav__logo {
+  font-family: var(--font-display); font-size: 22px; letter-spacing: -0.005em;
+  display: inline-flex; align-items: center;
+}
+.nav__logo::after { content: "."; color: var(--accent); }
+.nav__logo-line {
+  display: inline-block; width: 1.2rem; height: 1px;
+  background: currentColor; margin: 0 6px;
+}
+.nav__menu { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
+.nav__link { position: relative; padding-bottom: 4px; transition: color 0.3s var(--ease); }
+.nav__link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__link:hover { color: var(--accent); }
+.nav__link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ===== HERO ===== */
+.cs-hero {
+  position: relative; width: 100%; min-height: 100vh;
+  background: var(--bg-alt); overflow: hidden;
+}
+.cs-hero > img {
+  width: 100%; min-height: 100vh; object-fit: cover; display: block;
+}
+.cs-hero__meta {
+  position: absolute; bottom: var(--gutter); right: var(--gutter);
+  font-family: var(--font-mono); font-size: 12px; color: var(--fg);
+  text-align: right; z-index: 5; mix-blend-mode: difference; line-height: 1.6;
+}
+
+/* ===== MODULE ===== */
+.cs-module {
+  padding: var(--section) var(--gutter);
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.cs-module:last-of-type { border-bottom: none; }
+.cs-module--dark { background: var(--bg); }
+.cs-module--alt { background: var(--bg-alt); }
+.cs-module--bleed { padding: 0; background: var(--bg); }
+.cs-module--bleed > img { width: 100%; height: auto; display: block; }
+.cs-module--bleed .cs-caption { padding: 12px var(--gutter); }
+
+/* Brand-coloured modules */
+.cs-module--sky { background: var(--gryz-sky); color: var(--ink); }
+.cs-module--sky .cs-module-header__title { color: var(--ink); }
+.cs-module--sky .cs-module-header__meta { color: rgba(10,10,10,0.55); }
+.cs-module--sky .cs-caption { color: rgba(10,10,10,0.55); }
+
+.cs-module--milk { background: var(--gryz-milk); color: var(--ink); }
+.cs-module--milk .cs-module-header__title { color: var(--gryz-choco); }
+.cs-module--milk .cs-module-header__meta { color: rgba(10,10,10,0.5); }
+.cs-module--milk .cs-caption { color: rgba(10,10,10,0.5); }
+
+/* ===== MODULE HEADER ===== */
+.cs-module-header {
+  max-width: var(--max-w); margin: 0 auto 3rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+  flex-wrap: wrap; gap: 1rem;
+  padding-bottom: 1.5rem; border-bottom: 1px solid var(--line);
+}
+.cs-module--sky .cs-module-header,
+.cs-module--milk .cs-module-header { border-bottom-color: rgba(10,10,10,0.12); }
+
+.cs-module-header__title {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--accent); letter-spacing: 0.02em;
+}
+.cs-module-header__meta {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+}
+
+/* ===== INTRO ===== */
+.cs-intro {
+  max-width: var(--max-w); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start;
+}
+.cs-intro__metadata {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--line);
+}
+.cs-intro__metadata > div { display: flex; flex-direction: column; gap: 4px; }
+.cs-intro__metadata dt { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.cs-intro__metadata dd { font-size: 14px; font-weight: 500; }
+.cs-intro__label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; }
+.cs-intro__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 2rem;
+}
+.cs-intro__headline em { color: var(--accent); font-style: normal; }
+.cs-intro__body { font-size: 17px; line-height: 1.6; color: var(--tag-fg); max-width: 60ch; }
+@media (max-width: 900px) {
+  .cs-intro { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ===== CONCEPT ===== */
+.cs-concept {
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start;
+}
+.cs-concept__label { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.cs-concept__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 0.95; letter-spacing: -0.02em; max-width: 18ch;
+}
+.cs-concept__headline em { color: var(--accent); font-style: normal; }
+.cs-concept__body { font-size: 17px; line-height: 1.6; color: var(--tag-fg); max-width: 60ch; margin-top: 1rem; }
+
+/* ===== STORY ===== */
+.cs-story {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start;
+}
+.cs-story__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05; letter-spacing: -0.01em;
+}
+.cs-story__body {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  font-size: 17px; line-height: 1.65; color: var(--tag-fg);
+}
+@media (max-width: 900px) {
+  .cs-story { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ===== GRIDS ===== */
+.cs-grid-2 { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.cs-grid-3 { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.cs-grid-2 > div, .cs-grid-3 > div { display: flex; flex-direction: column; }
+@media (max-width: 700px) {
+  .cs-grid-2, .cs-grid-3 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+}
+
+.cs-caption {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  margin-top: 12px; line-height: 1.5; letter-spacing: 0.02em;
+}
+
+/* ===== SOLO ===== */
+.cs-solo { max-width: var(--max-w); margin: 0 auto; }
+.cs-solo > img { width: 100%; height: auto; display: block; }
+
+/* ===== LIFESTYLE full-bleed with overlay ===== */
+.cs-lifestyle {
+  position: relative; width: 100%; min-height: 60vh; padding: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.cs-lifestyle__media { position: relative; width: 100%; }
+.cs-lifestyle__media img { width: 100%; height: auto; display: block; }
+.cs-lifestyle__caption {
+  position: absolute; bottom: var(--gutter); left: var(--gutter); right: var(--gutter);
+  font-family: var(--font-mono); font-size: 12px; z-index: 3;
+  display: flex; justify-content: space-between; gap: 1rem;
+  letter-spacing: 0.02em; mix-blend-mode: difference; color: var(--fg);
+}
+
+/* ===== SPECS ===== */
+.cs-specs { max-width: var(--max-w); margin: 0 auto; }
+.cs-specs table { width: 100%; border-collapse: collapse; }
+.cs-specs tr { border-bottom: 1px solid var(--line); }
+.cs-specs tr:first-child { border-top: 1px solid var(--line); }
+.cs-specs td { padding: 18px 0; font-size: 14px; vertical-align: top; }
+.cs-specs__label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  letter-spacing: 0.08em; width: 220px;
+}
+.cs-specs__value { font-weight: 500; }
+@media (max-width: 700px) { .cs-specs__label { width: 140px; } }
+
+/* ===== CLOSER ===== */
+.cs-closer__statement {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1; letter-spacing: -0.02em;
+  text-align: center; max-width: 22ch; margin: 0 auto 4rem;
+}
+.cs-closer__statement em { color: var(--accent); font-style: normal; }
+.cs-closer__credits {
+  max-width: var(--max-w); margin: 0 auto 4rem;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem;
+  padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.cs-closer__credits > div { display: flex; flex-direction: column; gap: 4px; }
+.cs-closer__credits dt { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.cs-closer__credits dd { font-size: 14px; font-weight: 500; }
+.cs-closer__nav {
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+}
+.cs-closer__nav-link {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1; letter-spacing: -0.005em;
+  position: relative; padding-bottom: 4px; display: inline-block;
+  transition: color 0.3s var(--ease);
+}
+.cs-closer__nav-link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.cs-closer__nav-link:hover { color: var(--accent); }
+.cs-closer__nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+@media (max-width: 900px) {
+  .cs-closer__credits { grid-template-columns: 1fr 1fr; }
+  .cs-closer__nav { flex-direction: column; gap: 1rem; }
+}
+
+/* ===== REVEAL ===== */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 700px) {
+  .nav { padding: 16px var(--gutter); }
+  .nav__menu { gap: 16px; font-size: 12px; }
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  <a href="../index.html" class="logo">AD</a>
-  <nav>
-    <a href="../work.html">Showcase</a>
-    <a href="../about.html">Studio</a>
-    <a href="../index.html#contact">Contact</a>
-  </nav>
-</header>
-
-<div class="hero-bleed">
-  <img src="../assets/img_GRYZZZLI/hero.png" alt="Gryzzzli Bears hero" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'hero-placeholder',textContent:'GRYZZZLI BEARS / HERO'}))" />
-</div>
-
-<section class="title-block">
-  <div>
-    <div class="tagline">— Chocolate teddies for breakfast tables</div>
-    <h1>Gryzzzli <em>Bears</em></h1>
+<nav class="nav">
+  <a href="../index.html" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <div class="nav__menu">
+    <a href="../work.html" class="nav__link">Showcase</a>
+    <a href="../about.html" class="nav__link">Studio</a>
+    <a href="../index.html#contact" class="nav__link">Contact</a>
   </div>
-  <div class="meta-grid">
-    <div>
-      <div class="label">Client</div>
-      <div>Vobro</div>
-    </div>
-    <div>
-      <div class="label">Year</div>
-      <div>2025</div>
-    </div>
-    <div>
-      <div class="label">Scope</div>
-      <div>CGI · Packshot · Lifestyle</div>
-    </div>
+</nav>
+
+<!-- 01 HERO — KITCHEN BREAKFAST SCENE -->
+<section class="cs-hero">
+  <img src="../assets/img_Gryzzzli/hero_chot_stabilopack.png" alt="Gryzzzli Bears — hero breakfast scene" onerror="this.style.display='none'">
+  <div class="cs-hero__meta">
+    <div>VOBRO — GRYZZZLI</div>
+    <div>2025 · Chocolate teddies for breakfast tables</div>
   </div>
 </section>
 
-<section class="section">
-  <div class="section-label">Project</div>
-  <div class="section-body">
-    <h2>A teddy on a blue kitchen morning.</h2>
-    <p>Visualization and presentation imagery for <em>Gryzzzli</em> — Vobro's milk chocolate and rice-grain teddy bear range. The brand identity and pack design were finalized by the client; my role was to translate the finished artwork into shelf-ready CGI for catalogue, e-commerce and key-visual use.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-label">Concept</div>
-  <div class="section-body">
-    <p>The pack itself sells a clear story — a brown chocolate bear cresting through a wave of milk on a sky-blue field. Rather than copy that scene, the visualization extends it outward: a real breakfast kitchen with the doypack as protagonist, surrounded by the props that already live on the front of the label.</p>
-    <p>Strawberries, bananas, a glass of milk, granola, a croissant — every supporting object on set is a deliberate echo of an illustration already present on the artwork. The result is a hero image that doesn't just present the pack; it lets the pack walk into its own world.</p>
-  </div>
-</section>
-
-<section class="gallery">
-  <div class="gallery-row cols-1">
+<!-- 02 PROJECT INTRO -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-intro">
+    <dl class="cs-intro__metadata">
+      <div><dt>Client</dt><dd>Vobro</dd></div>
+      <div><dt>Year</dt><dd>2025</dd></div>
+      <div><dt>Category</dt><dd>CGI · Packaging · Lifestyle</dd></div>
+      <div><dt>Role</dt><dd>CGI Art Direction · Visualization · Presentation</dd></div>
+      <div><dt>Software</dt><dd>Blender 4.2 · Cycles · Photoshop</dd></div>
+    </dl>
     <div>
-      <div class="gallery-item ratio-wide">
-        <img src="../assets/img_GRYZZZLI/01.png" alt="Hero packshot · breakfast kitchen scene" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'hero-placeholder',textContent:'GRYZZZLI / 01'}))" />
-      </div>
-      <div class="gallery-caption">Hero packshot · breakfast kitchen scene</div>
-    </div>
-  </div>
-  <div class="gallery-row cols-2">
-    <div>
-      <div class="gallery-item ratio-square">
-        <img src="../assets/img_GRYZZZLI/02.png" alt="Brand pattern · diagonal repeat" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'hero-placeholder',textContent:'GRYZZZLI / 02'}))" />
-      </div>
-      <div class="gallery-caption">Brand pattern · diagonal repeat</div>
-    </div>
-    <div>
-      <div class="gallery-item ratio-square">
-        <img src="../assets/img_GRYZZZLI/03.png" alt="Unit-wrapped bar visualization" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'hero-placeholder',textContent:'GRYZZZLI / 03'}))" />
-      </div>
-      <div class="gallery-caption">Unit-wrapped bar visualization</div>
+      <div class="cs-intro__label">— Project</div>
+      <h1 class="cs-intro__headline reveal">
+        <em>A teddy on a blue kitchen morning.</em> Visualization and lifestyle campaign for Vobro's milk chocolate and rice-grain bear range — from pack to playground.
+      </h1>
+      <p class="cs-intro__body reveal">
+        Gryzzzli is Vobro's entry into children's confectionery — a milk chocolate bear with puffed rice grains, sold in both flowpack singles and 1 kg stabilopacks. The pack design was finalized by the client; the task was to build a complete visual system around it — shelf-ready CGI, lifestyle scenes and a campaign vocabulary that speaks to parents and children simultaneously. Built entirely in Blender with composited lifestyle environments.
+      </p>
     </div>
   </div>
 </section>
 
-<section class="pull-quote">
-  <blockquote>&ldquo;Visualization, not redesign — letting the finished pack lead the scene.&rdquo;</blockquote>
+<!-- 03 CONCEPT -->
+<section class="cs-module cs-module--alt">
+  <div class="cs-concept reveal">
+    <div class="cs-concept__label">— Concept</div>
+    <h2 class="cs-concept__headline">"The pack walks into its own world."</h2>
+    <p class="cs-concept__body">The visualization doesn't copy the label — it extends it. Strawberries, bananas, milk, granola — every supporting object on set is a deliberate echo of an illustration already on the artwork. The doypack becomes the protagonist of a breakfast scene it was always meant to inhabit.</p>
+  </div>
 </section>
 
-<section class="tech">
-  <div class="tech-label">Technical</div>
-  <table class="tech-table">
-    <tr><td>Software</td><td>Blender · Cycles · Photoshop</td></tr>
-    <tr><td>Resolution</td><td>3840 × 2160 px</td></tr>
-    <tr><td>Pack format</td><td>Stand-up doypack · 200 g</td></tr>
-    <tr><td>Materials</td><td>Matte film · gloss varnish accents</td></tr>
-    <tr><td>Deliverables</td><td>1 hero · 1 pattern · 1 unit pack · 3 detail crops</td></tr>
-    <tr><td>Source artwork</td><td>Provided by Vobro (final pack design)</td></tr>
-  </table>
+<!-- 04 STRATEGY -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-story reveal">
+    <h2 class="cs-story__heading">Two formats. Two audiences. One bear.</h2>
+    <div class="cs-story__body">
+      <p>The flowpack is impulse — a single bear that fits in a backpack, a jeans pocket, a lunchbox. It's the child's format: tactile, portable, personal. The visualization for flowpacks is diagonal, energetic, patterned — the bear repeated in motion.</p>
+      <p>The stabilopack is intent — a 1 kg family bag that lives on a kitchen shelf. It's the parent's format: reliable, generous, quiet. The visualization for stabilopacks is grounded, domestic, warm — the bag photographed in a real breakfast environment.</p>
+      <p>Both formats speak the same visual language: sky-blue field, milk-wave horizon, chocolate-brown character. But the tone shifts between motion and stillness, playground and kitchen, child and parent.</p>
+    </div>
+  </div>
 </section>
 
-<section class="credits">
-  <div class="item"><div class="label">Studio</div><div class="value">Davidova.Studio</div></div>
-  <div class="item"><div class="label">Art Direction · CGI</div><div class="value">Alexandra Davidova</div></div>
-  <div class="item"><div class="label">Client</div><div class="value">Vobro</div></div>
-  <div class="item"><div class="label">Location</div><div class="value">Warsaw · Worldwide</div></div>
+<!-- 05 HERO PACKSHOT — full bleed -->
+<section class="cs-module cs-module--bleed">
+  <img src="../assets/img_Gryzzzli/1.png" alt="Gryzzzli hero packshot — breakfast kitchen" onerror="this.style.display='none'">
+  <div class="cs-caption">— Hero packshot · breakfast kitchen scene · stabilopack as protagonist</div>
 </section>
 
-<section class="next-project">
-  <div class="label">Next project</div>
-  <a href="love-cherry.html">Love &amp; Cherry →</a>
+<!-- 06 PACKAGING SYSTEM -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Packaging</span>
+    <span class="cs-module-header__meta">Two formats · stabilopack 1 kg · flowpack singles</span>
+  </div>
+  <div class="cs-grid-2">
+    <div>
+      <img src="../assets/img_Gryzzzli/gryzzzli_1kg.png" alt="Gryzzzli 1kg stabilopack" onerror="this.style.display='none'">
+      <div class="cs-caption">Stabilopack · 1 kg family format · sky-blue field with milk wave</div>
+    </div>
+    <div>
+      <img src="../assets/img_Gryzzzli/group.png" alt="Gryzzzli product group" onerror="this.style.display='none'">
+      <div class="cs-caption">Full product group · stabilopack + flowpack range</div>
+    </div>
+  </div>
 </section>
 
-<footer>
-  <span>© 2026 Alexandra Davidova</span>
-  <span>studio@davidova.studio</span>
-</footer>
+<!-- 07 FLOWPACK PATTERN — brand-coloured module -->
+<section class="cs-module cs-module--sky">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Flowpack Detail</span>
+    <span class="cs-module-header__meta">Diagonal repeat · shelf pattern · impulse format</span>
+  </div>
+  <div class="cs-grid-2">
+    <div>
+      <img src="../assets/img_Gryzzzli/diag_flowpack.png" alt="Flowpack diagonal pattern" onerror="this.style.display='none'">
+      <div class="cs-caption">Diagonal repeat · single-serve flowpack · front face</div>
+    </div>
+    <div>
+      <img src="../assets/img_Gryzzzli/diag_flowpack1.png" alt="Flowpack diagonal detail" onerror="this.style.display='none'">
+      <div class="cs-caption">Brand pattern · tight crop · shelf-ready rhythm</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 LIFESTYLE — BREAKFAST SCENE full bleed -->
+<section class="cs-lifestyle">
+  <div class="cs-lifestyle__media">
+    <img src="../assets/img_Gryzzzli/2.png" alt="Lifestyle · child with product" onerror="this.style.display='none'">
+  </div>
+  <div class="cs-lifestyle__caption">
+    <div>01 / The breakfast table</div>
+    <div>Gryzzzli Bears · Lifestyle</div>
+  </div>
+</section>
+
+<!-- 09 LIFESTYLE GRID — CHILDREN CAMPAIGN -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Lifestyle Campaign</span>
+    <span class="cs-module-header__meta">Children + product · real environments · composited CGI</span>
+  </div>
+  <div class="cs-grid-3">
+    <div>
+      <img src="../assets/img_Gryzzzli/3.png" alt="Lifestyle — children with product" onerror="this.style.display='none'">
+      <div class="cs-caption">Friends sharing · playground context</div>
+    </div>
+    <div>
+      <img src="../assets/img_Gryzzzli/boy_twin.png" alt="Boy with Gryzzzli" onerror="this.style.display='none'">
+      <div class="cs-caption">On the move · backpack moment</div>
+    </div>
+    <div>
+      <img src="../assets/img_Gryzzzli/4.png" alt="Outdoor children scene" onerror="this.style.display='none'">
+      <div class="cs-caption">Active play · product as companion</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 HERO LIFESTYLE — OUTDOOR full bleed -->
+<section class="cs-lifestyle">
+  <div class="cs-lifestyle__media">
+    <img src="../assets/img_Gryzzzli/childrens_1kg_gryzzzli.png" alt="Children playing with Gryzzzli product" onerror="this.style.display='none'">
+  </div>
+  <div class="cs-lifestyle__caption">
+    <div>02 / From kitchen to playground</div>
+    <div>Gryzzzli Bears · 1 kg campaign</div>
+  </div>
+</section>
+
+<!-- 11 BACKPACK SCENE -->
+<section class="cs-module cs-module--bleed">
+  <img src="../assets/img_Gryzzzli/stabilopack_boy.png" alt="Boy with stabilopack in backpack" onerror="this.style.display='none'">
+  <div class="cs-caption">— Backpack moment · stabilopack fits the routine</div>
+</section>
+
+<!-- 12 PULL QUOTE -->
+<section class="cs-module cs-module--alt">
+  <div class="cs-concept reveal">
+    <div class="cs-concept__label">— Approach</div>
+    <h2 class="cs-concept__headline">"Visualization, not redesign — letting the <em>finished pack</em> lead the scene."</h2>
+    <p class="cs-concept__body">The brand identity and pack artwork were finalized by Vobro. The creative task was translation, not transformation — to build a world around a product that already knew its story, and let the CGI extend it into spaces the flat label can't reach.</p>
+  </div>
+</section>
+
+<!-- 13 TECHNICAL SPECS -->
+<section class="cs-module cs-module--dark">
+  <div class="cs-module-header">
+    <span class="cs-module-header__title">— Technical</span>
+    <span class="cs-module-header__meta">Project specifications</span>
+  </div>
+  <div class="cs-specs">
+    <table>
+      <tbody>
+        <tr><td class="cs-specs__label">SOFTWARE</td><td class="cs-specs__value">Blender 4.2 · Cycles · Photoshop</td></tr>
+        <tr><td class="cs-specs__label">RESOLUTION</td><td class="cs-specs__value">3840 × 2160 px (hero) · 3000 × 3000 px (square)</td></tr>
+        <tr><td class="cs-specs__label">SAMPLES</td><td class="cs-specs__value">4096 per pixel · OptiX denoising</td></tr>
+        <tr><td class="cs-specs__label">PACK FORMAT</td><td class="cs-specs__value">Stabilopack 1 kg · Flowpack 30 g singles</td></tr>
+        <tr><td class="cs-specs__label">MATERIALS</td><td class="cs-specs__value">Matte film · gloss varnish accents · metallic ink</td></tr>
+        <tr><td class="cs-specs__label">TEXTURES</td><td class="cs-specs__value">4K PBR · custom chocolate normals · milk fluid sim</td></tr>
+        <tr><td class="cs-specs__label">RENDER TIME</td><td class="cs-specs__value">18 minutes per frame on RTX 4090</td></tr>
+        <tr><td class="cs-specs__label">COLOR PIPELINE</td><td class="cs-specs__value">ACES · Filmic Log Encoding</td></tr>
+        <tr><td class="cs-specs__label">DELIVERABLES</td><td class="cs-specs__value">4 hero · 2 pattern · 6 lifestyle · product group shot</td></tr>
+        <tr><td class="cs-specs__label">SOURCE ARTWORK</td><td class="cs-specs__value">Provided by Vobro (final pack design)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 14 CLOSER -->
+<section class="cs-module cs-module--alt">
+  <p class="cs-closer__statement reveal">"Chocolate teddies for <em>breakfast tables.</em>"</p>
+  <dl class="cs-closer__credits">
+    <div><dt>Studio</dt><dd>Davidova.Studio</dd></div>
+    <div><dt>Art Direction</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>CGI</dt><dd>Alexandra Davidova</dd></div>
+    <div><dt>Client</dt><dd>Vobro</dd></div>
+    <div><dt>Year</dt><dd>2025</dd></div>
+    <div><dt>Location</dt><dd>Warsaw · Worldwide</dd></div>
+  </dl>
+  <div class="cs-closer__nav">
+    <a href="wow.html" class="cs-closer__nav-link">Next project →</a>
+    <a href="mailto:studio@davidova.studio" class="cs-closer__nav-link">studio@davidova.studio</a>
+  </div>
+</section>
+
+<script>
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+})();
+</script>
 
 </body>
 </html>

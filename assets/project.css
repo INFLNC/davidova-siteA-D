@@ -41,10 +41,10 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 22px 36px;
-  background: rgba(10, 10, 10, 0.78);
+  background: rgba(10, 10, 10, 0.38);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .logo {
@@ -192,6 +192,7 @@ nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .gallery-row { display: grid; gap: 24px; }
 .gallery-row.cols-1 { grid-template-columns: 1fr; }
 .gallery-row.cols-2 { grid-template-columns: 1fr 1fr; }
+.gallery-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
 
 .gallery-item {
   position: relative;

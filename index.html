@@ -499,8 +499,8 @@ img, video { max-width: 100%; display: block; }
 }
 
 .project__thumb {
-  width: 64px;
-  height: 80px;
+  height: 64px;
+  width: auto;
   background: rgba(10,10,10,0.5);
   cursor: pointer;
   overflow: hidden;
@@ -518,9 +518,9 @@ img, video { max-width: 100%; display: block; }
 }
 
 .project__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 64px;
+  width: auto;
+  display: block;
 }
 
 .project__thumb-num {
@@ -874,7 +874,7 @@ img, video { max-width: 100%; display: block; }
 <nav class="nav" id="nav">
   <a href="index.html" class="nav__logo">AD</a>
   <div class="nav__menu">
-    <a href="work.html" class="nav__link">Showcase<span style="font-family:var(--font-mono);font-size:10px;vertical-align:super;color:var(--muted);margin-left:2px;font-weight:400">(10)</span></a>
+    <a href="work.html" class="nav__link">Showcase<span style="font-family:var(--font-mono);font-size:10px;vertical-align:super;color:var(--muted);margin-left:2px;font-weight:400">(16)</span></a>
     <a href="about.html" class="nav__link">Studio</a>
     <a href="#contact" class="nav__link">Contact</a>
   </div>
@@ -923,7 +923,7 @@ img, video { max-width: 100%; display: block; }
 
     <a href="work/ego.html" class="project__hero">
       <img
-        src="assets/img/projects/img_EGO/hero.png"
+        src="assets/img/projects/img_EGO/Hero.png"
         data-default="assets/img/projects/img_EGO/hero.png"
         alt="VOBRO — EGO"
       />
@@ -1024,7 +1024,7 @@ img, video { max-width: 100%; display: block; }
   </article>
 
   <!-- PROJECT 03 — GUERLAIN LUMEN -->
-  <article class="project" data-name="Guerlain — Lumen Serum" data-href="work/guerlain.html">
+  <article class="project" data-name="Guerlain — Serum" data-href="work/guerlain.html">
     <div class="project__collapsed-bar">Guerlain — Lumen Serum</div>
 
     <a href="work/guerlain.html" class="project__hero">

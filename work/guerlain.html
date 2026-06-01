@@ -327,7 +327,7 @@ footer a:hover { color: var(--accent); }
 .cs-grid-2 > div { display: flex; flex-direction: column; }
 .cs-grid-2 > div > img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: auto;
   object-fit: cover;
 }
 .cs-grid-3 {
@@ -1026,14 +1026,13 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
 <section class="cs-module cs-module--ink">
   <div class="cs-module-header">
     <span class="cs-module-header__title">— Motion</span>
-    <span class="cs-module-header__meta">Sequence concept · 4-second loop</span>
+    <span class="cs-module-header__meta">Sequence concept · </span>
   </div>
-
-  <div class="cs-grid-4">
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_01">APPROACH</div><div class="cs-caption">01 — Approach</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_02">ROTATION</div><div class="cs-caption">02 — Rotation</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_03">DETAIL</div><div class="cs-caption">03 — Detail</div></div>
-    <div><div class="cs-slot cs-slot--square" data-slot-id="▣ MOTION_04">HOLD</div><div class="cs-caption">04 — Hold</div></div>
+   <div style="text-align:center;">
+    <video width="600" style="display:block; margin:0 auto;" autoplay muted loop playsinline>
+    <source src="../assets/img_Guerlian/hover.mp4" type="video/mp4">
+</video>
+    <div class="cs-caption">Process of Modeling (Blender)</div>
   </div>
 </section>
 
@@ -1048,7 +1047,7 @@ in chiaroscuro. The bottle is precious. The honey is its proof.</p>
   </div>
 
   <dl class="cs-specs">
-      <div><dt>Software</dt><dd>Blender 4.2 · Cycles</dd></div>
+      <div><dt>Software</dt><dd>Blender 5.0 · Cycles</dd></div>
     <div><dt>Resolution</dt><dd>3840 × 2160 px</dd></div>
     <div><dt>Samples</dt><dd>4096 per pixel · OptiX denoising</dd></div>
     <div><dt>Polycount</dt><dd>Hero asset: 21300 · Scene: 121000</dd></div>

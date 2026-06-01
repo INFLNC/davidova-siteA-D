@@ -247,7 +247,7 @@ em { font-style: normal; color: var(--accent); }
   position: relative; overflow: hidden; border: 1px solid var(--line);
 }
 .cs-motion-cell video {
-  width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
+  width: 100%; aspect-ratio: auto; object-fit: cover; display: block;
 }
 
 /* ===== SPECS ===== */
@@ -365,8 +365,10 @@ em { font-style: normal; color: var(--accent); }
 
 <!-- 04 PRODUCT GRID — full bleed -->
 <section class="cs-module cs-module--bleed">
-  <img src="../assets/img_Wow/1.1.png" alt="WOW product grid — all flavors" onerror="this.style.display='none'">
-  <div class="cs-caption">— Product grid · three flavors · four colorways</div>
+  <video width="1520" autoplay muted loop playsinline>
+    <source src="../assets/img_Wow/film_wow.mp4" type="video/mp4">
+</video>
+  <div class="cs-caption">— Product grid · three flavors · three colorways</div>
 </section>
 
 <!-- 05 PACKAGING SYSTEM -->
@@ -377,15 +379,17 @@ em { font-style: normal; color: var(--accent); }
   </div>
   <div class="cs-solo">
     <img src="../assets/img_Wow/packaging.png" alt="WOW full packaging lineup" onerror="this.style.display='none'">
-    <div class="cs-caption">Full product lineup · doypack 210 g · doypack 330 g · flowpack singles</div>
+    <div class="cs-caption">Full product lineup · doypack 210 g · doypack 182 g · doypack 1 kg</div>
   </div>
 </section>
 
 <!-- 06 FLAVOR 01 — ORANGE -->
 <section class="cs-module cs-module--orange">
   <div class="cs-flavor cs-flavor--horizontal">
-    <div class="cs-flavor__media">
-      <img src="../assets/img_Wow/logo_orange.png" alt="WOW Orange — logo with macro" onerror="this.style.display='none'">
+     <div class="cs-flavor__media">
+      <video width="700" autoplay muted loop playsinline>
+    <source src="../assets/img_Wow/orange.mp4" type="video/mp4">
+</video>
     </div>
     <div class="cs-flavor__copy">
       <div class="cs-flavor__label" style="color:var(--ink);">— 01 / Orange</div>
@@ -406,7 +410,9 @@ em { font-style: normal; color: var(--accent); }
       <p class="cs-flavor__description" style="color:rgba(10,10,10,0.75);">Milk chocolate coat, pillow-soft marshmallow, bright lemon jelly that bites back. The surprise reel.</p>
     </div>
     <div class="cs-flavor__media">
-      <img src="../assets/img_Wow/logo_cytryna1.png" alt="WOW Lemon — logo" onerror="this.style.display='none'">
+      <video width="700" autoplay muted loop playsinline>
+    <source src="../assets/img_Wow/lemon.mp4" type="video/mp4">
+</video>
     </div>
   </div>
 </section>
@@ -415,7 +421,9 @@ em { font-style: normal; color: var(--accent); }
 <section class="cs-module cs-module--cherry">
   <div class="cs-flavor cs-flavor--horizontal">
     <div class="cs-flavor__media">
-      <img src="../assets/img_Wow/logo_wisnia1.png" alt="WOW Cherry — logo" onerror="this.style.display='none'">
+      <video width="700" autoplay muted loop playsinline>
+    <source src="../assets/img_Wow/cherry.mp4" type="video/mp4">
+</video>
     </div>
     <div class="cs-flavor__copy">
       <div class="cs-flavor__label" style="color:var(--fg);">— 03 / Cherry</div>
@@ -424,22 +432,22 @@ em { font-style: normal; color: var(--accent); }
       <p class="cs-flavor__description" style="color:rgba(255,255,255,0.7);">Chocolate, marshmallow, cherry jelly — the flavor that pulls you back for one more.</p>
     </div>
   </div>
+  </section>
+  <section class="cs-module cs-module--alt">
+  <video width="1520" autoplay muted loop playsinline>
+    <source src="../assets/img_Wow/film_wow1.mp4" type="video/mp4">
+</video>
 </section>
 
 <!-- 09 CROSS-SECTION MACROS -->
 <section class="cs-module cs-module--dark">
   <div class="cs-module-header">
-    <span class="cs-module-header__title">— The Cross-Section</span>
-    <span class="cs-module-header__meta">The jackpot moment · chocolate / marshmallow / jelly</span>
+    <span class="cs-module-header__title">— DTP</span>
+    <span class="cs-module-header__meta">Print-ready · packaging construction</span>
   </div>
-  <div class="cs-grid-2">
     <div>
-      <img src="../assets/img_Wow/przekroj_cherry.png" alt="Cherry cross-section macro" onerror="this.style.display='none'">
-      <div class="cs-caption">Cherry · deep pink jelly core visible through the break</div>
-    </div>
-    <div>
-      <img src="../assets/img_Wow/przekroj_cytryna.png" alt="Lemon cross-section macro" onerror="this.style.display='none'">
-      <div class="cs-caption">Lemon · bright citrus jelly layer between marshmallow and chocolate</div>
+      <img src="../assets/img_Wow/wykrpjniki.png" alt="Lemon cross-section macro" onerror="this.style.display='none'">
+      <div class="cs-caption">DTP before package printing </div>
     </div>
   </div>
 </section>
@@ -484,23 +492,17 @@ em { font-style: normal; color: var(--accent); }
   </div>
 </section>
 
-<!-- 14 PRODUCT GRID VARIANT -->
-<section class="cs-module cs-module--bleed">
-  <img src="../assets/img_Wow/1.2.png" alt="WOW product grid variant" onerror="this.style.display='none'">
-  <div class="cs-caption">— Alternate product grid · color pairing variants</div>
-</section>
-
 <!-- 15 MOTION — 4 MINI ANIMATIONS -->
 <section class="cs-module cs-module--dark">
   <div class="cs-module-header">
     <span class="cs-module-header__title">— Motion</span>
     <span class="cs-module-header__meta">Four loops · product reveal · slot-reel energy</span>
   </div>
-  <div class="cs-grid-4">
+  <div class="cs-grid-2">
     <div>
       <div class="cs-motion-cell">
         <video autoplay muted loop playsinline>
-          <source src="../assets/img_Wow/MP4/1.mp4" type="video/mp4">
+          <source src="../assets/img_Wow/1.mp4" type="video/mp4">
         </video>
       </div>
       <div class="cs-caption">01 — Approach · unwrap tease</div>
@@ -508,41 +510,13 @@ em { font-style: normal; color: var(--accent); }
     <div>
       <div class="cs-motion-cell">
         <video autoplay muted loop playsinline>
-          <source src="../assets/img_Wow/MP4/2.mp4" type="video/mp4">
+          <source src="../assets/img_Wow/2.mp4" type="video/mp4">
         </video>
       </div>
       <div class="cs-caption">02 — Spin · flavor reel</div>
     </div>
-    <div>
-      <div class="cs-motion-cell">
-        <video autoplay muted loop playsinline>
-          <source src="../assets/img_Wow/MP4/3.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="cs-caption">03 — Break · cross-section reveal</div>
-    </div>
-    <div>
-      <div class="cs-motion-cell">
-        <video autoplay muted loop playsinline>
-          <source src="../assets/img_Wow/MP4/4.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="cs-caption">04 — Hold · hero lock</div>
-    </div>
-  </div>
 </section>
 
-<!-- 16 DIE-CUTS / TECHNICAL -->
-<section class="cs-module cs-module--alt">
-  <div class="cs-module-header">
-    <span class="cs-module-header__title">— Die-Cuts</span>
-    <span class="cs-module-header__meta">Print-ready · packaging construction</span>
-  </div>
-  <div class="cs-solo">
-    <img src="../assets/img_Wow/wykrojniki.png" alt="WOW packaging die-cuts" onerror="this.style.display='none'">
-    <div class="cs-caption">Die-cut layouts · doypack + display box · print-ready technical</div>
-  </div>
-</section>
 
 <!-- 17 PULL QUOTE -->
 <section class="cs-module cs-module--dark" style="border-left: 4px solid var(--wow-orange);">

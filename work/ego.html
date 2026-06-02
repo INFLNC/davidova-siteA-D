@@ -64,50 +64,7 @@ a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; height: auto; }
 
 em { font-style: normal; color: var(--accent); }
-/* HEADER */
-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 36px;
-  background: rgba(10, 10, 10, 0.38);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
 
-.logo {
-  font-family: 'Anton', sans-serif;
-  font-size: 22px;
-  letter-spacing: -0.005em;
-}
-.logo::after { content: "."; color: var(--accent); }
-
-nav {
-  display: flex;
-  gap: 32px;
-  font-size: 14px;
-  font-weight: 500;
-}
-nav a {
-  position: relative;
-  padding-bottom: 4px;
-  transition: color 0.2s ease;
-}
-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 /* ===== NAV ===== */
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
@@ -643,14 +600,14 @@ footer a:hover { color: var(--accent); }
 
 <body>
 
-<header class="site-header">
-  <a href="index.html" class="site-logo">AD</a>
-  <nav class="site-nav">
-    <a href="work.html" class="current">Showcase<span class="count">(16)</span></a>
-    <a href="about.html">Studio</a>
-    <a href="index.html#contact">Contact</a>
-  </nav>
-</header>
+<nav class="nav">
+  <a href="/" class="nav__logo">A<span class="nav__logo-line"></span>D</a>
+  <div class="nav__menu">
+    <a href="/work" class="nav__link">Work</a>
+    <a href="/about" class="nav__link">About</a>
+    <a href="/contact" class="nav__link">Contact</a>
+  </div>
+</nav>
 
 <!-- 01 HERO — 5 PACKS ON ROPE / SKY -->
 <section class="cs-hero">

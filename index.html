@@ -262,7 +262,12 @@ footer a:hover { color: var(--accent); }
 }
 
 .hero__placeholder {
-  /* Hero video — заполняет весь placeholder, покрывает весь экран */
+  position: absolute; inset: 0; opacity: 0;
+  transition: opacity 1s var(--ease-out-expo) 0.2s;
+}
+
+.hero__placeholder.visible { opacity: 1; }
+
 .hero__video {
   position: absolute;
   inset: 0;
@@ -270,16 +275,8 @@ footer a:hover { color: var(--accent); }
   height: 100%;
   object-fit: cover;
   display: block;
-  /* Лёгкое затемнение чтобы текст meta читался */
   filter: brightness(0.72);
 }
-
-/* На мобилке — видео работает точно так же, object-fit: cover адаптируется */
-.hero__placeholder {
-  position: absolute; inset: 0; opacity: 0;
-  transition: opacity 1s var(--ease-out-expo) 0.2s;
-}
-
 .hero__meta {
   position: absolute; bottom: var(--gutter); left: var(--gutter); right: var(--gutter);
   display: flex; justify-content: space-between; align-items: flex-end; color: var(--fg);

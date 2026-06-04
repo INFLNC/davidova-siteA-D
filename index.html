@@ -262,14 +262,23 @@ footer a:hover { color: var(--accent); }
 }
 
 .hero__placeholder {
+  /* Hero video — заполняет весь placeholder, покрывает весь экран */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Лёгкое затемнение чтобы текст meta читался */
+  filter: brightness(0.72);
+}
+
+/* На мобилке — видео работает точно так же, object-fit: cover адаптируется */
+.hero__placeholder {
   position: absolute; inset: 0; opacity: 0;
   transition: opacity 1s var(--ease-out-expo) 0.2s;
-  background:
-    radial-gradient(ellipse at 30% 60%, rgba(255, 46, 22, 0.18), transparent 65%),
-    radial-gradient(ellipse at 70% 70%, rgba(110, 108, 102, 0.12), transparent 65%),
-    linear-gradient(180deg, #111 0%, #0a0a0a 100%);
 }
-.hero__placeholder.visible { opacity: 1; }
 
 .hero__meta {
   position: absolute; bottom: var(--gutter); left: var(--gutter); right: var(--gutter);
@@ -909,7 +918,24 @@ footer a:hover { color: var(--accent); }
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero__placeholder" id="hero-bg"></div>
+
+  <div class="hero__placeholder" id="hero-bg">
+    <!--
+      Замени src на путь к твоему mp4.
+      poster — первый кадр видео (jpg), показывается пока видео грузится.
+      Если poster нет — просто удали этот атрибут.
+    -->
+    <video
+      class="hero__video"
+      src="assets/video/hero.mp4"
+      poster="assets/video/hero-poster.jpg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    ></video>
+  </div>
 
   <div class="hero__meta" id="hero-meta">
     <div>Alexandra Davidova — CGI Art Direction</div>
@@ -920,6 +946,7 @@ footer a:hover { color: var(--accent); }
     <span>Scroll</span>
     <span class="hero__scroll-line"></span>
   </div>
+
 </section>
 
 <!-- MANIFESTO -->

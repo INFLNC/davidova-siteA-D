@@ -47,30 +47,13 @@
   .filters::-webkit-scrollbar { display: none; }
   .filters button { flex: 0 0 auto; white-space: nowrap; }
 
-  /* --- PROJECT GRID: одна колонка, hero на всю ширину --- */
+  /* --- PROJECT GRID: одна колонка --- */
   .grid {
-    padding: 24px 0 60px;
+    padding: 24px 1.25rem 60px;
     grid-template-columns: 1fr;
     gap: 44px;
   }
-  .card { padding: 0 !important; }
-  .card-tile {
-    aspect-ratio: 16 / 9;
-    width: 100vw;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 0;
-  }
-  .card-tile img,
-  .card-tile video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .card-name, .card-meta, .tag {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
+  .card-tile { aspect-ratio: 4 / 3; }
   .card-name { font-size: 24px; }
   .card-tile-meta { font-size: 9px; top: 10px; left: 10px; right: 10px; }
   .tag { font-size: 10px; padding: 4px 8px; }
@@ -140,7 +123,7 @@
   }
 
   /* Сетки изображений */
-  .cs-grid-3x3 { grid-template-columns: repeat(3, 1fr) !important; gap: 0.5rem !important; }
+  .cs-grid-3x3 { grid-template-columns: 1fr 1fr !important; }
   .cs-grid-2, .cs-grid-3, .cs-grid-4,
   .cs-strip-3, .cs-strip-4,
   .packaging__sequence,
@@ -181,44 +164,128 @@
   .credits { grid-template-columns: 1fr 1fr; padding: 48px 1.25rem; }
   .next { padding: 48px 1.25rem; }
 
-  /* На тач отключаем все hover-видео в case study тоже */
-  .project__preview, .project__thumbs { display: none !important; }
+  /* ============ INDEX — ГЛАВНАЯ (preloader + nav + project stream) ============ */
 
-  /* Studio intro (index sticky portrait) — упрощаем для мобилки */
+  /* --- PRELOADER: вписываем в ширину экрана --- */
+  .preloader__wordmark {
+    font-size: 11vw !important;
+    white-space: nowrap;
+    letter-spacing: -0.01em !important;
+    padding: 0 1rem;
+    text-align: center;
+    line-height: 1 !important;
+  }
+  .preloader__char { font-size: inherit !important; }
+  .preloader__dash-line { width: 6vw !important; }
+  .preloader__count { font-size: 13px !important; }
+
+  /* --- NAV: убираем collapsed A—D (наезжает на меню) --- */
+  .wordmark-collapse { display: none !important; }
+  .nav { padding: 14px 1.25rem !important; }
+  .nav__logo { font-size: 18px !important; }
+  .nav__menu { gap: 14px !important; font-size: 12px !important; }
+
+  /* Полный wordmark ALEXANDRA—DAVIDOVA в шапке — тоже прячем,
+     оставляем только компактный логотип, чтобы ничего не наезжало */
+  .wordmark { display: none !important; }
+
+  /* --- HERO --- */
+  .hero { min-height: 88vh !important; }
+  .hero__meta { font-size: 11px !important; }
+  .manifesto { padding: 56px 1.25rem !important; }
+  .manifesto__text { font-size: 13vw !important; line-height: 0.95 !important; }
+
+  /* --- PROJECT STREAM: расклеиваем sticky-стопку в ленту --- */
+  .project-stream { height: auto !important; }
+  .project-wrap { height: auto !important; }
+
+  .project {
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin-bottom: 56px;
+    display: flex !important;
+    flex-direction: column !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .project.is-collapsed .project__inner { opacity: 1 !important; }
+  .project__collapsed-bar { display: none !important; }
+
+  /* HERO каждого проекта — своя картинка, формат 16:9, по очереди */
+  .project__hero {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    overflow: hidden;
+    background: var(--bg-alt, #14120f);
+  }
+  .project__hero img {
+    position: static !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Превью при наведении и thumbnails не нужны на тач-экране */
+  .project__preview { display: none !important; }
+  .project__thumbs { display: none !important; }
+
+  /* Мета-слой проекта: статично под картинкой, не поверх */
+  .project__inner {
+    position: static !important;
+    height: auto !important;
+    padding: 16px 1.25rem 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  .project__meta-layer {
+    position: static !important;
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .project__top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .project__meta-right { align-items: flex-start !important; text-align: left !important; }
+  .project__num { color: var(--accent, #ff2e16) !important; font-size: 12px !important; }
+  .project__category { font-size: 12px !important; }
+  .project__tag { font-size: 11px !important; }
+  .project__bottom { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+  .project__year { font-size: 11px !important; }
+  .project__title {
+    position: static !important;
+    font-size: 34px !important;
+    line-height: 1 !important;
+    margin-top: 10px !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* --- STUDIO INTRO (sticky-портрет) — упрощаем --- */
   .studio-intro { height: auto !important; }
   .studio-intro__sticky { position: static !important; height: auto !important; flex-direction: column; padding: 60px 1.25rem; gap: 2rem; }
   .studio-intro__photo { position: static !important; transform: none !important; width: 70vw !important; left: auto !important; }
   .studio-intro__content { position: static !important; transform: none !important; opacity: 1 !important; max-width: 100% !important; left: auto !important; }
-
-  /* Project stream (index simple list) — корректировки для мобилки */
-  .project-wrap { height: auto !important; }
-  .project { position: static !important; height: auto !important; min-height: 0 !important; }
-  .project__inner { padding: 1rem 1.25rem 2rem !important; gap: 1rem !important; }
-  .project__title { font-size: clamp(1.75rem, 8vw, 2.5rem) !important; }
-  .project__collapsed-bar,
-  .project__preview,
-  .project__thumbs,
-  .project__bottom { display: none !important; }
-
-  /* Wordmark на мобиле — поменьше, слева, не пересекается с меню */
-  .wordmark, .wordmark-collapse {
-    font-size: 0.85rem !important;
-    top: 1rem !important;
-    left: 1.25rem !important;
-  }
-  .wordmark__dash, .wordmark-collapse__dash {
-    width: 1rem !important;
-    margin: 0 0.4rem !important;
-  }
 }
 
 /* ====================== ТЕЛЕФОН (≤480px) ====================== */
 @media (max-width: 480px) {
   .page-intro h1 { font-size: 18vw; }
   .about-hero__heading { font-size: 15vw; }
-  .card-tile { aspect-ratio: 16 / 9; }
+  .card-tile { aspect-ratio: 1 / 1; }
 
-  .cs-grid-3x3 { grid-template-columns: repeat(3, 1fr) !important; gap: 0.4rem !important; }
+  .cs-grid-3x3,
   .cs-colors, .color-system { grid-template-columns: 1fr !important; }
   .cs-icons { grid-template-columns: repeat(2, 1fr) !important; }
   .cs-closer__credits, .credits__grid,
